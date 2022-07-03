@@ -1,0 +1,4 @@
+#+TITLE: Sitemap for project site-org
+
+- [[file:content/emacs/build-blog.org][Build-blog]]
+- [[file:content/emacs/test.org][Test formats]]

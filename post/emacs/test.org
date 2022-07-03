@@ -1,0 +1,89 @@
+#+title: Test of blog post elements
+#+author: Yu Huo
+#+date: <2022-06-27 Mon>
+
+* Heading 1
+** Subheading 1
+*** Lists
+Bullet points:
++ Item 1
++ Item 2
+
+Numbered list:
+1. Item 1
+2. Item 2
+
+*** Types
+Test =verbatim=.
+Test ~code~.
+Test /italic/.
+Test *bold*.
+Test _underscore_ (not working).
+Test +strikethrough+.
+Test super^script.
+Test sub_script.
+Test "smart quote".
+
+*** Footnotes
+Test footnote[fn:test: This is a footnote.].
+
+A footnote can be cited multiple times[fn:test].
+
+*** Maths
+Test equation \(E = m c^2\).
+
+Test equation
+#+NAME: eq:einstein
+\begin{equation}
+    E = mc^2
+\end{equation}
+
+Eq [[eq:einstein]] is a famous equation.
+
+*** Greek letters
+\alpha, \beta, \gamma.
+
+*** CJK characters
++ 漢字
++ *漢字*
++ ひらがな
++ カタカナ
+
+** Subheading 2
+*** Code block and syntax highlighting
+#+begin_src python
+import numpy as np
+for i in range(3):
+    print(i)
+#+end_src
+
+#+begin_src shell
+cd ~/blog
+#+end_src
+
+#+begin_src elisp
+(add-to-list 'a-list '("abc"))
+#+end_src
+
+
+*** Quote
+#+begin_quote
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+#+end_quote
+
+*** Table
+#+CAPTION: Lorem Ipsum
+| Lorem | Ipsum |
+|       |       |
+
+*** Image
+#+CAPTION: This is Tux.
+[[../../misc/tux.png]]
+
+*** TODO "Todo" headings
+Lorem ipsum dolor sit amet
+
+*** Links
+Internal: [[* Quote][Link to quote]]
+
+External: [[../../index.org][Link to index]]

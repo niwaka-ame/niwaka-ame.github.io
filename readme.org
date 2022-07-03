@@ -2,4 +2,4 @@
 
 This is my blog built with Org Mode (and only Org Mode).
 
-Link to my blog: [[niwaka-ame.github.io]]
+Link to my blog is  [[https://niwaka-ame.github.io][here]].

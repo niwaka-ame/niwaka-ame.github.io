@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-01-01 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Syncing and Encrypting Diary/Journal in Emacs</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/"> HOME </a>
+</div><main id="content" class="content">
+<header>
+<h1 class="title">Syncing and Encrypting Diary/Journal in Emacs</h1>
+</header>
+<section id="outline-container-orgefa2da9" class="outline-2">
+<h2 id="orgefa2da9"><span class="section-number-2">1.</span> Motivation</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I&rsquo;ve long been keeping a private diary/journal with <a href="https://github.com/bastibe/org-journal">Org Journal</a> in Emacs.
+For long, I&rsquo;ve been writing on a single PC at home with no online syncing or real-time backup out of privacy concerns.
+This is inconvenient, because I&rsquo;m not always home, and unsafe, because the disk may break down.
+</p>
+
+<p>
+Fortunately, Org Journal supports automatic <a href="https://gnupg.org/">GnuPG</a> (GPG) encryption, so each Journal file will be automatically encrypted each time we save the file.
+Thus, it is safe to sync my encrypted files with Dropbox.
+In this blog post, I&rsquo;ll describe:
+</p>
+<ul class="org-ul">
+<li>how I set up GnuPG and Org Journal to enable encryption;</li>
+<li>how I migrate (archive) old journal files to this new system.</li>
+</ul>
+</div>
+</section>
+
+<section id="outline-container-orgfd9d277" class="outline-2">
+<h2 id="orgfd9d277"><span class="section-number-2">2.</span> Setting up GPG</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+GPG is a nice tool for asymmetric encryption.
+Asymmetric encryption, in short, uses a public key to encrypt the secret and a private key to decrypt the secret (in this case my diary).
+The private key must be kept <i>private</i> and <i>safe</i> &#x2014; if it is disclosed, somebody else can decrypt my secret; if it is lost, I won&rsquo;t be able to decrypt my own journal (until the era of quantum computing:-)).
+</p>
+
+<p>
+GPG should ship with most Linux distributions and Mac OS.
+Windows users will need to install <a href="https://www.gpg4win.org/">GPG4win</a>.
+The first step is to generate a GPG key pair, see Steps 1&#x2013;12 in this <a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key">Github tutorial</a>.
+</p>
+
+<p>
+I would like to edit my journal on multiple machines, and it&rsquo;s therefore necessary to export this key pair to my other machines.
+To export the public key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg --armor --export example@email.com --output pub.key
+</pre>
+</div>
+<p>
+where <code>pub.key</code> is the file name, and the email address is the recipient I entered when generating the key pair, which can be shown with command: <code>gpg -k</code>.
+To export the private key, use <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg --armor --export-secret-keys example@email.com | gpg --armor --symmetric --output mykey.sec.asc
+</pre>
+</div>
+<p>
+This will prompt for a passphrase to (symmetrically) encrypt my private key.
+</p>
+
+<p>
+After sending the keys to another machine, I import the keys.
+For the public key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg --import pub.key
+</pre>
+</div>
+<p>
+and the encrypted private key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg -d mykey.sec.asc | gpg --allow-secret-key-import --import
+</pre>
+</div>
+<p>
+and I&rsquo;ll be prompted for passphrase twice, the first one being the symmetric decryption during export, and the second one being the one I entered during key pair generation.
+</p>
+
+<p>
+The keys must be trusted after import, otherwise I&rsquo;ll be warned when using that key.
+To trust the key, type:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg --edit-key example@email.com
+</pre>
+</div>
+<p>
+and I enter an interactive prompt which looks like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg&gt;
+</pre>
+</div>
+<p>
+type <code>trust</code> and then hit <code>ENTER</code> and choose 5 (ultimate) and then type <code>quit</code>.
+That&rsquo;s it!
+</p>
+</div>
+</section>
+
+<section id="outline-container-org4986b45" class="outline-2">
+<h2 id="org4986b45"><span class="section-number-2">3.</span> Org journal settings</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Setting Org journal is simple &#x2014; just set
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">setq</span> org-journal-encrypt-journal t<span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
+<p>
+in my config file.
+It is also possible to encrypt certain entries with <a href="https://orgmode.org/manual/Org-Crypt.html">Org Crypt</a>.
+See the <a href="https://github.com/bastibe/org-journal">Org Journal</a> readme page.
+</p>
+
+<p>
+I used to keep separate journal files for each day (i.e. <code>org-journal-file-type</code> is <code>'daily</code>), but I realised that to search over older journal files with <code>org-journal-search-forever</code> is rather slow because all files must be decrypted one by one.
+Thus, now I use a single file for each year:
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">setq</span> org-journal-file-type <span style="color: #5EC4FF;">'</span><span style="color: #EBBF83;">yearly</span>
+      org-journal-file-format <span style="color: #539AFC;">"%Y.org"</span><span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
+</div>
+</section>
+
+<section id="outline-container-org58d388a" class="outline-2">
+<h2 id="org58d388a"><span class="section-number-2">4.</span> Archiving old journal files</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+So now what to do is my old, daily journal files?
+I would like them to be encrypted, synced and searchable.
+</p>
+
+<p>
+My first attempt was to encrypt them one by one with the same key and then delete the original <code>.org</code> files.
+However, this again makes it rather slow to search over all files with <code>org-journal-search-forever</code>.
+So my solution is to merge them into one big <code>.org</code> file and then encrypt it.
+This won&rsquo;t enable me to search with <code>org-journal-search-forever</code> but I can search within the buffer with <code>swiper</code>.
+</p>
+
+<p>
+The Elisp code for merging is:
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">with-current-buffer</span> <span style="color: #E27E8D;">(</span><span style="color: #E27E8D;">get-buffer-create</span> <span style="color: #539AFC;">"old-journal.org"</span><span style="color: #E27E8D;">)</span>
+  <span style="color: #E27E8D;">(</span><span style="color: #5EC4FF;">let</span> <span style="color: #8BD49C;">(</span><span style="color: #B62D65;">(</span>filelist <span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">with-temp-buffer</span>
+                    <span style="color: #E27E8D;">(</span><span style="color: #33CED8;">insert-directory</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">concat</span> <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">file-name-as-directory</span> org-journal-dir<span style="color: #B62D65;">)</span> <span style="color: #539AFC;">"*.org"</span><span style="color: #8BD49C;">)</span> nil t t<span style="color: #E27E8D;">)</span>
+                    <span style="color: #E27E8D;">(</span><span style="color: #33CED8;">split-string</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">buffer-string</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span>
+    <span style="color: #8BD49C;">(</span><span style="color: #5EC4FF;">dolist</span> <span style="color: #B62D65;">(</span>file filelist nil<span style="color: #B62D65;">)</span>
+      <span style="color: #B62D65;">(</span><span style="color: #5EC4FF;">let</span> <span style="color: #5EC4FF;">(</span><span style="color: #E27E8D;">(</span>file-string <span style="color: #8BD49C;">(</span><span style="color: #5EC4FF;">with-current-buffer</span> <span style="color: #B62D65;">(</span><span style="color: #33CED8;">find-file-noselect</span> <span style="color: #5EC4FF;">(</span><span style="color: #E27E8D;">concat</span> <span style="color: #E27E8D;">(</span><span style="color: #E27E8D;">file-name-as-directory</span> org-journal-dir<span style="color: #E27E8D;">)</span> file<span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span>
+                           <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">buffer-string</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
+        <span style="color: #5EC4FF;">(</span><span style="color: #E27E8D;">insert</span> file-string<span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span>
+  <span style="color: #41505E;">;</span><span style="color: #41505E;">(display-buffer (current-buffer))</span>
+  <span style="color: #E27E8D;">(</span><span style="color: #33CED8;">write-file</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">concat</span> <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">file-name-as-directory</span> org-journal-dir<span style="color: #B62D65;">)</span> <span style="color: #539AFC;">"old-journal.org"</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
+<p>
+in which <code>org-journal-dir</code> is the path to my journal files.
+To preview the output first, I use the <code>display-buffer</code> line and annotate the <code>write-file</code> line.
+Then I encrypt the output file with <code>gpg</code> (either in command line or with <code>epa-encrypt-file</code> in Emacs) and delete the <code>.org</code> file.
+</p>
+</div>
+</section>
+
+<section id="outline-container-orgee1cc87" class="outline-2">
+<h2 id="orgee1cc87"><span class="section-number-2">5.</span> Avoiding entering passphrase each time I open my journal</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+The last issue I encountered (on one of my machine) is that I have to enter my passpharase each time I open my journal.
+I would like it to be cached for, say, an hour.
+The way to do it is to configure the GPG Agent, which ships with GPG.
+First is to see if any config already exists:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #EBBF83;">cd</span> ~/.gnupg
+<span style="color: #EBBF83;">touch</span> gpg-agent.conf
+<span style="color: #EBBF83;">cat</span> gpg-agent.conf
+</pre>
+</div>
+<p>
+Second, modify or type in these lines in the config file:
+</p>
+<pre class="example">
+default-cache-ttl 3600
+max-cache-ttl 86400
+</pre>
+<p>
+This will allow GPG Agent to cache my passphrase for 3600 seconds (one hour).
+</p>
+
+<p>
+That&rsquo;s it! Happy new year!
+</p>
+</div>
+</section>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+see the <a href="https://www.openkeychain.org/faq/">FAQ of the Openkeychain website</a> for why.
+</p></div></div>
+
+
+</div>
+</div></main>
+<footer id="postamble" class="status">
+<div class='footer'> © Yu Huo 2022. Created 2023-01-01, Last updated 2023-01-01, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+</footer>
+</body>
+</html>

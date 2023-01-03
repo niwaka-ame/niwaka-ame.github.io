@@ -1,4 +1,4 @@
-#+title: How did I build this blog with Org Mode /only/?
+#+title: How did I build this blog with Org Mode?
 #+date: <2022-07-02 Sat>
 #+options: toc:t
 #+PROPERTY: header-args :eval never-export :results verbatim
@@ -7,30 +7,36 @@
 As a daily user of Org Mode, I want a minimalistic blogging workflow with Org Mode, without too many overheads in hacking and maintaining and with minimal knowledge of HTML.
 While it's possible to combine Org Mode with Jekyll or Hugo, it seems blogging with the built-in ~org-publish~ module to me is good enough.
 
-* Understanding how ~org-publish~ works
+* My config file
+Below, I'll only show chunks of my blog's config.
+My whole config is [[../../misc/blog.el][here]].
+I am using [[https://github.com/doomemacs/doomemacs][Doom Emacs]], so my config is actually in ~.doom.d/config.el~.
+
+* How ~org-publish~ works
 I started with this [[https://gitlab.com/pages/org-mode][example Org Mode website]] on GitLab pages.
 In this example, each post is a single ~org~ file in the base directory of the website and the job of ~publish.el~ is to call ~org-publish~, which converts the ~org~ files into HTML pages and automatically generates a sitemap (which is the index page in this example).
 
-By looking into the details of ~publish.el~, I found that the major part is the variable ~org-publish-project-alist~, which basically contains all information required to build a website, and some of its most important properties[fn:1] are:
-+ ~:base-directory~ tells ~org-publish~ where to find the ~org~ files to publish;
-+ ~:publishing-directory~ defines where the converted HTML files should go;
-+ ~:auto-sitemap~ and ~:sitemap-filename~ decide whether I want an automatically generated sitemap and where it should go.
-See [[https://orgmode.org/manual/Project-alist.html][this part of the Org Manual]] for an exhausted list of properties.
-
-[fn:1] Strictly speaking, the properties of each element (project) in ~org-publish-project-alist~, because the ~alist~ may hold more than one projects.
+By looking into the details of ~publish.el~, I found that the major part is the variable ~org-publish-project-alist~, which basically contains all information required to build a website.
+In a typical config it is set like this:
+#+begin_src elisp
+(setq org-publish-project-alist
+      (list
+       (list "post"
+             :property1 value1
+             :property2 value2
+             ; etc
+             )
+       (list "site" :components '("post"))))
+#+end_src
+I'll go through the most useful properties in the coming sections.
+See [[https://orgmode.org/manual/Project-alist.html][this part of the Org Manual]] for an exhausted list of properties if you need reference later.
 
 * Customising my blog
 I cloned the repo above and successfully built it. Yay!
 This is essentially what I want --- an index page with links to all posts, and each post as a single HTML page.
 Then, the next thing is to customise it mostly by changing property values in ~org-publish-project-alist~.
 
-** My config file
-Below, I'll only show snippets of my blog's config.
-The whole config is [[../../misc/blog.el][here]].
-I am using [[https://github.com/doomemacs/doomemacs][Doom Emacs]], so my config is actually in ~.doom.d/config.el~.
-
 ** Repo structure
-
 I want to keep the original ~org~ files, published HTML files and other files (e.g. images) inside a single repo.
 So the basic structure of my repo looks like this:
 
@@ -41,8 +47,19 @@ tree -d ~/blog -L 1
 #+RESULTS:
 : /home/yu/blog
 : ├── misc # other files (e.g. images)
-: ├── post # org files
-: └── public # html files
+: ├── post # org files (what I write)
+: └── public # html files (what people see)
+
+Accordingly, my config should look like this:
+#+begin_src elisp
+(setq org-publish-project-alist
+      (list (list "post"
+                  ;; ... other properties
+                  :base-directory "~/blog/post"
+                  :publishing-directory "~/blog/public"
+                  ;; ...
+                  )))
+#+end_src
 
 *** Tags or subfolders?
 
@@ -89,8 +106,36 @@ tree -d ~/blog -L 2
 #+end_example
 and the [[../../index.html][homepage]] shows the tree structure of my blog.
 
-** Styling
+** Auto sitemap
+Whenever I publish a new post, I want the sitemap to be automatically updated, with my name as the sitemap's title.
+This can be set by the following properties:
+#+begin_src elisp
+(setq org-publish-project-alist
+      (list (list "post"
+                  ;; ... other properties
+                  :auto-sitemap t
+                  :sitemap-filename "index.org"
+                  :sitemap-title "Yu Huo"
+                  :sitemap-format-entry #'my-format-entry
+                  ;; ...
+                  )))
+#+end_src
 
+The fourth property above is a customised format of each sitemap entry, which allows me to show the date of each post on the sitemap.
+I tried to set the ~:sitemap-file-entry-format~ property to ~"%d *%t*"~ as a simple solution but it does not seem to work, so I adapted a sitemap entry format from [[https://ravi.pro/blog/blogging-with-emacs-org-mode.html#orgac49a03][Ravi Sagar]] to a tree-style sitemap and capitalised titles.
+
+Simply add this function to config:
+#+begin_src elisp
+(defun my-format-entry (entry style project)
+  (if (file-directory-p (org-publish--expand-file-name entry project))
+      (format "%s" (capitalize (substring entry 0 -1)))
+    (format "[[file:%s][%s]] --- %s"
+            entry
+            (capitalize (org-publish-find-title entry project))
+            (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))))
+#+end_src
+
+** Styling
 By default, the styling of exported HTML pages is minimal.
 I want my blog to look more attractive and include necessary information/links at the top and bottom of the page.
 
@@ -131,36 +176,20 @@ I adapted a postamble from  [[https://ravi.pro/blog/blogging-with-emacs-org-mode
                   )))
 #+end_src
 
-*** Sitemap entry format
-The default sitemap entry doesn't show date of each post, and it doesn't work after I set the ~:sitemap-file-entry-format~ property to ~"%d *%t*"~, either.
-
-So I adapted a sitemap entry format from [[https://ravi.pro/blog/blogging-with-emacs-org-mode.html#orgac49a03][Ravi Sagar]] again.
-I modified it such that it works for tree-style sitemap and capitalises titles.
-#+begin_src elisp
-(defun my-format-entry (entry style project)
-  (if (file-directory-p (org-publish--expand-file-name entry project))
-      (format "%s" (capitalize (substring entry 0 -1)))
-    (format "[[file:%s][%s]] --- %s"
-            entry
-            (capitalize (org-publish-find-title entry project))
-            (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))))
-
-(setq org-publish-project-alist
-      (list (list "post"
-                  ;; ... other properties
-                  :sitemap-format-entry #'my-format-entry
-                  ;; ...
-                  )))
-#+end_src
 
 * Testing
+After all the settings above, I reload My Emacs configurations to include the new ~org-publish~ settings.
+Then we can start testing!
+
 ** Making a test page
 I extensively use Org Mode's [[https://orgmode.org/manual/Markup-for-Rich-Contents.html][markup for rich contents]], for example, bold, italic and embedded LaTeX.
 To see if those markups can be properly exported, I set up a [[./test.org][test page]] for markups that I use most.
 
 ** Hosting locally
-I want live preview of the outcome of various tests.
+I'd like to first locally preview the outcome.
+First, I export the files with ~M-x org-publish~, and choose ~site~, and the output HTML will go to the ~public~ folder.
 Instead of directly opening the exported HTML file, I use [[https://github.com/skeeto/emacs-web-server][simple-httpd]] to locally host the website in Emacs, as recommended by [[https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/#previewing-the-generated-site][System Crafters]].
+After installing Simple Httpd, serve the ~~/blog~ folder with ~M-x httpd-serve-directory~, and visit [[http://0.0.0.0:8080/public/]] to see the result.
 
 ** Forcing sitemap to update
 One issue that I encountered while testing is that the sitemap won't automatically update after I change my post's title and re-build.
@@ -170,14 +199,14 @@ Following this [[https://emacs.stackexchange.com/questions/44534/org-mode-sitema
 (org-publish-remove-all-timestamps)
 (org-publish "site" t)
 #+end_src
-As pointed out in the comment, this is probably a feature to speed up sitemap generation.
+This is probably a feature to speed up sitemap generation.
 
 * Hosting on Github Pages
 With my blog pretty much behaving as desired, it's time to host it somewhere and start writing!
 Again to minimise overheads, I chose to host my blog on [[https://pages.github.com/][Github Pages]].
 
 ** Dummy ~index.html~ file
-The only issue is that Github Pages requires an ~index.html~ file at the root of my repo, so following this [[https://stackoverflow.com/questions/25320356/can-i-have-my-github-pages-index-html-in-a-subfolder-of-the-repository][solution]] I created a dummy html file.
+Github Pages requires an ~index.html~ file at the root of my repo, so following this [[https://stackoverflow.com/questions/25320356/can-i-have-my-github-pages-index-html-in-a-subfolder-of-the-repository][solution]] I created a dummy html file.
 
 * Further reading
 Articles that I found when building this blog, but did not mention in the main text:

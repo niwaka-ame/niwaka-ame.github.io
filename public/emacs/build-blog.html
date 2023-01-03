@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-01-01 -->
+<!-- 2023-01-03 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>How did I build this blog with Org Mode /only/?</title>
+<title>How did I build this blog with Org Mode?</title>
 <meta name="author" content="Yu Huo" />
 <meta name="generator" content="Org Mode" />
 <link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
@@ -16,44 +16,44 @@
  <a accesskey="H" href="/"> HOME </a>
 </div><main id="content" class="content">
 <header>
-<h1 class="title">How did I build this blog with Org Mode <i>only</i>?</h1>
+<h1 class="title">How did I build this blog with Org Mode?</h1>
 </header><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org5e51764">1. Motivation</a></li>
-<li><a href="#orga61505a">2. Understanding how <code>org-publish</code> works</a></li>
-<li><a href="#orgbe05a7e">3. Customising my blog</a>
+<li><a href="#orgd35ca1c">2. My config file</a></li>
+<li><a href="#org40bf94e">3. How <code>org-publish</code> works</a></li>
+<li><a href="#orgbe05a7e">4. Customising my blog</a>
 <ul>
-<li><a href="#orgd35ca1c">3.1. My config file</a></li>
-<li><a href="#org8e321ee">3.2. Repo structure</a>
+<li><a href="#org8e321ee">4.1. Repo structure</a>
 <ul>
-<li><a href="#org8c8489f">3.2.1. Tags or subfolders?</a></li>
+<li><a href="#org8c8489f">4.1.1. Tags or subfolders?</a></li>
 </ul>
 </li>
-<li><a href="#orga06117f">3.3. Styling</a>
+<li><a href="#org273fd4b">4.2. Auto sitemap</a></li>
+<li><a href="#orga06117f">4.3. Styling</a>
 <ul>
-<li><a href="#orga1c75f5">3.3.1. CSS</a></li>
-<li><a href="#org261b3eb">3.3.2. Preamble</a></li>
-<li><a href="#orgba50227">3.3.3. Postamble</a></li>
-<li><a href="#org5c8e751">3.3.4. Sitemap entry format</a></li>
+<li><a href="#orga1c75f5">4.3.1. CSS</a></li>
+<li><a href="#org261b3eb">4.3.2. Preamble</a></li>
+<li><a href="#orgba50227">4.3.3. Postamble</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org071e303">4. Testing</a>
+<li><a href="#org071e303">5. Testing</a>
 <ul>
-<li><a href="#org964bab8">4.1. Making a test page</a></li>
-<li><a href="#org6dc29f7">4.2. Hosting locally</a></li>
-<li><a href="#org12e7635">4.3. Forcing sitemap to update</a></li>
+<li><a href="#org964bab8">5.1. Making a test page</a></li>
+<li><a href="#org6dc29f7">5.2. Hosting locally</a></li>
+<li><a href="#org12e7635">5.3. Forcing sitemap to update</a></li>
 </ul>
 </li>
-<li><a href="#orgd9d0b64">5. Hosting on Github Pages</a>
+<li><a href="#orgd9d0b64">6. Hosting on Github Pages</a>
 <ul>
-<li><a href="#orgc346df1">5.1. Dummy <code>index.html</code> file</a></li>
+<li><a href="#orgc346df1">6.1. Dummy <code>index.html</code> file</a></li>
 </ul>
 </li>
-<li><a href="#orge129577">6. Further reading</a></li>
+<li><a href="#orge129577">7. Further reading</a></li>
 </ul>
 </div>
 </nav>
@@ -68,31 +68,50 @@ While it&rsquo;s possible to combine Org Mode with Jekyll or Hugo, it seems blog
 </div>
 </section>
 
-<section id="outline-container-orga61505a" class="outline-2">
-<h2 id="orga61505a"><span class="section-number-2">2.</span> Understanding how <code>org-publish</code> works</h2>
+<section id="outline-container-orgd35ca1c" class="outline-2">
+<h2 id="orgd35ca1c"><span class="section-number-2">2.</span> My config file</h2>
 <div class="outline-text-2" id="text-2">
+<p>
+Below, I&rsquo;ll only show chunks of my blog&rsquo;s config.
+My whole config is <a href="../../misc/blog.el">here</a>.
+I am using <a href="https://github.com/doomemacs/doomemacs">Doom Emacs</a>, so my config is actually in <code>.doom.d/config.el</code>.
+</p>
+</div>
+</section>
+
+<section id="outline-container-org40bf94e" class="outline-2">
+<h2 id="org40bf94e"><span class="section-number-2">3.</span> How <code>org-publish</code> works</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 I started with this <a href="https://gitlab.com/pages/org-mode">example Org Mode website</a> on GitLab pages.
 In this example, each post is a single <code>org</code> file in the base directory of the website and the job of <code>publish.el</code> is to call <code>org-publish</code>, which converts the <code>org</code> files into HTML pages and automatically generates a sitemap (which is the index page in this example).
 </p>
 
 <p>
-By looking into the details of <code>publish.el</code>, I found that the major part is the variable <code>org-publish-project-alist</code>, which basically contains all information required to build a website, and some of its most important properties<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> are:
+By looking into the details of <code>publish.el</code>, I found that the major part is the variable <code>org-publish-project-alist</code>, which basically contains all information required to build a website.
+In a typical config it is set like this:
 </p>
-<ul class="org-ul">
-<li><code>:base-directory</code> tells <code>org-publish</code> where to find the <code>org</code> files to publish;</li>
-<li><code>:publishing-directory</code> defines where the converted HTML files should go;</li>
-<li><code>:auto-sitemap</code> and <code>:sitemap-filename</code> decide whether I want an automatically generated sitemap and where it should go.</li>
-</ul>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">setq</span> <span style="color: #718CA1;">org-publish-project-alist</span>
+      <span style="color: #E27E8D;">(</span><span style="color: #E27E8D;">list</span>
+       <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #539AFC;">"post"</span>
+             <span style="color: #5EC4FF;">:property1</span> value1
+             <span style="color: #5EC4FF;">:property2</span> value2
+             <span style="color: #41505E;">; </span><span style="color: #41505E;">etc</span>
+             <span style="color: #8BD49C;">)</span>
+       <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #539AFC;">"site"</span> <span style="color: #5EC4FF;">:components</span> <span style="color: #5EC4FF;">'</span><span style="color: #B62D65;">(</span><span style="color: #539AFC;">"post"</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
 <p>
-See <a href="https://orgmode.org/manual/Project-alist.html">this part of the Org Manual</a> for an exhausted list of properties.
+I&rsquo;ll go through the most useful properties in the coming sections.
+See <a href="https://orgmode.org/manual/Project-alist.html">this part of the Org Manual</a> for an exhausted list of properties if you need reference later.
 </p>
 </div>
 </section>
 
 <section id="outline-container-orgbe05a7e" class="outline-2">
-<h2 id="orgbe05a7e"><span class="section-number-2">3.</span> Customising my blog</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="orgbe05a7e"><span class="section-number-2">4.</span> Customising my blog</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 I cloned the repo above and successfully built it. Yay!
 This is essentially what I want &#x2014; an index page with links to all posts, and each post as a single HTML page.
@@ -100,20 +119,9 @@ Then, the next thing is to customise it mostly by changing property values in <c
 </p>
 </div>
 
-<div id="outline-container-orgd35ca1c" class="outline-3">
-<h3 id="orgd35ca1c"><span class="section-number-3">3.1.</span> My config file</h3>
-<div class="outline-text-3" id="text-3-1">
-<p>
-Below, I&rsquo;ll only show snippets of my blog&rsquo;s config.
-The whole config is <a href="../../misc/blog.el">here</a>.
-I am using <a href="https://github.com/doomemacs/doomemacs">Doom Emacs</a>, so my config is actually in <code>.doom.d/config.el</code>.
-</p>
-</div>
-</div>
-
 <div id="outline-container-org8e321ee" class="outline-3">
-<h3 id="org8e321ee"><span class="section-number-3">3.2.</span> Repo structure</h3>
-<div class="outline-text-3" id="text-3-2">
+<h3 id="org8e321ee"><span class="section-number-3">4.1.</span> Repo structure</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 I want to keep the original <code>org</code> files, published HTML files and other files (e.g. images) inside a single repo.
 So the basic structure of my repo looks like this:
@@ -122,14 +130,29 @@ So the basic structure of my repo looks like this:
 <pre class="example">
 /home/yu/blog
 ├── misc # other files (e.g. images)
-├── post # org files
-└── public # html files
+├── post # org files (what I write)
+└── public # html files (what people see)
 </pre>
+
+
+<p>
+Accordingly, my config should look like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">setq</span> <span style="color: #718CA1;">org-publish-project-alist</span>
+      <span style="color: #E27E8D;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #539AFC;">"post"</span>
+                  <span style="color: #41505E;">;; </span><span style="color: #41505E;">... other properties</span>
+                  <span style="color: #5EC4FF;">:base-directory</span> <span style="color: #539AFC;">"~/blog/post"</span>
+                  <span style="color: #5EC4FF;">:publishing-directory</span> <span style="color: #539AFC;">"~/blog/public"</span>
+                  <span style="color: #41505E;">;; </span><span style="color: #41505E;">...</span>
+                  <span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
 </div>
 
 <div id="outline-container-org8c8489f" class="outline-4">
-<h4 id="org8c8489f"><span class="section-number-4">3.2.1.</span> Tags or subfolders?</h4>
-<div class="outline-text-4" id="text-3-2-1">
+<h4 id="org8c8489f"><span class="section-number-4">4.1.1.</span> Tags or subfolders?</h4>
+<div class="outline-text-4" id="text-4-1-1">
 <p>
 Ideally, I&rsquo;d like my blog to support a tagging system, so each post can be assigned multiple tags, and visitors can view contents by various tags.
 This is seen in <a href="https://alhassy.github.io/AlBasmala.html">this example</a>, but it&rsquo;s not simple.
@@ -180,9 +203,50 @@ and the <a href="../../index.html">homepage</a> shows the tree structure of my b
 </div>
 </div>
 
+<div id="outline-container-org273fd4b" class="outline-3">
+<h3 id="org273fd4b"><span class="section-number-3">4.2.</span> Auto sitemap</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Whenever I publish a new post, I want the sitemap to be automatically updated, with my name as the sitemap&rsquo;s title.
+This can be set by the following properties:
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">setq</span> <span style="color: #718CA1;">org-publish-project-alist</span>
+      <span style="color: #E27E8D;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #539AFC;">"post"</span>
+                  <span style="color: #41505E;">;; </span><span style="color: #41505E;">... other properties</span>
+                  <span style="color: #5EC4FF;">:auto-sitemap</span> t
+                  <span style="color: #5EC4FF;">:sitemap-filename</span> <span style="color: #539AFC;">"index.org"</span>
+                  <span style="color: #5EC4FF;">:sitemap-title</span> <span style="color: #539AFC;">"Yu Huo"</span>
+                  <span style="color: #5EC4FF;">:sitemap-format-entry</span> <span style="color: #5EC4FF;">#'</span><span style="color: #EBBF83;">my-format-entry</span>
+                  <span style="color: #41505E;">;; </span><span style="color: #41505E;">...</span>
+                  <span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
+
+<p>
+The fourth property above is a customised format of each sitemap entry, which allows me to show the date of each post on the sitemap.
+I tried to set the <code>:sitemap-file-entry-format</code> property to <code>"%d *%t*"</code> as a simple solution but it does not seem to work, so I adapted a sitemap entry format from <a href="https://ravi.pro/blog/blogging-with-emacs-org-mode.html#orgac49a03">Ravi Sagar</a> to a tree-style sitemap and capitalised titles.
+</p>
+
+<p>
+Simply add this function to config:
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">defun</span> <span style="color: #33CED8;">my-format-entry</span> <span style="color: #E27E8D;">(</span>entry style project<span style="color: #E27E8D;">)</span>
+  <span style="color: #E27E8D;">(</span><span style="color: #5EC4FF;">if</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">file-directory-p</span> <span style="color: #B62D65;">(</span><span style="color: #33CED8;">org-publish--expand-file-name</span> entry project<span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span>
+      <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">format</span> <span style="color: #539AFC;">"%s"</span> <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">capitalize</span> <span style="color: #5EC4FF;">(</span><span style="color: #E27E8D;">substring</span> entry <span style="color: #E27E8D; font-weight: bold;">0</span> <span style="color: #E27E8D; font-weight: bold;">-1</span><span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span>
+    <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">format</span> <span style="color: #539AFC;">"[[file:%s][%s]] --- %s"</span>
+            entry
+            <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">capitalize</span> <span style="color: #5EC4FF;">(</span><span style="color: #33CED8;">org-publish-find-title</span> entry project<span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span>
+            <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">format-time-string</span> <span style="color: #539AFC;">"%Y-%m-%d"</span> <span style="color: #5EC4FF;">(</span><span style="color: #33CED8;">org-publish-find-date</span> entry project<span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orga06117f" class="outline-3">
-<h3 id="orga06117f"><span class="section-number-3">3.3.</span> Styling</h3>
-<div class="outline-text-3" id="text-3-3">
+<h3 id="orga06117f"><span class="section-number-3">4.3.</span> Styling</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 By default, the styling of exported HTML pages is minimal.
 I want my blog to look more attractive and include necessary information/links at the top and bottom of the page.
@@ -190,8 +254,8 @@ I want my blog to look more attractive and include necessary information/links a
 </div>
 
 <div id="outline-container-orga1c75f5" class="outline-4">
-<h4 id="orga1c75f5"><span class="section-number-4">3.3.1.</span> CSS</h4>
-<div class="outline-text-4" id="text-3-3-1">
+<h4 id="orga1c75f5"><span class="section-number-4">4.3.1.</span> CSS</h4>
+<div class="outline-text-4" id="text-4-3-1">
 <p>
 CSS controls the looking of the website, whilst being agnostic of its content.
 I found a minimal CSS setting, <a href="https://simplecss.org/">Simple.css</a> from System Crafters&rsquo; <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/#improving-the-page-styling">post</a> (which is amazing).
@@ -209,8 +273,8 @@ Another CSS setting that is worth mentioning is <a href="http://taopeng.me/org-n
 </div>
 
 <div id="outline-container-org261b3eb" class="outline-4">
-<h4 id="org261b3eb"><span class="section-number-4">3.3.2.</span> Preamble</h4>
-<div class="outline-text-4" id="text-3-3-2">
+<h4 id="org261b3eb"><span class="section-number-4">4.3.2.</span> Preamble</h4>
+<div class="outline-text-4" id="text-4-3-2">
 <p>
 I want to keep preambles as simple as possible &#x2014; that is, just a link back to my homepage:
 </p>
@@ -231,8 +295,8 @@ For some reason, the &ldquo;UP&rdquo; and &ldquo;HOME&rdquo; links always appear
 </div>
 
 <div id="outline-container-orgba50227" class="outline-4">
-<h4 id="orgba50227"><span class="section-number-4">3.3.3.</span> Postamble</h4>
-<div class="outline-text-4" id="text-3-3-3">
+<h4 id="orgba50227"><span class="section-number-4">4.3.3.</span> Postamble</h4>
+<div class="outline-text-4" id="text-4-3-3">
 <p>
 I adapted a postamble from  <a href="https://ravi.pro/blog/blogging-with-emacs-org-mode.html#orgac49a03">Ravi Sagar</a>:
 </p>
@@ -250,47 +314,22 @@ I adapted a postamble from  <a href="https://ravi.pro/blog/blogging-with-emacs-o
 </div>
 </div>
 </div>
-
-<div id="outline-container-org5c8e751" class="outline-4">
-<h4 id="org5c8e751"><span class="section-number-4">3.3.4.</span> Sitemap entry format</h4>
-<div class="outline-text-4" id="text-3-3-4">
-<p>
-The default sitemap entry doesn&rsquo;t show date of each post, and it doesn&rsquo;t work after I set the <code>:sitemap-file-entry-format</code> property to <code>"%d *%t*"</code>, either.
-</p>
-
-<p>
-So I adapted a sitemap entry format from <a href="https://ravi.pro/blog/blogging-with-emacs-org-mode.html#orgac49a03">Ravi Sagar</a> again.
-I modified it such that it works for tree-style sitemap and capitalises titles.
-</p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">defun</span> <span style="color: #33CED8;">my-format-entry</span> <span style="color: #E27E8D;">(</span>entry style project<span style="color: #E27E8D;">)</span>
-  <span style="color: #E27E8D;">(</span><span style="color: #5EC4FF;">if</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">file-directory-p</span> <span style="color: #B62D65;">(</span><span style="color: #33CED8;">org-publish--expand-file-name</span> entry project<span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span>
-      <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">format</span> <span style="color: #539AFC;">"%s"</span> <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">capitalize</span> <span style="color: #5EC4FF;">(</span><span style="color: #E27E8D;">substring</span> entry <span style="color: #E27E8D; font-weight: bold;">0</span> <span style="color: #E27E8D; font-weight: bold;">-1</span><span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span>
-    <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">format</span> <span style="color: #539AFC;">"[[file:%s][%s]] --- %s"</span>
-            entry
-            <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">capitalize</span> <span style="color: #5EC4FF;">(</span><span style="color: #33CED8;">org-publish-find-title</span> entry project<span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span>
-            <span style="color: #B62D65;">(</span><span style="color: #E27E8D;">format-time-string</span> <span style="color: #539AFC;">"%Y-%m-%d"</span> <span style="color: #5EC4FF;">(</span><span style="color: #33CED8;">org-publish-find-date</span> entry project<span style="color: #5EC4FF;">)</span><span style="color: #B62D65;">)</span><span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
-
-<span style="color: #5EC4FF;">(</span><span style="color: #5EC4FF;">setq</span> <span style="color: #718CA1;">org-publish-project-alist</span>
-      <span style="color: #E27E8D;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #8BD49C;">(</span><span style="color: #E27E8D;">list</span> <span style="color: #539AFC;">"post"</span>
-                  <span style="color: #41505E;">;; </span><span style="color: #41505E;">... other properties</span>
-                  <span style="color: #5EC4FF;">:sitemap-format-entry</span> <span style="color: #5EC4FF;">#'</span><span style="color: #EBBF83;">my-format-entry</span>
-                  <span style="color: #41505E;">;; </span><span style="color: #41505E;">...</span>
-                  <span style="color: #8BD49C;">)</span><span style="color: #E27E8D;">)</span><span style="color: #5EC4FF;">)</span>
-</pre>
-</div>
-</div>
-</div>
 </div>
 </section>
 
+
 <section id="outline-container-org071e303" class="outline-2">
-<h2 id="org071e303"><span class="section-number-2">4.</span> Testing</h2>
-<div class="outline-text-2" id="text-4">
+<h2 id="org071e303"><span class="section-number-2">5.</span> Testing</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+After all the settings above, I reload My Emacs configurations to include the new <code>org-publish</code> settings.
+Then we can start testing!
+</p>
 </div>
+
 <div id="outline-container-org964bab8" class="outline-3">
-<h3 id="org964bab8"><span class="section-number-3">4.1.</span> Making a test page</h3>
-<div class="outline-text-3" id="text-4-1">
+<h3 id="org964bab8"><span class="section-number-3">5.1.</span> Making a test page</h3>
+<div class="outline-text-3" id="text-5-1">
 <p>
 I extensively use Org Mode&rsquo;s <a href="https://orgmode.org/manual/Markup-for-Rich-Contents.html">markup for rich contents</a>, for example, bold, italic and embedded LaTeX.
 To see if those markups can be properly exported, I set up a <a href="./test.html">test page</a> for markups that I use most.
@@ -299,18 +338,20 @@ To see if those markups can be properly exported, I set up a <a href="./test.htm
 </div>
 
 <div id="outline-container-org6dc29f7" class="outline-3">
-<h3 id="org6dc29f7"><span class="section-number-3">4.2.</span> Hosting locally</h3>
-<div class="outline-text-3" id="text-4-2">
+<h3 id="org6dc29f7"><span class="section-number-3">5.2.</span> Hosting locally</h3>
+<div class="outline-text-3" id="text-5-2">
 <p>
-I want live preview of the outcome of various tests.
+I&rsquo;d like to first locally preview the outcome.
+First, I export the files with <code>M-x org-publish</code>, and choose <code>site</code>, and the output HTML will go to the <code>public</code> folder.
 Instead of directly opening the exported HTML file, I use <a href="https://github.com/skeeto/emacs-web-server">simple-httpd</a> to locally host the website in Emacs, as recommended by <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/#previewing-the-generated-site">System Crafters</a>.
+After installing Simple Httpd, serve the <code>~/blog</code> folder with <code>M-x httpd-serve-directory</code>, and visit <a href="http://0.0.0.0:8080/public/">http://0.0.0.0:8080/public/</a> to see the result.
 </p>
 </div>
 </div>
 
 <div id="outline-container-org12e7635" class="outline-3">
-<h3 id="org12e7635"><span class="section-number-3">4.3.</span> Forcing sitemap to update</h3>
-<div class="outline-text-3" id="text-4-3">
+<h3 id="org12e7635"><span class="section-number-3">5.3.</span> Forcing sitemap to update</h3>
+<div class="outline-text-3" id="text-5-3">
 <p>
 One issue that I encountered while testing is that the sitemap won&rsquo;t automatically update after I change my post&rsquo;s title and re-build.
 I realised that it&rsquo;s an issue with <code>org-publish</code> caching the post&rsquo;s title in <code>org-publish-cache</code>.
@@ -322,15 +363,15 @@ Following this <a href="https://emacs.stackexchange.com/questions/44534/org-mode
 </pre>
 </div>
 <p>
-As pointed out in the comment, this is probably a feature to speed up sitemap generation.
+This is probably a feature to speed up sitemap generation.
 </p>
 </div>
 </div>
 </section>
 
 <section id="outline-container-orgd9d0b64" class="outline-2">
-<h2 id="orgd9d0b64"><span class="section-number-2">5.</span> Hosting on Github Pages</h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="orgd9d0b64"><span class="section-number-2">6.</span> Hosting on Github Pages</h2>
+<div class="outline-text-2" id="text-6">
 <p>
 With my blog pretty much behaving as desired, it&rsquo;s time to host it somewhere and start writing!
 Again to minimise overheads, I chose to host my blog on <a href="https://pages.github.com/">Github Pages</a>.
@@ -338,18 +379,18 @@ Again to minimise overheads, I chose to host my blog on <a href="https://pages.g
 </div>
 
 <div id="outline-container-orgc346df1" class="outline-3">
-<h3 id="orgc346df1"><span class="section-number-3">5.1.</span> Dummy <code>index.html</code> file</h3>
-<div class="outline-text-3" id="text-5-1">
+<h3 id="orgc346df1"><span class="section-number-3">6.1.</span> Dummy <code>index.html</code> file</h3>
+<div class="outline-text-3" id="text-6-1">
 <p>
-The only issue is that Github Pages requires an <code>index.html</code> file at the root of my repo, so following this <a href="https://stackoverflow.com/questions/25320356/can-i-have-my-github-pages-index-html-in-a-subfolder-of-the-repository">solution</a> I created a dummy html file.
+Github Pages requires an <code>index.html</code> file at the root of my repo, so following this <a href="https://stackoverflow.com/questions/25320356/can-i-have-my-github-pages-index-html-in-a-subfolder-of-the-repository">solution</a> I created a dummy html file.
 </p>
 </div>
 </div>
 </section>
 
 <section id="outline-container-orge129577" class="outline-2">
-<h2 id="orge129577"><span class="section-number-2">6.</span> Further reading</h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="orge129577"><span class="section-number-2">7.</span> Further reading</h2>
+<div class="outline-text-2" id="text-7">
 <p>
 Articles that I found when building this blog, but did not mention in the main text:
 </p>
@@ -360,19 +401,9 @@ Articles that I found when building this blog, but did not mention in the main t
 </ul>
 </div>
 </section>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-Strictly speaking, the properties of each element (project) in <code>org-publish-project-alist</code>, because the <code>alist</code> may hold more than one projects.
-</p></div></div>
-
-
-</div>
-</div></main>
+</main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022. Created 2022-07-02, Last updated 2023-01-01, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022. Created 2022-07-02, Last updated 2023-01-03, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

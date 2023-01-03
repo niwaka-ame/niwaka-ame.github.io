@@ -1,8 +1,8 @@
 #+TITLE: Yu Huo
 
 - Emacs
-  - [[file:emacs/synced-encrypted-journal.org][Syncing And Encrypting Diary/Journal In Emacs]] --- 2023-01-01
-  - [[file:emacs/build-blog.org][How Did I Build This Blog With Org Mode /Only/?]] --- 2022-07-02
+  - [[file:emacs/synced-encrypted-journal.org][Automatically Encrypt My Org Journal Diary While Syncing]] --- 2023-01-01
+  - [[file:emacs/build-blog.org][How Did I Build This Blog With Org Mode?]] --- 2022-07-02
   - [[file:emacs/test.org][Test Of Blog Post Elements]] --- 2022-06-27
 - About
   - [[file:about/me.org][Me]] --- 2023-01-01

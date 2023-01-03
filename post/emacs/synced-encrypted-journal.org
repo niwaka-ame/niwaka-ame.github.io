@@ -1,4 +1,4 @@
-#+title: Syncing and Encrypting Diary/Journal in Emacs
+#+title: Automatically Encrypt my Org Journal Diary while Syncing
 #+date: <2023-01-01 Sun>
 #+options: toc:nil
 #+PROPERTY: header-args :eval never-export :results verbatim

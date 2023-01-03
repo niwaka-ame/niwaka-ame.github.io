@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-01-01 -->
+<!-- 2023-01-03 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Syncing and Encrypting Diary/Journal in Emacs</title>
+<title>Automatically Encrypt my Org Journal Diary while Syncing</title>
 <meta name="author" content="Yu Huo" />
 <meta name="generator" content="Org Mode" />
 <link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
@@ -16,10 +16,10 @@
  <a accesskey="H" href="/"> HOME </a>
 </div><main id="content" class="content">
 <header>
-<h1 class="title">Syncing and Encrypting Diary/Journal in Emacs</h1>
+<h1 class="title">Automatically Encrypt my Org Journal Diary while Syncing</h1>
 </header>
-<section id="outline-container-orgefa2da9" class="outline-2">
-<h2 id="orgefa2da9"><span class="section-number-2">1.</span> Motivation</h2>
+<section id="outline-container-org93bebe1" class="outline-2">
+<h2 id="org93bebe1"><span class="section-number-2">1.</span> Motivation</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 I&rsquo;ve long been keeping a private diary/journal with <a href="https://github.com/bastibe/org-journal">Org Journal</a> in Emacs.
@@ -39,8 +39,8 @@ In this blog post, I&rsquo;ll describe:
 </div>
 </section>
 
-<section id="outline-container-orgfd9d277" class="outline-2">
-<h2 id="orgfd9d277"><span class="section-number-2">2.</span> Setting up GPG</h2>
+<section id="outline-container-org1078a25" class="outline-2">
+<h2 id="org1078a25"><span class="section-number-2">2.</span> Setting up GPG</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 GPG is a nice tool for asymmetric encryption.
@@ -115,8 +115,8 @@ That&rsquo;s it!
 </div>
 </section>
 
-<section id="outline-container-org4986b45" class="outline-2">
-<h2 id="org4986b45"><span class="section-number-2">3.</span> Org journal settings</h2>
+<section id="outline-container-org6f40858" class="outline-2">
+<h2 id="org6f40858"><span class="section-number-2">3.</span> Org journal settings</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Setting Org journal is simple &#x2014; just set
@@ -143,8 +143,8 @@ Thus, now I use a single file for each year:
 </div>
 </section>
 
-<section id="outline-container-org58d388a" class="outline-2">
-<h2 id="org58d388a"><span class="section-number-2">4.</span> Archiving old journal files</h2>
+<section id="outline-container-org9b5d98c" class="outline-2">
+<h2 id="org9b5d98c"><span class="section-number-2">4.</span> Archiving old journal files</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 So now what to do is my old, daily journal files?
@@ -182,8 +182,8 @@ Then I encrypt the output file with <code>gpg</code> (either in command line or 
 </div>
 </section>
 
-<section id="outline-container-orgee1cc87" class="outline-2">
-<h2 id="orgee1cc87"><span class="section-number-2">5.</span> Avoiding entering passphrase each time I open my journal</h2>
+<section id="outline-container-org70762e2" class="outline-2">
+<h2 id="org70762e2"><span class="section-number-2">5.</span> Avoiding entering passphrase each time I open my journal</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 The last issue I encountered (on one of my machine) is that I have to enter my passpharase each time I open my journal.
@@ -225,7 +225,7 @@ see the <a href="https://www.openkeychain.org/faq/">FAQ of the Openkeychain webs
 </div>
 </div></main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022. Created 2023-01-01, Last updated 2023-01-01, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022. Created 2023-01-01, Last updated 2023-01-03, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

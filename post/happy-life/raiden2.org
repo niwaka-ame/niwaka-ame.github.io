@@ -1,4 +1,4 @@
-#+title: Getting Raiden II working on Retropie
+#+title: Getting Raiden 2 working on Retropie
 #+date: <2023-01-20 Fri>
 #+options: toc:nil
 #+PROPERTY: header-args :eval never-export :results verbatim

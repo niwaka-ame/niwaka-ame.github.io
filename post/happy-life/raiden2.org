@@ -1,0 +1,14 @@
+#+title: Getting Raiden II working on Retropie
+#+date: <2023-01-20 Fri>
+#+options: toc:nil
+#+PROPERTY: header-args :eval never-export :results verbatim
+
+I used to be a big fan of [[https://en.wikipedia.org/wiki/Raiden_(video_game)][Raiden]] and was able to get Raiden II working on my Retropie during the pandemic.
+Today, after several some weeks of hard work, I feel like playing this classic again.
+But I forgot which ROM and emulator I used before.
+Tonight after some trial and error I find this [[https://www.retrostic.com/pt/roms/mame/raiden-ii-40996][ROM]] (Raiden II, US, Set 1) and it runs on the ~lr-fbneo~ emulator on Retropie.
+The only thing I need to do is to copy this ROM to this directory
+#+begin_src
+~/Retropie/roms/fba
+#+end_src
+and the game should work out of the box!

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-01-03 -->
+<!-- 2023-01-20 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>How did I build this blog with Org Mode?</title>
@@ -21,45 +21,45 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgeb5d995">1. Motivation</a></li>
-<li><a href="#orge1116e5">2. My config file</a></li>
-<li><a href="#orgd633dc7">3. How <code>org-publish</code> works</a></li>
-<li><a href="#org030a4ce">4. Customising my blog</a>
+<li><a href="#org8771d13">1. Motivation</a></li>
+<li><a href="#org438c3cc">2. My config file</a></li>
+<li><a href="#org3147383">3. How <code>org-publish</code> works</a></li>
+<li><a href="#org5359c05">4. Customising my blog</a>
 <ul>
-<li><a href="#org359a039">4.1. Repo structure</a>
+<li><a href="#org618b731">4.1. Repo structure</a>
 <ul>
-<li><a href="#org00c549a">4.1.1. Tags or subfolders?</a></li>
+<li><a href="#org10ac245">4.1.1. Tags or subfolders?</a></li>
 </ul>
 </li>
-<li><a href="#orgf75c0b0">4.2. Auto sitemap</a></li>
-<li><a href="#orgea48cb0">4.3. Styling</a>
+<li><a href="#orgaa83318">4.2. Auto sitemap</a></li>
+<li><a href="#org103fbca">4.3. Styling</a>
 <ul>
-<li><a href="#orgd91b1b7">4.3.1. CSS</a></li>
-<li><a href="#orgc9e6f9e">4.3.2. Preamble</a></li>
-<li><a href="#orgf01974e">4.3.3. Postamble</a></li>
+<li><a href="#org4f26e29">4.3.1. CSS</a></li>
+<li><a href="#org58726f5">4.3.2. Preamble</a></li>
+<li><a href="#org0834a5f">4.3.3. Postamble</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org0cc9856">5. Testing</a>
+<li><a href="#org61c9641">5. Testing</a>
 <ul>
-<li><a href="#org58a4650">5.1. Making a test page</a></li>
-<li><a href="#org0d7210a">5.2. Hosting locally</a></li>
-<li><a href="#orgd027801">5.3. Forcing sitemap to update</a></li>
+<li><a href="#org918f70f">5.1. Making a test page</a></li>
+<li><a href="#org903d641">5.2. Hosting locally</a></li>
+<li><a href="#org3f7ef89">5.3. Forcing sitemap to update</a></li>
 </ul>
 </li>
-<li><a href="#org45c9c01">6. Hosting on Github Pages</a>
+<li><a href="#org4a26c4c">6. Hosting on Github Pages</a>
 <ul>
-<li><a href="#org3ce1c99">6.1. Dummy <code>index.html</code> file</a></li>
+<li><a href="#org4084939">6.1. Dummy <code>index.html</code> file</a></li>
 </ul>
 </li>
-<li><a href="#org8aa07c0">7. Further reading</a></li>
+<li><a href="#org33bf166">7. Further reading</a></li>
 </ul>
 </div>
 </nav>
 
-<section id="outline-container-orgeb5d995" class="outline-2">
-<h2 id="orgeb5d995"><span class="section-number-2">1.</span> Motivation</h2>
+<section id="outline-container-org8771d13" class="outline-2">
+<h2 id="org8771d13"><span class="section-number-2">1.</span> Motivation</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 As a daily user of Org Mode, I want a minimalistic blogging workflow with Org Mode, without too many overheads in hacking and maintaining and with minimal knowledge of HTML.
@@ -68,8 +68,8 @@ While it&rsquo;s possible to combine Org Mode with Jekyll or Hugo, it seems blog
 </div>
 </section>
 
-<section id="outline-container-orge1116e5" class="outline-2">
-<h2 id="orge1116e5"><span class="section-number-2">2.</span> My config file</h2>
+<section id="outline-container-org438c3cc" class="outline-2">
+<h2 id="org438c3cc"><span class="section-number-2">2.</span> My config file</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Below, I&rsquo;ll only show chunks of my blog&rsquo;s config.
@@ -79,8 +79,8 @@ I am using <a href="https://github.com/doomemacs/doomemacs">Doom Emacs</a>, so m
 </div>
 </section>
 
-<section id="outline-container-orgd633dc7" class="outline-2">
-<h2 id="orgd633dc7"><span class="section-number-2">3.</span> How <code>org-publish</code> works</h2>
+<section id="outline-container-org3147383" class="outline-2">
+<h2 id="org3147383"><span class="section-number-2">3.</span> How <code>org-publish</code> works</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 I started with this <a href="https://gitlab.com/pages/org-mode">example Org Mode website</a> on GitLab pages.
@@ -109,8 +109,8 @@ See <a href="https://orgmode.org/manual/Project-alist.html">this part of the Org
 </div>
 </section>
 
-<section id="outline-container-org030a4ce" class="outline-2">
-<h2 id="org030a4ce"><span class="section-number-2">4.</span> Customising my blog</h2>
+<section id="outline-container-org5359c05" class="outline-2">
+<h2 id="org5359c05"><span class="section-number-2">4.</span> Customising my blog</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 I cloned the repo above and successfully built it. Yay!
@@ -119,8 +119,8 @@ Then, the next thing is to customise it mostly by changing property values in <c
 </p>
 </div>
 
-<div id="outline-container-org359a039" class="outline-3">
-<h3 id="org359a039"><span class="section-number-3">4.1.</span> Repo structure</h3>
+<div id="outline-container-org618b731" class="outline-3">
+<h3 id="org618b731"><span class="section-number-3">4.1.</span> Repo structure</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 I want to keep the original <code>org</code> files, published HTML files and other files (e.g. images) inside a single repo.
@@ -150,8 +150,8 @@ Accordingly, my config should look like this:
 </div>
 </div>
 
-<div id="outline-container-org00c549a" class="outline-4">
-<h4 id="org00c549a"><span class="section-number-4">4.1.1.</span> Tags or subfolders?</h4>
+<div id="outline-container-org10ac245" class="outline-4">
+<h4 id="org10ac245"><span class="section-number-4">4.1.1.</span> Tags or subfolders?</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 Ideally, I&rsquo;d like my blog to support a tagging system, so each post can be assigned multiple tags, and visitors can view contents by various tags.
@@ -186,7 +186,7 @@ Accordingly, I have the following settings:
 <p>
 such that the <code>public</code> folder mirrors the structure of the <code>post</code> folder:
 </p>
-<pre class="example" id="org0faf659">
+<pre class="example" id="orgd017e9f">
 /home/yu/blog
 ├── misc
 ├── post
@@ -203,8 +203,8 @@ and the <a href="../../index.html">homepage</a> shows the tree structure of my b
 </div>
 </div>
 
-<div id="outline-container-orgf75c0b0" class="outline-3">
-<h3 id="orgf75c0b0"><span class="section-number-3">4.2.</span> Auto sitemap</h3>
+<div id="outline-container-orgaa83318" class="outline-3">
+<h3 id="orgaa83318"><span class="section-number-3">4.2.</span> Auto sitemap</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Whenever I publish a new post, I want the sitemap to be automatically updated, with my name as the sitemap&rsquo;s title.
@@ -244,8 +244,8 @@ Simply add this function to config:
 </div>
 </div>
 
-<div id="outline-container-orgea48cb0" class="outline-3">
-<h3 id="orgea48cb0"><span class="section-number-3">4.3.</span> Styling</h3>
+<div id="outline-container-org103fbca" class="outline-3">
+<h3 id="org103fbca"><span class="section-number-3">4.3.</span> Styling</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 By default, the styling of exported HTML pages is minimal.
@@ -253,8 +253,8 @@ I want my blog to look more attractive and include necessary information/links a
 </p>
 </div>
 
-<div id="outline-container-orgd91b1b7" class="outline-4">
-<h4 id="orgd91b1b7"><span class="section-number-4">4.3.1.</span> CSS</h4>
+<div id="outline-container-org4f26e29" class="outline-4">
+<h4 id="org4f26e29"><span class="section-number-4">4.3.1.</span> CSS</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 CSS controls the looking of the website, whilst being agnostic of its content.
@@ -272,8 +272,8 @@ Another CSS setting that is worth mentioning is <a href="http://taopeng.me/org-n
 </div>
 </div>
 
-<div id="outline-container-orgc9e6f9e" class="outline-4">
-<h4 id="orgc9e6f9e"><span class="section-number-4">4.3.2.</span> Preamble</h4>
+<div id="outline-container-org58726f5" class="outline-4">
+<h4 id="org58726f5"><span class="section-number-4">4.3.2.</span> Preamble</h4>
 <div class="outline-text-4" id="text-4-3-2">
 <p>
 I want to keep preambles as simple as possible &#x2014; that is, just a link back to my homepage:
@@ -294,8 +294,8 @@ For some reason, the &ldquo;UP&rdquo; and &ldquo;HOME&rdquo; links always appear
 </div>
 </div>
 
-<div id="outline-container-orgf01974e" class="outline-4">
-<h4 id="orgf01974e"><span class="section-number-4">4.3.3.</span> Postamble</h4>
+<div id="outline-container-org0834a5f" class="outline-4">
+<h4 id="org0834a5f"><span class="section-number-4">4.3.3.</span> Postamble</h4>
 <div class="outline-text-4" id="text-4-3-3">
 <p>
 I adapted a postamble from  <a href="https://ravi.pro/blog/blogging-with-emacs-org-mode.html#orgac49a03">Ravi Sagar</a>:
@@ -318,8 +318,8 @@ I adapted a postamble from  <a href="https://ravi.pro/blog/blogging-with-emacs-o
 </section>
 
 
-<section id="outline-container-org0cc9856" class="outline-2">
-<h2 id="org0cc9856"><span class="section-number-2">5.</span> Testing</h2>
+<section id="outline-container-org61c9641" class="outline-2">
+<h2 id="org61c9641"><span class="section-number-2">5.</span> Testing</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 After all the settings above, I reload My Emacs configurations to include the new <code>org-publish</code> settings.
@@ -327,8 +327,8 @@ Then we can start testing!
 </p>
 </div>
 
-<div id="outline-container-org58a4650" class="outline-3">
-<h3 id="org58a4650"><span class="section-number-3">5.1.</span> Making a test page</h3>
+<div id="outline-container-org918f70f" class="outline-3">
+<h3 id="org918f70f"><span class="section-number-3">5.1.</span> Making a test page</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 I extensively use Org Mode&rsquo;s <a href="https://orgmode.org/manual/Markup-for-Rich-Contents.html">markup for rich contents</a>, for example, bold, italic and embedded LaTeX.
@@ -337,8 +337,8 @@ To see if those markups can be properly exported, I set up a <a href="./test.htm
 </div>
 </div>
 
-<div id="outline-container-org0d7210a" class="outline-3">
-<h3 id="org0d7210a"><span class="section-number-3">5.2.</span> Hosting locally</h3>
+<div id="outline-container-org903d641" class="outline-3">
+<h3 id="org903d641"><span class="section-number-3">5.2.</span> Hosting locally</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 I&rsquo;d like to first locally preview the outcome.
@@ -349,8 +349,8 @@ After installing Simple Httpd, serve the <code>~/blog</code> folder with <code>M
 </div>
 </div>
 
-<div id="outline-container-orgd027801" class="outline-3">
-<h3 id="orgd027801"><span class="section-number-3">5.3.</span> Forcing sitemap to update</h3>
+<div id="outline-container-org3f7ef89" class="outline-3">
+<h3 id="org3f7ef89"><span class="section-number-3">5.3.</span> Forcing sitemap to update</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 One issue that I encountered while testing is that the sitemap won&rsquo;t automatically update after I change my post&rsquo;s title and re-build.
@@ -369,8 +369,8 @@ This is probably a feature to speed up sitemap generation.
 </div>
 </section>
 
-<section id="outline-container-org45c9c01" class="outline-2">
-<h2 id="org45c9c01"><span class="section-number-2">6.</span> Hosting on Github Pages</h2>
+<section id="outline-container-org4a26c4c" class="outline-2">
+<h2 id="org4a26c4c"><span class="section-number-2">6.</span> Hosting on Github Pages</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 With my blog pretty much behaving as desired, it&rsquo;s time to host it somewhere and start writing!
@@ -378,8 +378,8 @@ Again to minimise overheads, I chose to host my blog on <a href="https://pages.g
 </p>
 </div>
 
-<div id="outline-container-org3ce1c99" class="outline-3">
-<h3 id="org3ce1c99"><span class="section-number-3">6.1.</span> Dummy <code>index.html</code> file</h3>
+<div id="outline-container-org4084939" class="outline-3">
+<h3 id="org4084939"><span class="section-number-3">6.1.</span> Dummy <code>index.html</code> file</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Github Pages requires an <code>index.html</code> file at the root of my repo, so following this <a href="https://stackoverflow.com/questions/25320356/can-i-have-my-github-pages-index-html-in-a-subfolder-of-the-repository">solution</a> I created a dummy html file.
@@ -388,8 +388,8 @@ Github Pages requires an <code>index.html</code> file at the root of my repo, so
 </div>
 </section>
 
-<section id="outline-container-org8aa07c0" class="outline-2">
-<h2 id="org8aa07c0"><span class="section-number-2">7.</span> Further reading</h2>
+<section id="outline-container-org33bf166" class="outline-2">
+<h2 id="org33bf166"><span class="section-number-2">7.</span> Further reading</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Articles that I found when building this blog, but did not mention in the main text:

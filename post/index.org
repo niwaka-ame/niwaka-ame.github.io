@@ -1,7 +1,7 @@
 #+TITLE: Yu Huo
 
 - Happy-Life
-  - [[file:happy-life/raiden2.org][Getting Raiden Ii Working On Retropie]] --- 2023-01-20
+  - [[file:happy-life/raiden2.org][Getting Raiden 2 Working On Retropie]] --- 2023-01-20
 - Emacs
   - [[file:emacs/synced-encrypted-journal.org][Automatically Encrypt My Org Journal Diary While Syncing]] --- 2023-01-01
   - [[file:emacs/build-blog.org][How Did I Build This Blog With Org Mode?]] --- 2022-07-02

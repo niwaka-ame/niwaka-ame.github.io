@@ -2,6 +2,13 @@
 
 Hello, my name is Yu Huo.
 
-I am currently a PhD student in systems biology.
+I am currently a PhD student in systems biology at the University of Edinburgh.
 
 I ❤ Emacs.
+
+Why am I maintaining this blog?
+Mainly just for fun.
+Other reasons include:
+1. contents on blogs being more searchable on the web than social media;
+2. the length and format of my writing not being restricted;
+3. marking down how I did something for my future reference, which may be incidentally useful to somebody else.

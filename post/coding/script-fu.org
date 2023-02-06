@@ -71,6 +71,6 @@ where ~batch-resize~ is the function I should call and ~batch-resize-list~ is a 
 To call it from command line:
 #+begin_src shell
 cd <my-photo-directory>
-gimp -b -i "(batch-resize \"`pwd`\")"
+gimp -i -b "(batch-resize \"`pwd`\")"
 #+end_src
 Now you may see why I hard-coded the ~*.JPG~ pattern within the function --- I don't want to type in another argument when calling this function.

@@ -128,9 +128,10 @@ To call it from command line:
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #EBBF83;">cd</span> &lt;my-photo-directory&gt;
-gimp -b -i <span style="color: #539AFC;">"(batch-resize \"</span><span style="color: #5EC4FF; font-weight: bold;">`</span><span style="color: #5EC4FF; font-weight: bold;">pwd</span><span style="color: #5EC4FF; font-weight: bold;">`</span><span style="color: #539AFC;">\")"</span>
+gimp -i -b <span style="color: #539AFC;">"(batch-resize \"</span><span style="color: #5EC4FF; font-weight: bold;">`</span><span style="color: #5EC4FF; font-weight: bold;">pwd</span><span style="color: #5EC4FF; font-weight: bold;">`</span><span style="color: #539AFC;">\")"</span>
 </pre>
 </div>
+
 <p>
 Now you may see why I hard-coded the <code>*.JPG</code> pattern within the function &#x2014; I don&rsquo;t want to type in another argument when calling this function.
 </p>

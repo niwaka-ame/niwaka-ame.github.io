@@ -4,7 +4,7 @@
 <!-- 2023-02-06 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Scripting with Script-Fu in GIMP to process photos in batch</title>
+<title>Scripting with Script-Fu in GIMP to compress photos in batch</title>
 <meta name="author" content="Yu Huo" />
 <meta name="generator" content="Org Mode" />
 <link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
@@ -16,7 +16,7 @@
  <a accesskey="H" href="/"> HOME </a>
 </div><main id="content" class="content">
 <header>
-<h1 class="title">Scripting with Script-Fu in GIMP to process photos in batch</h1>
+<h1 class="title">Scripting with Script-Fu in GIMP to compress photos in batch</h1>
 </header><p>
 I&rsquo;m now trying out <a href="https://www.gimp.org/">GIMP</a> for photo editing.
 I know it supports scripting with <a href="https://docs.gimp.org/en/gimp-using-script-fu-tutorial.html">Script-Fu</a>, a programming language based on Scheme, a minimalist Lisp dialect.
@@ -24,8 +24,8 @@ Today, I was trying to compress some photos to be uploaded to my blog.
 Instead of opening and editing the photos one by one, why don&rsquo;t I try out Script-Fu to do the job in batch?
 </p>
 
-<section id="outline-container-org60df844" class="outline-2">
-<h2 id="org60df844"><span class="section-number-2">1.</span> Running functions inside a <code>*.scm</code> script file from the console</h2>
+<section id="outline-container-org3293db4" class="outline-2">
+<h2 id="org3293db4"><span class="section-number-2">1.</span> Running functions inside a <code>*.scm</code> script file from the console</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Each of my script file ends with <code>.scm</code>, which stands for Scheme.
@@ -73,8 +73,8 @@ After the call was run, we can type <code>^C</code> (<code>Ctrl+C</code>) to exi
 </div>
 </section>
 
-<section id="outline-container-org00cf898" class="outline-2">
-<h2 id="org00cf898"><span class="section-number-2">2.</span> Getting help</h2>
+<section id="outline-container-org54f26cc" class="outline-2">
+<h2 id="org54f26cc"><span class="section-number-2">2.</span> Getting help</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I&rsquo;m new to Scheme, but I know Emacs Lisp, another Lisp dialect, so reading Lisp code is fine with me.
@@ -84,8 +84,8 @@ I found that the <a href="https://en.wikipedia.org/wiki/Scheme_(programming_lang
 </div>
 </section>
 
-<section id="outline-container-org122e9ea" class="outline-2">
-<h2 id="org122e9ea"><span class="section-number-2">3.</span> Now implement the code</h2>
+<section id="outline-container-org5662a3b" class="outline-2">
+<h2 id="org5662a3b"><span class="section-number-2">3.</span> Now implement the code</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 I found a <a href="https://stackoverflow.com/questions/51337105/batch-resize-images-with-gimp">Script</a> on Stackoverflow, so I only need to adapt the code for my own use (many thanks!).
@@ -131,7 +131,6 @@ To call it from command line:
 gimp -i -b <span style="color: #539AFC;">"(batch-resize \"</span><span style="color: #5EC4FF; font-weight: bold;">`</span><span style="color: #5EC4FF; font-weight: bold;">pwd</span><span style="color: #5EC4FF; font-weight: bold;">`</span><span style="color: #539AFC;">\")"</span>
 </pre>
 </div>
-
 <p>
 Now you may see why I hard-coded the <code>*.JPG</code> pattern within the function &#x2014; I don&rsquo;t want to type in another argument when calling this function.
 </p>
@@ -139,7 +138,7 @@ Now you may see why I hard-coded the <code>*.JPG</code> pattern within the funct
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022. Created 2023-02-05, Last updated 2023-02-06, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022. Created 2023-02-05, Last updated 2023-02-06, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

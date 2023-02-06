@@ -1,4 +1,4 @@
-#+title: Scripting with Script-Fu in GIMP to process photos in batch
+#+title: Scripting with Script-Fu in GIMP to compress photos in batch
 #+date: <2023-02-05 Sun>
 
 I'm now trying out [[https://www.gimp.org/][GIMP]] for photo editing.

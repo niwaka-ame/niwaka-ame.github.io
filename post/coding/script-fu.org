@@ -1,0 +1,76 @@
+#+title: Scripting with Script-Fu in GIMP to process photos in batch
+#+date: <2023-02-05 Sun>
+
+I'm now trying out [[https://www.gimp.org/][GIMP]] for photo editing.
+I know it supports scripting with [[https://docs.gimp.org/en/gimp-using-script-fu-tutorial.html][Script-Fu]], a programming language based on Scheme, a minimalist Lisp dialect.
+Today, I was trying to compress some photos to be uploaded to my blog.
+Instead of opening and editing the photos one by one, why don't I try out Script-Fu to do the job in batch?
+
+* Running functions inside a ~*.scm~ script file from the console
+Each of my script file ends with ~.scm~, which stands for Scheme.
+To be loaded into GIMP, the file should be in
+#+begin_src shell
+~/.config/GIMP/2.10/scripts
+#+end_src
+on my computer, which runs Linux and has GIMP 2.10 installed.
+Within each file, there are just a collection of functions written by myself, and those functions will be loaded into GIMP and can be called from the Script-Fu console.
+
+For example, let's say I have a function ~hello-world~
+#+begin_src scheme
+(define (hello-world) (gimp-message "hello world"))
+#+end_src
+in the file, I can open the console in GIMP by finding ~Filter >> Script-Fu >> Console~ on the menu bar.
+If I call the function by typing
+#+begin_src scheme
+(hello-world)
+#+end_src
+in the prompt, it will prompt a message saying "hello world" (and return a true value ~#t~).
+
+We can also run the script from the operating system's console:
+#+begin_src shell
+gimp -i -b '(hello-world)'
+#+end_src
+where ~-i~ stands for no interface and ~-b~ stands for batch mode (which accepts function call).
+After the call was run, we can type ~^C~ (~Ctrl+C~) to exit.
+
+* Getting help
+I'm new to Scheme, but I know Emacs Lisp, another Lisp dialect, so reading Lisp code is fine with me.
+Still, I need to know (1) some basic functions and macros of Scheme (e.g. conditional statements) and (2) the APIs of GIMP (e.g. ~gimp-image-resize~).
+I found that the [[https://en.wikipedia.org/wiki/Scheme_(programming_language)][Wikipedia page of Scheme]] has a good cheatsheet for the basics of Scheme, and right next to the prompt within the GIMP console, the ~Browse...~ button allows us to search the documentations of the GIMP API functions.
+
+* Now implement the code
+I found a [[https://stackoverflow.com/questions/51337105/batch-resize-images-with-gimp][Script]] on Stackoverflow, so I only need to adapt the code for my own use (many thanks!).
+To be fair, the code should work almost out-of-box in my case,
+but I modified it a bit to satisfy my own taste (to make it functional instead of imperative) and to simplify the call from command line.
+Here it is:
+#+begin_src scheme
+(define (batch-resize dir)
+  (let* ((filelist (cadr (file-glob (string-append dir "/*.JPG") 1))))
+        (batch-resize-list filelist)))
+
+(define (batch-resize-list filelist)
+  (unless (null? filelist)
+    (let* (
+           (filename (car filelist))
+           (image (car (gimp-file-load 1 filename filename)))
+           (drawable   (car (gimp-image-active-drawable image)))
+           (cur-width  (car (gimp-image-width image)))
+           (cur-height (car (gimp-image-height image)))
+           (width      (/ cur-width 4))
+           (height     (/ cur-height 4))
+           )
+      (gimp-message filename)
+      (gimp-image-scale-full image width height INTERPOLATION-CUBIC)
+      (gimp-file-save RUN-NONINTERACTIVE image drawable filename filename))
+    (batch-resize-list (cdr filelist))))
+#+end_src
+where ~batch-resize~ is the function I should call and ~batch-resize-list~ is a helper function.
+
+*WARNING*: This code will compress and REWRITE the original photo file, so make sure you have backups when testing it!
+
+To call it from command line:
+#+begin_src shell
+cd <my-photo-directory>
+gimp -b -i "(batch-resize \"`pwd`\")"
+#+end_src
+Now you may see why I hard-coded the ~*.JPG~ pattern within the function --- I don't want to type in another argument when calling this function.

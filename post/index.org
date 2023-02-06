@@ -1,5 +1,7 @@
 #+TITLE: Yu Huo
 
+- Coding
+  - [[file:coding/script-fu.org][Scripting With Script-Fu In Gimp To Process Photos In Batch]] --- 2023-02-05
 - Happy-Life
   - [[file:happy-life/melrose.org][Melrose: The River Tweed, Eildon Hills And Middle-Age Abbey]] --- 2023-02-05
   - [[file:happy-life/raiden2.org][Getting Raiden 2 Working On Retropie]] --- 2023-01-20

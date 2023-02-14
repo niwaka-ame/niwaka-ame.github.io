@@ -1,0 +1,127 @@
+#+title: Using SymPy to derive the distribution of the ratio of two Gaussian variables
+#+date: <2023-02-14 Tue>
+#+PROPERTY: header-args :eval never-export :results verbatim
+
+We know that the ratio of two Gausian variables both with mean zero follows the Cauchy distribution, but how about the more general case?
+
+This post serves two purposes:
+1. as an primitive investigation the distribution of the ratio of two Gaussian variables;
+2. as a note on how to use SymPy.
+
+There's another blog post which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
+
+* Standard way of deriving a ratio's distribution
+Before we get into SymPy, perhaps it's best to do some math work on paper first.
+Let's consider the ratio \(R \equiv X/Y\), and both \(X\sim \text{Normal}(\mu_1, \sigma_1^2)\) and \(Y\sim \text{Normal}(\mu_2, \sigma_2^2)\).
+Then, we first consider the cumulative density function (CDF) of R, \(F(r)\), which consists of two parts:
+#+NAME: eq:cdf-R
+\begin{equation}
+    F(r) = P(R \leq r) = P(X \leq rY, Y>0) + P(X \geq rY, Y<0)
+\end{equation}
+and the probability density \(p(r)\) is
+#+NAME: eq:pdf-R
+\begin{align}
+    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \\
+        &\equiv p_{+}(r) + p_{-}(r)
+\end{align}
+
+When \(Y>0\),
+#+NAME: eq:cdf-R-pos
+\begin{equation}
+    P(X \leq RY) = \int_0^{+\infty} p(y) \left(\int_{-\infty}^{ry} p(x) dx\right) dy
+\end{equation}
+and we're interested in the PDF:
+#+NAME: eq:pdf-R-pos
+\begin{align}
+    p_+(r) &= \frac{d}{dr}P(X \leq RY) = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \\
+    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy
+\end{align}
+where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
+
+Similarly, when \(Y<0\), we have
+#+NAME: eq:pdf-R-neg
+\begin{align}
+    p_-(r) &= \frac{d}{dr}P(X \geq RY) = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \\
+    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy
+\end{align}
+
+Now we can use SymPy to analytically integrate.
+
+* Integrating with SymPy
+We first import the module and generate symbols:
+#+begin_src python
+from sympy import *
+x, y, mu1, mu2, sig1, sig2, r = symbols("x y \mu_1 \mu_2 \sigma_1 \sigma_2 r", real=True)
+#+end_src
+
+Type in the Gaussian densities of \(X\) and \(Y\):
+#+begin_src python
+px = exp(-(x-mu1)**2 / (2 * sig1**2)) / sqrt(2 * pi) / sig1
+py = exp(-(y-mu2)**2 / (2 * sig2**2)) / sqrt(2 * pi) / sig2
+#+end_src
+
+Calculate Eqs [[eq:pdf-R-pos]] and [[eq:pdf-R-neg]]:
+#+begin_src python
+# substitute ry into px first
+px_ry = px.replace(x, r*y)
+pr_pos = integrate(y * px_ry * py, (y, 0, oo))
+pr_neg = integrate(-y * px_ry * py, (y, -oo, 0))
+#+end_src
+If we check the results now, it will look ugly, because we haven't simplified it, and
+the results consider also the case in which variables or the square root are complex.
+So I need to select the case of interest with ~args~, replace the ~polar_lift~ function with the ~Id~ (identity) function and simplify the expression:
+#+begin_src python
+pr_pos = simplify(pr_pos.args[0][0].replace(polar_lift, Id))
+pr_neg = simplify(pr_neg.args[0][0].replace(polar_lift, Id))
+pr = simplify(pr_pos + pr_neg)
+print(latex(pr))
+#+end_src
+Now the get the expression of \(p(r)\):
+#+NAME: eq:pr
+\begin{equation}
+\frac{\sqrt{2} \left(\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\right) e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}}
+
+\end{equation}
+
+It is best to check if \(p(r)\) is a Cauchy distribution when \(\mu_1 = 0\) and \(\mu_2 = 0\):
+#+begin_src python
+print(latex(simplify(pr.subs({mu1:0, mu2:0}))))
+#+end_src
+which prints
+#+NAME: eq:cauchy
+\begin{equation}
+    \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}
+\end{equation}
+as expected.
+
+We can also numerically check whether \(p(r)\)'s integral is 1, given the \(\mu\)'s and \(\sigma\)'s:
+#+begin_src python
+from scipy.integrate import quad
+import numpy as np
+# substitute parameters into p(r)
+pr_subs = pr.subs({sig1:1, sig2:1, mu1:1, mu2:-1})
+# make it a proper python function that takes one argument, r
+pr_subs = lambdify((r,), pr_subs)
+# numerically integrate
+intg, _ = quad(pr_subs, -np.inf, np.inf)
+print(intg)
+#+end_src
+
+* Properties of \(p(r)\)
+\(p(r)\) is even if \(\mu_1 = 0\):
+#+begin_src python
+print(latex(simplify(pr.subs({mu1:0}))))
+#+end_src
+but the expression does not seem to be even if \(\mu_2 = 0\), although its graph seems symmetric (why?):
+#+begin_src python
+import matplotlib.pyplot as plt
+x = np.arange(-10, 10, 0.1)
+pr_subs = lambdify((r,), pr.subs({sig1:1, sig2:1, mu1:5, mu2:0}))
+pr_subs_cauchy = lambdify((r,), pr.subs({sig1:1, sig2:1, mu1:0, mu2:0}))
+y = pr_subs(x)
+y_cauchy = pr_subs_cauchy(x)
+plt.plot(x,y,label="$\mu_1 = 5,\ \mu_2 = 0$")
+plt.plot(x,y_cauchy,label="Cauchy: $\mu_1 = \mu_2 = 0$")
+plt.legend()
+plt.show()
+#+end_src

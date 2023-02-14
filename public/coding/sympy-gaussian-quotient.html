@@ -159,9 +159,9 @@ Now the get the expression of \(p(r)\):
 </p>
 \begin{align}
 \label{org6ad5a8c}
-p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
+p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \\
 & \times \Bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
-& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\Bigg]
+& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\Bigg] \nonumber
 \end{align}
 
 <p>
@@ -215,9 +215,9 @@ which gives
 </p>
 \begin{align}
 \label{orgb3a272c}
-p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
+p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \\
 & \times \Bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
-& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg]
+& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg] \nonumber
 \end{align}
 <p>
 because all terms of \(r\) is in the form of \(r^2\).
@@ -232,12 +232,13 @@ The expression does not seem to be even at first sight when \(\mu_2 = 0\):
 </div>
 \begin{align}
 \label{orgbba42e8}
-p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \nonumber \\
+p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \\
 & \times \Bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
-& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg]
+& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg] \nonumber
 \end{align}
 <p>
-but it <i>is</i> even &#x2014; the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
+but it <i>is</i> even &#x2014;  because the first term within the square bracket can be written as \(g(f) \propto f \cdot \mathrm{erf}(f)\), which is even, and \(f(r) \propto \frac{r}{\sqrt{\sigma_1^2 + \sigma_2^2 r^2}}\), which is odd.
+The composition of an even function with an odd function is even.
 We can plot the graph to see the symmetry:
 </p>
 <div class="org-src-container">
@@ -256,7 +257,7 @@ plt.show()
 </div>
 
 
-<figure id="org25768db">
+<figure id="org862423d">
 <img src="../../misc/coding/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png">
 
 </figure>

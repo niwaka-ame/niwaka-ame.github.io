@@ -112,7 +112,23 @@ print(intg)
 #+begin_src python
 print(latex(simplify(pr.subs({mu1:0}))))
 #+end_src
-but the expression does not seem to be even if \(\mu_2 = 0\), although its graph seems symmetric (why?):
+which prints
+#+NAME: eq:pr-mu1-zero
+\begin{equation}
+    \frac{\sigma_{1} \left(\sqrt{2} \sqrt{\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\right) e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}}
+\end{equation}
+because all terms of \(r\) is in the form of \(r^2\).
+
+The expression does not seem to be even if \(\mu_2 = 0\):
+#+begin_src python
+print(latex(simplify(pr.subs({mu2:0}))))
+#+end_src
+#+NAME: eq:pr-mu2-zero
+\begin{equation}
+\frac{\sigma_{2} \left(\sqrt{2} \sqrt{\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\right) e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}}
+\end{equation}
+but it is even, because the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
+We can plot the graph to see the symmetry:
 #+begin_src python
 import matplotlib.pyplot as plt
 x = np.arange(-10, 10, 0.1)
@@ -125,3 +141,4 @@ plt.plot(x,y_cauchy,label="Cauchy: $\mu_1 = \mu_2 = 0$")
 plt.legend()
 plt.show()
 #+end_src
+

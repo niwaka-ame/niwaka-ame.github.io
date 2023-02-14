@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-02-14 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Derive the distribution of two Gaussian variables' ratio with SymPy</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/"> HOME </a>
+</div><main id="content" class="content">
+<header>
+<h1 class="title">Derive the distribution of two Gaussian variables&rsquo; ratio with SymPy</h1>
+</header><p>
+We know that the ratio of two Gaussian variables both with mean zero follows the Cauchy distribution, but how about the more general case?
+</p>
+
+<p>
+This post serves two purposes:
+</p>
+<ol class="org-ol">
+<li>as an primitive investigation the distribution of the ratio of two Gaussian variables;</li>
+<li>as a note on how to use <a href="https://www.sympy.org/en/index.html">SymPy</a>, a free and open source alternative of Mathematica.</li>
+</ol>
+
+<p>
+Note: there&rsquo;s <a href="https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient">another blog post</a> which shows that the ratio of two Gaussian <i>densities</i> still being Gaussian, which is not to be confused with.
+</p>
+
+<section id="outline-container-org07931ce" class="outline-2">
+<h2 id="org07931ce"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Before we get into SymPy, perhaps it&rsquo;s best to do some math work on paper first.
+Let&rsquo;s consider the ratio \(R \equiv X/Y\), and both \(X\sim \text{Normal}(\mu_1, \sigma_1^2)\) and \(Y\sim \text{Normal}(\mu_2, \sigma_2^2)\).
+Then, we first consider the cumulative density function (CDF) of R, \(F(r)\), which consists of two parts:
+</p>
+\begin{equation}
+\label{org4397c50}
+    F(r) = P(R \leq r) = P(X \leq rY, Y>0) + P(X \geq rY, Y<0)
+\end{equation}
+<p>
+and the probability density \(p(r)\) is
+</p>
+\begin{align}
+\label{org483d354}
+    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \\
+        &\equiv p_{+}(r) + p_{-}(r)
+\end{align}
+
+<p>
+When \(Y>0\),
+</p>
+\begin{equation}
+\label{orgad52903}
+    P(X \leq RY) = \int_0^{+\infty} p(y) \left(\int_{-\infty}^{ry} p(x) dx\right) dy
+\end{equation}
+<p>
+and we&rsquo;re interested in the PDF:
+</p>
+\begin{align}
+\label{orgfb52af7}
+    p_+(r) &= \frac{d}{dr}P(X \leq RY) = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \\
+    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy
+\end{align}
+<p>
+where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
+</p>
+
+<p>
+Similarly, when \(Y<0\), we have
+</p>
+\begin{align}
+\label{org5479c8f}
+    p_-(r) &= \frac{d}{dr}P(X \geq RY) = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \\
+    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy
+\end{align}
+
+<p>
+Now we can use SymPy to analytically integrate.
+</p>
+</div>
+</section>
+
+<section id="outline-container-org363eac5" class="outline-2">
+<h2 id="org363eac5"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+We first import the module and generate symbols:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">from</span> sympy <span style="color: #5EC4FF;">import</span> *
+<span style="color: #718CA1;">x</span>, <span style="color: #718CA1;">y</span>, <span style="color: #718CA1;">mu1</span>, <span style="color: #718CA1;">mu2</span>, <span style="color: #718CA1;">sig1</span>, <span style="color: #718CA1;">sig2</span>, <span style="color: #718CA1;">r</span> = symbols(<span style="color: #539AFC;">"x y \mu_1 \mu_2 \sigma_1 \sigma_2 r"</span>, real=<span style="color: #E27E8D;">True</span>)
+</pre>
+</div>
+
+<p>
+Type in the Gaussian densities of \(X\) and \(Y\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #718CA1;">px</span> = exp(-(x-mu1)**<span style="color: #E27E8D; font-weight: bold;">2</span> / (<span style="color: #E27E8D; font-weight: bold;">2</span> * sig1**<span style="color: #E27E8D; font-weight: bold;">2</span>)) / sqrt(<span style="color: #E27E8D; font-weight: bold;">2</span> * pi) / sig1
+<span style="color: #718CA1;">py</span> = exp(-(y-mu2)**<span style="color: #E27E8D; font-weight: bold;">2</span> / (<span style="color: #E27E8D; font-weight: bold;">2</span> * sig2**<span style="color: #E27E8D; font-weight: bold;">2</span>)) / sqrt(<span style="color: #E27E8D; font-weight: bold;">2</span> * pi) / sig2
+</pre>
+</div>
+
+<p>
+Calculate Eqs \eqref{orgfb52af7} and \eqref{org5479c8f}:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #41505E;"># </span><span style="color: #41505E;">substitute ry into px first</span>
+<span style="color: #718CA1;">px_ry</span> = px.replace(x, r*y)
+<span style="color: #718CA1;">pr_pos</span> = integrate(y * px_ry * py, (y, <span style="color: #E27E8D; font-weight: bold;">0</span>, oo))
+<span style="color: #718CA1;">pr_neg</span> = integrate(-y * px_ry * py, (y, -oo, <span style="color: #E27E8D; font-weight: bold;">0</span>))
+</pre>
+</div>
+<p>
+If we check the results now, it will look ugly, because we haven&rsquo;t simplified it, and
+the results consider also the case in which variables or the square root are complex.
+So I need to select the case of interest with <code>args</code>, replace the <code>polar_lift</code> function with the <code>Id</code> (identity) function and simplify the expression:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #718CA1;">pr_pos</span> = simplify(pr_pos.args[<span style="color: #E27E8D; font-weight: bold;">0</span>][<span style="color: #E27E8D; font-weight: bold;">0</span>].replace(polar_lift, Id))
+<span style="color: #718CA1;">pr_neg</span> = simplify(pr_neg.args[<span style="color: #E27E8D; font-weight: bold;">0</span>][<span style="color: #E27E8D; font-weight: bold;">0</span>].replace(polar_lift, Id))
+<span style="color: #718CA1;">pr</span> = simplify(pr_pos + pr_neg)
+<span style="color: #5EC4FF;">print</span>(latex(pr))
+</pre>
+</div>
+<p>
+Now the get the expression of \(p(r)\):
+</p>
+\begin{align}
+\label{org6ad5a8c}
+p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
+& \times \bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
+& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\bigg]
+\end{align}
+
+<p>
+It is best to check if \(p(r)\) is a Cauchy distribution when \(\mu_1 = 0\) and \(\mu_2 = 0\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">print</span>(latex(simplify(pr.subs({mu1:<span style="color: #E27E8D; font-weight: bold;">0</span>, mu2:<span style="color: #E27E8D; font-weight: bold;">0</span>}))))
+</pre>
+</div>
+<p>
+which prints
+</p>
+\begin{equation}
+\label{org464970b}
+    \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}
+\end{equation}
+<p>
+as expected.
+</p>
+
+<p>
+We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the \(\mu\)&rsquo;s and \(\sigma\)&rsquo;s:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">from</span> scipy.integrate <span style="color: #5EC4FF;">import</span> quad
+<span style="color: #5EC4FF;">import</span> numpy <span style="color: #5EC4FF;">as</span> np
+<span style="color: #41505E;"># </span><span style="color: #41505E;">substitute parameters into p(r)</span>
+<span style="color: #718CA1;">pr_subs</span> = pr.subs({sig1:<span style="color: #E27E8D; font-weight: bold;">1</span>, sig2:<span style="color: #E27E8D; font-weight: bold;">1</span>, mu1:<span style="color: #E27E8D; font-weight: bold;">1</span>, mu2:-<span style="color: #E27E8D; font-weight: bold;">1</span>})
+<span style="color: #41505E;"># </span><span style="color: #41505E;">make it a proper python function that takes one argument, r</span>
+<span style="color: #718CA1;">pr_subs</span> = lambdify((r,), pr_subs)
+<span style="color: #41505E;"># </span><span style="color: #41505E;">numerically integrate</span>
+<span style="color: #718CA1;">intg</span>, <span style="color: #718CA1;">_</span> = quad(pr_subs, -np.inf, np.inf)
+<span style="color: #5EC4FF;">print</span>(intg)
+</pre>
+</div>
+</div>
+</section>
+
+<section id="outline-container-org5221daa" class="outline-2">
+<h2 id="org5221daa"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+\(p(r)\) is even if \(\mu_1 = 0\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">print</span>(latex(simplify(pr.subs({mu1:<span style="color: #E27E8D; font-weight: bold;">0</span>}))))
+</pre>
+</div>
+<p>
+which gives
+</p>
+\begin{align}
+\label{orgb3a272c}
+p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
+& \times \bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+\end{align}
+<p>
+because all terms of \(r\) is in the form of \(r^2\).
+</p>
+
+<p>
+The expression does not seem to be even if \(\mu_2 = 0\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">print</span>(latex(simplify(pr.subs({mu2:<span style="color: #E27E8D; font-weight: bold;">0</span>}))))
+</pre>
+</div>
+\begin{align}
+\label{orgbba42e8}
+p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \nonumber \\
+& \times \bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+\end{align}
+<p>
+but it is even, because the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
+We can plot the graph to see the symmetry:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">import</span> matplotlib.pyplot <span style="color: #5EC4FF;">as</span> plt
+<span style="color: #718CA1;">x</span> = np.arange(-<span style="color: #E27E8D; font-weight: bold;">10</span>, <span style="color: #E27E8D; font-weight: bold;">10</span>, <span style="color: #E27E8D; font-weight: bold;">0.1</span>)
+<span style="color: #718CA1;">pr_subs</span> = lambdify((r,), pr.subs({<span style="color: #718CA1;">sig1</span>:<span style="color: #E27E8D; font-weight: bold;">1</span>, sig2:<span style="color: #E27E8D; font-weight: bold;">1</span>, mu1:<span style="color: #E27E8D; font-weight: bold;">5</span>, mu2:<span style="color: #E27E8D; font-weight: bold;">0</span>}))
+pr_subs_cauchy = lambdify((r,), pr.subs({<span style="color: #718CA1;">sig1</span>:<span style="color: #E27E8D; font-weight: bold;">1</span>, sig2:<span style="color: #E27E8D; font-weight: bold;">1</span>, mu1:<span style="color: #E27E8D; font-weight: bold;">0</span>, mu2:<span style="color: #E27E8D; font-weight: bold;">0</span>}))
+y = pr_subs(x)
+<span style="color: #718CA1;">y_cauchy</span> = pr_subs_cauchy(x)
+plt.figure()
+plt.plot(x,y,label=<span style="color: #539AFC;">"$\mu_1 = 5,\ \mu_2 = 0$"</span>)
+plt.plot(x,y_cauchy,label=<span style="color: #539AFC;">"Cauchy: $\mu_1 = \mu_2 = 0$"</span>)
+plt.legend()
+plt.show()
+</pre>
+</div>
+
+
+<figure id="org0ce29e7">
+<img src="../../misc/coding/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png">
+
+</figure>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'> © Yu Huo 2022. Created 2023-02-14, Last updated 2023-02-14, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+</footer>
+</body>
+</html>

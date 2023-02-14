@@ -88,8 +88,8 @@ and we&rsquo;re interested in the PDF:
 \begin{align}
 \label{orgfb52af7}
     p_+(r) &= \frac{d}{dr}P(X \leq RY) \\
-    &= \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
-    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
+    & = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
+    & = \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 <p>
 where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
@@ -100,8 +100,9 @@ Similarly, when \(Y<0\), we have
 </p>
 \begin{align}
 \label{org5479c8f}
-    p_-(r) &= \frac{d}{dr}P(X \geq RY) = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \\
-    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
+    p_-(r) &= \frac{d}{dr}P(X \geq RY) \\
+    & = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \nonumber \\
+    & = - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 
 <p>
@@ -255,7 +256,7 @@ plt.show()
 </div>
 
 
-<figure id="org64875ab">
+<figure id="org25768db">
 <img src="../../misc/coding/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png">
 
 </figure>

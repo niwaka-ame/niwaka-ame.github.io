@@ -34,16 +34,17 @@ and we're interested in the PDF:
 #+NAME: eq:pdf-R-pos
 \begin{align}
     p_+(r) &= \frac{d}{dr}P(X \leq RY) \\
-    &= \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
-    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
+    & = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
+    & = \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
 
 Similarly, when \(Y<0\), we have
 #+NAME: eq:pdf-R-neg
 \begin{align}
-    p_-(r) &= \frac{d}{dr}P(X \geq RY) = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \\
-    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
+    p_-(r) &= \frac{d}{dr}P(X \geq RY) \\
+    & = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \nonumber \\
+    & = - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 
 Now we can use SymPy to analytically integrate Eqs [[eq:pdf-R-pos]] and [[eq:pdf-R-neg]].

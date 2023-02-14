@@ -2,11 +2,11 @@
 #+date: <2023-02-14 Tue>
 #+PROPERTY: header-args :eval never-export :exports code
 
-We know that the ratio of two Gaussian variables both with mean zero follows the Cauchy distribution, but how about the more general case?
+We know that the ratio of two Gaussian variables both with mean zero [[https://en.wikipedia.org/wiki/Ratio_distribution][follows the Cauchy distribution]], but how about the more general case?
 
 This post serves two purposes:
 1. as an primitive investigation the distribution of the ratio of two Gaussian variables;
-2. as a note on how to use [[https://www.sympy.org/en/index.html][SymPy]], a free and open source alternative of Mathematica.
+2. as an example on how to use [[https://www.sympy.org/en/index.html][SymPy]], a free and open source alternative of Mathematica.
 
 Note: there's [[https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient][another blog post]] which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
 
@@ -21,7 +21,7 @@ Then, we first consider the cumulative density function (CDF) of R, \(F(r)\), wh
 and the probability density \(p(r)\) is
 #+NAME: eq:pdf-R
 \begin{align}
-    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \\
+    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \nonumber \\
         &\equiv p_{+}(r) + p_{-}(r)
 \end{align}
 
@@ -33,8 +33,9 @@ When \(Y>0\),
 and we're interested in the PDF:
 #+NAME: eq:pdf-R-pos
 \begin{align}
-    p_+(r) &= \frac{d}{dr}P(X \leq RY) = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \\
-    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy
+    p_+(r) &= \frac{d}{dr}P(X \leq RY) \\
+    &= \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
+    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
 
@@ -42,10 +43,10 @@ Similarly, when \(Y<0\), we have
 #+NAME: eq:pdf-R-neg
 \begin{align}
     p_-(r) &= \frac{d}{dr}P(X \geq RY) = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \\
-    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy
+    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 
-Now we can use SymPy to analytically integrate.
+Now we can use SymPy to analytically integrate Eqs [[eq:pdf-R-pos]] and [[eq:pdf-R-neg]].
 
 * Integrating with SymPy
 We first import the module and generate symbols:
@@ -60,15 +61,15 @@ px = exp(-(x-mu1)**2 / (2 * sig1**2)) / sqrt(2 * pi) / sig1
 py = exp(-(y-mu2)**2 / (2 * sig2**2)) / sqrt(2 * pi) / sig2
 #+end_src
 
-Calculate Eqs [[eq:pdf-R-pos]] and [[eq:pdf-R-neg]]:
+Integrate Eqs [[eq:pdf-R-pos]] and [[eq:pdf-R-neg]]:
 #+begin_src python
 # substitute ry into px first
 px_ry = px.replace(x, r*y)
 pr_pos = integrate(y * px_ry * py, (y, 0, oo))
 pr_neg = integrate(-y * px_ry * py, (y, -oo, 0))
 #+end_src
-If we check the results now, it will look ugly, because we haven't simplified it, and
-the results consider also the case in which variables or the square root are complex.
+If we check the results now, it will look ugly, because (1) we haven't simplified it, and (2)
+the results consider also the case in which variables or the square root are complex numbers.
 So I need to select the case of interest with ~args~, replace the ~polar_lift~ function with the ~Id~ (identity) function and simplify the expression:
 #+begin_src python
 pr_pos = simplify(pr_pos.args[0][0].replace(polar_lift, Id))
@@ -80,8 +81,8 @@ Now the get the expression of \(p(r)\):
 #+NAME: eq:pr
 \begin{align}
 p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
-& \times \bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
-& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\bigg]
+& \times \Bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
+& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\Bigg]
 \end{align}
 
 It is best to check if \(p(r)\) is a Cauchy distribution when \(\mu_1 = 0\) and \(\mu_2 = 0\):
@@ -109,7 +110,7 @@ print(intg)
 #+end_src
 
 * Properties of \(p(r)\)
-\(p(r)\) is even if \(\mu_1 = 0\):
+\(p(r)\) is even when \(\mu_1 = 0\):
 #+begin_src python
 print(latex(simplify(pr.subs({mu1:0}))))
 #+end_src
@@ -117,22 +118,22 @@ which gives
 #+NAME: eq:pr-mu1-zero
 \begin{align}
 p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
-& \times \bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
-& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+& \times \Bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg]
 \end{align}
 because all terms of \(r\) is in the form of \(r^2\).
 
-The expression does not seem to be even if \(\mu_2 = 0\):
+The expression does not seem to be even at first sight when \(\mu_2 = 0\):
 #+begin_src python
 print(latex(simplify(pr.subs({mu2:0}))))
 #+end_src
 #+NAME: eq:pr-mu2-zero
 \begin{align}
 p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \nonumber \\
-& \times \bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
-& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+& \times \Bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg]
 \end{align}
-but it is even, because the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
+but it /is/ even --- the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
 We can plot the graph to see the symmetry:
 #+begin_src python
 import matplotlib.pyplot as plt

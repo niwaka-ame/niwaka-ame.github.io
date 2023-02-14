@@ -39,7 +39,7 @@
 <header>
 <h1 class="title">Derive the distribution of two Gaussian variables&rsquo; ratio with SymPy</h1>
 </header><p>
-We know that the ratio of two Gaussian variables both with mean zero follows the Cauchy distribution, but how about the more general case?
+We know that the ratio of two Gaussian variables both with mean zero <a href="https://en.wikipedia.org/wiki/Ratio_distribution">follows the Cauchy distribution</a>, but how about the more general case?
 </p>
 
 <p>
@@ -47,7 +47,7 @@ This post serves two purposes:
 </p>
 <ol class="org-ol">
 <li>as an primitive investigation the distribution of the ratio of two Gaussian variables;</li>
-<li>as a note on how to use <a href="https://www.sympy.org/en/index.html">SymPy</a>, a free and open source alternative of Mathematica.</li>
+<li>as an example on how to use <a href="https://www.sympy.org/en/index.html">SymPy</a>, a free and open source alternative of Mathematica.</li>
 </ol>
 
 <p>
@@ -71,7 +71,7 @@ and the probability density \(p(r)\) is
 </p>
 \begin{align}
 \label{org483d354}
-    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \\
+    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \nonumber \\
         &\equiv p_{+}(r) + p_{-}(r)
 \end{align}
 
@@ -87,8 +87,9 @@ and we&rsquo;re interested in the PDF:
 </p>
 \begin{align}
 \label{orgfb52af7}
-    p_+(r) &= \frac{d}{dr}P(X \leq RY) = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \\
-    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy
+    p_+(r) &= \frac{d}{dr}P(X \leq RY) \\
+    &= \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
+    &= \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 <p>
 where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
@@ -100,11 +101,11 @@ Similarly, when \(Y<0\), we have
 \begin{align}
 \label{org5479c8f}
     p_-(r) &= \frac{d}{dr}P(X \geq RY) = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \\
-    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy
+    &= - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 
 <p>
-Now we can use SymPy to analytically integrate.
+Now we can use SymPy to analytically integrate Eqs \eqref{orgfb52af7} and \eqref{org5479c8f}.
 </p>
 </div>
 </section>
@@ -131,7 +132,7 @@ Type in the Gaussian densities of \(X\) and \(Y\):
 </div>
 
 <p>
-Calculate Eqs \eqref{orgfb52af7} and \eqref{org5479c8f}:
+Integrate Eqs \eqref{orgfb52af7} and \eqref{org5479c8f}:
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #41505E;"># </span><span style="color: #41505E;">substitute ry into px first</span>
@@ -141,8 +142,8 @@ Calculate Eqs \eqref{orgfb52af7} and \eqref{org5479c8f}:
 </pre>
 </div>
 <p>
-If we check the results now, it will look ugly, because we haven&rsquo;t simplified it, and
-the results consider also the case in which variables or the square root are complex.
+If we check the results now, it will look ugly, because (1) we haven&rsquo;t simplified it, and (2)
+the results consider also the case in which variables or the square root are complex numbers.
 So I need to select the case of interest with <code>args</code>, replace the <code>polar_lift</code> function with the <code>Id</code> (identity) function and simplify the expression:
 </p>
 <div class="org-src-container">
@@ -158,8 +159,8 @@ Now the get the expression of \(p(r)\):
 \begin{align}
 \label{org6ad5a8c}
 p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
-& \times \bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
-& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\bigg]
+& \times \Bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
+& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\Bigg]
 \end{align}
 
 <p>
@@ -202,7 +203,7 @@ We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the 
 <h2 id="org5221daa"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-\(p(r)\) is even if \(\mu_1 = 0\):
+\(p(r)\) is even when \(\mu_1 = 0\):
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #5EC4FF;">print</span>(latex(simplify(pr.subs({mu1:<span style="color: #E27E8D; font-weight: bold;">0</span>}))))
@@ -214,15 +215,15 @@ which gives
 \begin{align}
 \label{orgb3a272c}
 p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
-& \times \bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
-& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+& \times \Bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg]
 \end{align}
 <p>
 because all terms of \(r\) is in the form of \(r^2\).
 </p>
 
 <p>
-The expression does not seem to be even if \(\mu_2 = 0\):
+The expression does not seem to be even at first sight when \(\mu_2 = 0\):
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #5EC4FF;">print</span>(latex(simplify(pr.subs({mu2:<span style="color: #E27E8D; font-weight: bold;">0</span>}))))
@@ -231,11 +232,11 @@ The expression does not seem to be even if \(\mu_2 = 0\):
 \begin{align}
 \label{orgbba42e8}
 p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \nonumber \\
-& \times \bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
-& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+& \times \Bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg]
 \end{align}
 <p>
-but it is even, because the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
+but it <i>is</i> even &#x2014; the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
 We can plot the graph to see the symmetry:
 </p>
 <div class="org-src-container">
@@ -254,7 +255,7 @@ plt.show()
 </div>
 
 
-<figure id="org0ce29e7">
+<figure id="org64875ab">
 <img src="../../misc/coding/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png">
 
 </figure>

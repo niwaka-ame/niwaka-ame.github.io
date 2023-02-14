@@ -6,9 +6,9 @@ We know that the ratio of two Gausian variables both with mean zero follows the 
 
 This post serves two purposes:
 1. as an primitive investigation the distribution of the ratio of two Gaussian variables;
-2. as a note on how to use SymPy.
+2. as a note on how to use SymPy, a free and open source alternative of Mathematica.
 
-There's another blog post which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
+Note: there's another blog post which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
 
 * Standard way of deriving a ratio's distribution
 Before we get into SymPy, perhaps it's best to do some math work on paper first.

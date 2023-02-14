@@ -1,14 +1,14 @@
-#+title: Using SymPy to derive the distribution of the ratio of two Gaussian variables
+#+title: Derive the distribution of two Gaussian variables' ratio with SymPy
 #+date: <2023-02-14 Tue>
-#+PROPERTY: header-args :eval never-export :results verbatim
+#+PROPERTY: header-args :eval never-export :exports code
 
-We know that the ratio of two Gausian variables both with mean zero follows the Cauchy distribution, but how about the more general case?
+We know that the ratio of two Gaussian variables both with mean zero follows the Cauchy distribution, but how about the more general case?
 
 This post serves two purposes:
 1. as an primitive investigation the distribution of the ratio of two Gaussian variables;
-2. as a note on how to use SymPy, a free and open source alternative of Mathematica.
+2. as a note on how to use [[https://www.sympy.org/en/index.html][SymPy]], a free and open source alternative of Mathematica.
 
-Note: there's another blog post which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
+Note: there's [[https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient][another blog post]] which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
 
 * Standard way of deriving a ratio's distribution
 Before we get into SymPy, perhaps it's best to do some math work on paper first.
@@ -78,10 +78,11 @@ print(latex(pr))
 #+end_src
 Now the get the expression of \(p(r)\):
 #+NAME: eq:pr
-\begin{equation}
-\frac{\sqrt{2} \left(\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\right) e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}}
-
-\end{equation}
+\begin{align}
+p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
+& \times \bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
+& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\bigg]
+\end{align}
 
 It is best to check if \(p(r)\) is a Cauchy distribution when \(\mu_1 = 0\) and \(\mu_2 = 0\):
 #+begin_src python
@@ -112,11 +113,13 @@ print(intg)
 #+begin_src python
 print(latex(simplify(pr.subs({mu1:0}))))
 #+end_src
-which prints
+which gives
 #+NAME: eq:pr-mu1-zero
-\begin{equation}
-    \frac{\sigma_{1} \left(\sqrt{2} \sqrt{\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\right) e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}}
-\end{equation}
+\begin{align}
+p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
+& \times \bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+\end{align}
 because all terms of \(r\) is in the form of \(r^2\).
 
 The expression does not seem to be even if \(\mu_2 = 0\):
@@ -124,9 +127,11 @@ The expression does not seem to be even if \(\mu_2 = 0\):
 print(latex(simplify(pr.subs({mu2:0}))))
 #+end_src
 #+NAME: eq:pr-mu2-zero
-\begin{equation}
-\frac{\sigma_{2} \left(\sqrt{2} \sqrt{\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\right) e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}}
-\end{equation}
+\begin{align}
+p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \nonumber \\
+& \times \bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\bigg]
+\end{align}
 but it is even, because the error function \(\mathrm{erf}(r)\) is odd and the \(r\) outside the error function is also odd, so \(r \cdot \mathrm{erf}(r)\) is even.
 We can plot the graph to see the symmetry:
 #+begin_src python
@@ -136,9 +141,11 @@ pr_subs = lambdify((r,), pr.subs({sig1:1, sig2:1, mu1:5, mu2:0}))
 pr_subs_cauchy = lambdify((r,), pr.subs({sig1:1, sig2:1, mu1:0, mu2:0}))
 y = pr_subs(x)
 y_cauchy = pr_subs_cauchy(x)
+plt.figure()
 plt.plot(x,y,label="$\mu_1 = 5,\ \mu_2 = 0$")
 plt.plot(x,y_cauchy,label="Cauchy: $\mu_1 = \mu_2 = 0$")
 plt.legend()
 plt.show()
 #+end_src
 
+[[../../misc/coding/sympy-gaussian-quotient.png]]

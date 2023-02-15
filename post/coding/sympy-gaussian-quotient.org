@@ -153,27 +153,25 @@ plt.show()
 
 [[../../misc/coding/sympy-gaussian-quotient.png]]
 
-We know that the mean and the variance of the Cauchy distribution do not exist.
-Similarly, the mean and the variance do not exist for either \(\mu_2 = 0\) or \(\mu_1 = 0\).
+We know that when \(\mu_1 = 0\) and \(\mu_2 = 0\), \(p(r)\) is a Cauchy distribution, whose mean and variance diverge.
+Similarly, below I show that the mean and variance also diverge for other real values of \(\mu_1\) and \(\mu_2\).
 
 /Proof/:
 
-To prove \(\int_{-\infty}^{+ \infty} r p(r)\) does not converge, we only need to prove \(\int_0^{+\infty} r p(r)\) does not converge.
+To prove that the variance diverges, we only need to prove that the mean diverges.
+To prove \(\int_{-\infty}^{+ \infty} r p(r)\) diverge, we only need to prove \(\int_0^{+\infty} r p(r)\) diverge.
 
-When \(\mu_1 = 0\), \(p(r)\) is Eq [[eq:pr-mu1-zero]].
-We know that
+The second term within the square bracket of Eq [[eq:pr]]
 #+NAME: first-term
 \begin{equation}
-\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0
+\sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0
 \end{equation}
-because \(\mu_{2} \mathrm{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0\).
+because \(z \mathrm{erf}(Az) \geq 0\) when \(z = \mu_1 \sigma_2^2 r + \mu_2 \sigma_1^2\) and \(A > 0\).
 Thus, given \(r \geq 0\),
 #+NAME: first-term
 \begin{align}
-r p(r) & \geq r \frac{2 \sigma_{1} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \\
-& = r \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
+r p(r) & \geq r \frac{2 \sigma_{1}^2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}}{2 \pi \sigma_1 \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \\
+& = r \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
 & \equiv g(r) \nonumber
 \end{align}
-and \(\int_0^{+\infty} g(r) dr\) diverges, so \(\int_0^{ +\infty} r p(r) dr\) diverges, by the [[https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex)/06%3A_Techniques_of_Integration/6.08%3A_Improper_Integration][direct comparison test for improper integrals]].
-
-The proof for the case of \(\mu_2 = 0\) is similar. \(\blacksquare\)
+and \(\int_0^{+\infty} g(r) dr\) diverges, so \(\int_0^{ +\infty} r p(r) dr\) diverges, by the [[https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex)/06%3A_Techniques_of_Integration/6.08%3A_Improper_Integration][direct comparison test for improper integrals]]. \(\blacksquare\)

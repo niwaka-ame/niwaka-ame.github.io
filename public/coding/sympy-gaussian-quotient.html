@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-02-14 -->
+<!-- 2023-02-15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Derive the distribution of two Gaussian variables' ratio with SymPy</title>
@@ -257,15 +257,54 @@ plt.show()
 </div>
 
 
-<figure id="org862423d">
+<figure id="org3007b21">
 <img src="../../misc/coding/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png">
 
 </figure>
+
+<p>
+We know that the mean and the variance of the Cauchy distribution do not exist.
+Similarly, the mean and the variance do not exist for either \(\mu_2 = 0\) or \(\mu_1 = 0\).
+</p>
+
+<p>
+<i>Proof</i>:
+</p>
+
+<p>
+To prove \(\int_{-\infty}^{+ \infty} r p(r)\) does not converge, we only need to prove \(\int_0^{+\infty} r p(r)\) does not converge.
+</p>
+
+<p>
+When \(\mu_1 = 0\), \(p(r)\) is Eq \eqref{orgb3a272c}.
+We know that
+</p>
+\begin{equation}
+\label{orgf59f4f8}
+\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0
+\end{equation}
+<p>
+because \(\mu_{2} \mathrm{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0\).
+Thus, given \(r \geq 0\),
+</p>
+\begin{align}
+\label{org8436ed6}
+r p(r) & \geq r \frac{2 \sigma_{1} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \\
+& = r \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \nonumber \\
+& \equiv g(r) \nonumber
+\end{align}
+<p>
+and \(\int_0^{+\infty} g(r) dr\) diverges, so \(\int_0^{ +\infty} r p(r) dr\) diverges, by the <a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex)/06%3A_Techniques_of_Integration/6.08%3A_Improper_Integration">direct comparison test for improper integrals</a>.
+</p>
+
+<p>
+The proof for the case of \(\mu_2 = 0\) is similar. \(\blacksquare\)
+</p>
 </div>
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022. Created 2023-02-14, Last updated 2023-02-14, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022. Created 2023-02-14, Last updated 2023-02-15, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

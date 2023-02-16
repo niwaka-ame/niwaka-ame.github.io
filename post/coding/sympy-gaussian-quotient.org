@@ -5,8 +5,10 @@
 We know that the ratio of two Gaussian variables both with mean zero [[https://en.wikipedia.org/wiki/Ratio_distribution][follows the Cauchy distribution]], but how about the more general case?
 
 This post serves two purposes:
-1. as an primitive investigation the distribution of the ratio of two Gaussian variables;
+1. as an primitive investigation of the distribution of the ratio of two Gaussian variables;
 2. as an example on how to use [[https://www.sympy.org/en/index.html][SymPy]], a free and open source alternative of Mathematica.
+
+A key property of this distribution that I'll show in this post is that its mean and variance diverge, regardless of the means and variances of the two Gaussian distribution.
 
 Note: there's [[https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient][another blog post]] which shows that the ratio of two Gaussian /densities/ still being Gaussian, which is not to be confused with.
 
@@ -154,7 +156,7 @@ plt.show()
 [[../../misc/coding/sympy-gaussian-quotient.png]]
 
 We know that when \(\mu_1 = 0\) and \(\mu_2 = 0\), \(p(r)\) is a Cauchy distribution, whose mean and variance diverge.
-Similarly, below I show that the mean and variance also diverge for other real values of \(\mu_1\) and \(\mu_2\).
+*Below I show that the mean and variance diverge for any real values of \(\mu_1\) and \(\mu_2\).*
 
 /Proof/:
 
@@ -166,7 +168,7 @@ The second term within the square bracket of Eq [[eq:pr]]
 \begin{equation}
 \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0
 \end{equation}
-because \(z \mathrm{erf}(Az) \geq 0\) when \(z = \mu_1 \sigma_2^2 r + \mu_2 \sigma_1^2\) and \(A > 0\).
+because \(z \cdot \mathrm{erf}(Az) \geq 0\) for any \(z\) when \(A > 0\), and here \(z = \mu_1 \sigma_2^2 r + \mu_2 \sigma_1^2\).
 Thus, given \(r \geq 1\),
 #+NAME: first-term
 \begin{align}

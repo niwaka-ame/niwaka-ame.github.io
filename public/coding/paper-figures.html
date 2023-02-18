@@ -69,22 +69,21 @@ I prepare the spacial arrangement and plot the data within one script:
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #5EC4FF;">import</span> matplotlib.pyplot <span style="color: #5EC4FF;">as</span> plt
 <span style="color: #41505E;"># </span><span style="color: #41505E;">create the figure</span>
-<span style="color: #718CA1;">fig</span>, <span style="color: #718CA1;">ax</span> = plt.subplots(<span style="color: #E27E8D; font-weight: bold;">1</span>, <span style="color: #E27E8D; font-weight: bold;">2</span>, figsize=(<span style="color: #E27E8D; font-weight: bold;">8</span>,<span style="color: #E27E8D; font-weight: bold;">4</span>))
+<span style="color: #718CA1;">fig</span>, <span style="color: #718CA1;">ax</span> = plt.subplots(<span style="color: #E27E8D; font-weight: bold;">1</span>, <span style="color: #E27E8D; font-weight: bold;">2</span>, figsize=(<span style="color: #E27E8D; font-weight: bold;">8</span>,<span style="color: #E27E8D; font-weight: bold;">4</span>), dpi=<span style="color: #E27E8D; font-weight: bold;">300</span>)
 <span style="color: #41505E;"># </span><span style="color: #41505E;">plot something on the second panel</span>
 x = <span style="color: #5EC4FF;">list</span>(<span style="color: #5EC4FF;">range</span>(<span style="color: #E27E8D; font-weight: bold;">4</span>))
 ax[<span style="color: #E27E8D; font-weight: bold;">1</span>].scatter(x, x)
 <span style="color: #41505E;"># </span><span style="color: #41505E;">save the figure (for now)</span>
-plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>, dpi=<span style="color: #E27E8D; font-weight: bold;">300</span>)
+plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>)
 </pre>
 </div>
 <p>
-The <code>figsize</code> argument in <code>plt.subplots</code> controls the width and the height of the figure, each in inches.
-The <code>dpi</code> argument in <code>plt.savefig</code> controls the number of dots (pixels) per inch.
+The <code>figsize</code> argument in <code>plt.subplots</code> controls the width and the height of the figure, each in inches, and the <code>dpi</code> argument controls the number of dots (pixels) per inch.
 Combining the two settings, the resolution of the output figure should be \(2400 \times 1200\) pixels.
 </p>
 
 
-<figure id="orgaef4f7e">
+<figure id="org5d19f77">
 <img src="../../misc/coding/paper-figures-1.png" alt="paper-figures-1.png">
 
 </figure>
@@ -95,12 +94,19 @@ Combining the two settings, the resolution of the output figure should be \(2400
 <h2 id="orgcef5688"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Before drawing in Inkscape, we must set the page&rsquo;s size in the <code>File &gt;&gt; Document properties...</code> menu.
-In our spatial arrangement, the height and the width of the schematics should be half of those of the whole figure.
-The white space around the figure takes up about 20% of the width and height, so the page&rsquo;s width and height in inches should be \(8 \times 0.8 / 2 = 3.2\).
+Before drawing in Inkscape, we must get the schematics&rsquo; size from Python:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #718CA1;">bbox</span> = ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].get_tightbbox(fig.canvas.get_renderer())
+<span style="color: #5EC4FF;">print</span>(bbox.x1, bbox.y1) <span style="color: #41505E;"># </span><span style="color: #41505E;">the height (x1) and the width (y1)</span>
+</pre>
+</div>
+
+<p>
+Now we set the page&rsquo;s size in the <code>File &gt;&gt; Document properties...</code> menu, using <code>custom</code> format in unit of <code>px</code> (pixel), and then filling in the height and width and make sure the orientation is correct.
 How to draw in Inkscape is beyond the scope of this post, but Inkscape includes a wonderful, interactive tutorial in the <code>Help &gt;&gt; Tutorials</code> menu.
 After finishing the schematics, save it as an <code>.svg</code> file for future modification, and export to a <code>.png</code> file to merge with the figure from Python.
-To export to PNG, find the <code>File &gt;&gt; Export...</code> menu and set the DPI to be 300 before exporting.
+To export to PNG, find the <code>File &gt;&gt; Export...</code> menu and within the prompted sidebar, choose the <code>page</code> menu and export with the default DPI (such that the width and height in <code>px</code> is correct).
 </p>
 </div>
 </section>
@@ -113,7 +119,7 @@ Now the read the PNG file exported from Inkscape back to Python and plot in the 
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #718CA1;">img</span> = plt.imread(<span style="color: #539AFC;">"my-path-to-the-inscape-image.png"</span>)
-ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].imshow(img) <span style="color: #41505E;"># </span><span style="color: #41505E;">you may try aspect="auto"</span>
+ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].imshow(img)
 <span style="color: #41505E;"># </span><span style="color: #41505E;">hide the x and y axis</span>
 ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].axis(<span style="color: #539AFC;">"off"</span>)
 </pre>
@@ -139,7 +145,7 @@ The last thing is to automatically add the labels A, B, C&#x2026; to the panels,
 And don&rsquo;t forget to save the figure:
 </p>
 <div class="org-src-container">
-<pre class="src src-python">plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>, dpi=<span style="color: #E27E8D; font-weight: bold;">300</span>)
+<pre class="src src-python">plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>)
 </pre>
 </div>
 <p>
@@ -147,14 +153,8 @@ Now we can place both the SVG file from Inkscape and the Python under version co
 There&rsquo;s no need to place the generated PNG file under version control, because we&rsquo;ll get it back once we run the Python code again.
 </p>
 
-<p>
-One issue of this workflow is that the label of the schematics panel is not placed at the same level of other panel labels.
-This is because the size we used in the Inkscape section, \(3.2 \times 3.2\) inches, does not exactly match the size of the panel.
-To solve this, we can either (1) fine-tune the size in Inkscape or (2) set <code>aspect="auto"</code> when calling <code>ax[0].imshow()</code>, or (3) adjust the whitespace between subplots using <code>plt.subplots_adjust()</code>.
-</p>
 
-
-<figure id="org9feeaaf">
+<figure id="org87d7e82">
 <img src="../../misc/coding/paper-figures-2.png" alt="paper-figures-2.png">
 
 </figure>
@@ -167,6 +167,7 @@ To solve this, we can either (1) fine-tune the size in Inkscape or (2) set <code
 <p>
 <code>matplotlib</code> also supports more sophisticated spacial arrangement.
 See the official documentation of its <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec">GridSpec</a> module.
+We can also create an inset panel within a panel with <code>ax[0].inset_axes()</code>, see the official Documentation <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html">here</a>.
 </p>
 </div>
 </section>

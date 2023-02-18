@@ -21,32 +21,35 @@ I prepare the spacial arrangement and plot the data within one script:
 #+begin_src python
 import matplotlib.pyplot as plt
 # create the figure
-fig, ax = plt.subplots(1, 2, figsize=(8,4))
+fig, ax = plt.subplots(1, 2, figsize=(8,4), dpi=300)
 # plot something on the second panel
 x = list(range(4))
 ax[1].scatter(x, x)
 # save the figure (for now)
-plt.savefig("my-path-to-the-figure.png", dpi=300)
+plt.savefig("my-path-to-the-figure.png")
 #+end_src
-The ~figsize~ argument in ~plt.subplots~ controls the width and the height of the figure, each in inches.
-The ~dpi~ argument in ~plt.savefig~ controls the number of dots (pixels) per inch.
+The ~figsize~ argument in ~plt.subplots~ controls the width and the height of the figure, each in inches, and the ~dpi~ argument controls the number of dots (pixels) per inch.
 Combining the two settings, the resolution of the output figure should be \(2400 \times 1200\) pixels.
 
 [[../../misc/coding/paper-figures-1.png]]
 
 * Generating a schematics with Inkscape
-Before drawing in Inkscape, we must set the page's size in the ~File >> Document properties...~ menu.
-In our spatial arrangement, the height and the width of the schematics should be half of those of the whole figure.
-The white space around the figure takes up about 20% of the width and height, so the page's width and height in inches should be \(8 \times 0.8 / 2 = 3.2\).
+Before drawing in Inkscape, we must get the schematics' size from Python:
+#+begin_src python
+bbox = ax[0].get_tightbbox(fig.canvas.get_renderer())
+print(bbox.x1, bbox.y1) # the height (x1) and the width (y1)
+#+end_src
+
+Now we set the page's size in the ~File >> Document properties...~ menu, using ~custom~ format in unit of ~px~ (pixel), and then filling in the height and width and make sure the orientation is correct.
 How to draw in Inkscape is beyond the scope of this post, but Inkscape includes a wonderful, interactive tutorial in the ~Help >> Tutorials~ menu.
 After finishing the schematics, save it as an ~.svg~ file for future modification, and export to a ~.png~ file to merge with the figure from Python.
-To export to PNG, find the ~File >> Export...~ menu and set the DPI to be 300 before exporting.
+To export to PNG, find the ~File >> Export...~ menu and within the prompted sidebar, choose the ~page~ menu and export with the default DPI (such that the width and height in ~px~ is correct).
 
 * Combining the schematics and the plots
 Now the read the PNG file exported from Inkscape back to Python and plot in the first panel:
 #+begin_src python
 img = plt.imread("my-path-to-the-inscape-image.png")
-ax[0].imshow(img) # you may try aspect="auto"
+ax[0].imshow(img)
 # hide the x and y axis
 ax[0].axis("off")
 #+end_src
@@ -66,17 +69,14 @@ for n, axis in enumerate(ax): # ax.flat if `ax` is an array
 #+end_src
 And don't forget to save the figure:
 #+begin_src python
-plt.savefig("my-path-to-the-figure.png", dpi=300)
+plt.savefig("my-path-to-the-figure.png")
 #+end_src
 Now we can place both the SVG file from Inkscape and the Python under version control!
 There's no need to place the generated PNG file under version control, because we'll get it back once we run the Python code again.
-
-One issue of this workflow is that the label of the schematics panel is not placed at the same level of other panel labels.
-This is because the size we used in the Inkscape section, \(3.2 \times 3.2\) inches, does not exactly match the size of the panel.
-To solve this, we can either (1) fine-tune the size in Inkscape or (2) set ~aspect="auto"~ when calling ~ax[0].imshow()~, or (3) adjust the whitespace between subplots using ~plt.subplots_adjust()~.
 
 [[../../misc/coding/paper-figures-2.png]]
 
 * More sophisticated cases
 ~matplotlib~ also supports more sophisticated spacial arrangement.
 See the official documentation of its [[https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec][GridSpec]] module.
+We can also create an inset panel within a panel with ~ax[0].inset_axes()~, see the official Documentation [[https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html][here]].

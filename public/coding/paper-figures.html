@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-02-18 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Streamlining creation of multi-panel paper figures with Python</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="/"> UP </a>
+ |
+ <a accesskey="H" href="/"> HOME </a>
+</div><main id="content" class="content">
+<header>
+<h1 class="title">Streamlining creation of multi-panel paper figures with Python</h1>
+</header><p>
+Papers published on scientific journals usually have limited space, so we usually have to generate figures with multiple panels.
+Within one figure, panels can be schematics (cartoons), example data (photos) and data analysis (plots).
+Usually, we manually combine the panels into a single figure in an image editing software, which makes it hard to be version-controlled.
+What&rsquo;s worse, the figures are subject to frequent update, which leads to:
+</p>
+<ol class="org-ol">
+<li>difficulty in reverting to, or recovering part of the previous version;</li>
+<li>repeated manual labour to combine panels;</li>
+<li>arbitrary positioning of the panels and their labels.</li>
+</ol>
+
+<p>
+Below, I show how to combine Python and Inkscape to streamline this process:
+</p>
+<ol class="org-ol">
+<li>use <code>matplotlib</code> in Python to generate the spatial arrangement of panels and plot data in data panels;</li>
+<li>(optional) use <a href="https://inkscape.org/">Inkscape</a> to generate schematics;</li>
+<li>use Python again to combine the Python output and the schematics, and generate panel labels (A, B, C&#x2026;).</li>
+</ol>
+
+<section id="outline-container-orga15ab76" class="outline-2">
+<h2 id="orga15ab76"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+For example, I want a 4-panel figure in a \(2 \times 2\) format, with the first being the schematics.
+I prepare the spacial arrangement and plot the data within one script:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">import</span> matplotlib.pyplot <span style="color: #5EC4FF;">as</span> plt
+<span style="color: #41505E;"># </span><span style="color: #41505E;">create the figure</span>
+<span style="color: #718CA1;">fig</span>, <span style="color: #718CA1;">ax</span> = plt.subplots(<span style="color: #E27E8D; font-weight: bold;">1</span>, <span style="color: #E27E8D; font-weight: bold;">2</span>, figsize=(<span style="color: #E27E8D; font-weight: bold;">8</span>,<span style="color: #E27E8D; font-weight: bold;">4</span>))
+<span style="color: #41505E;"># </span><span style="color: #41505E;">plot something on the second panel</span>
+x = <span style="color: #5EC4FF;">list</span>(<span style="color: #5EC4FF;">range</span>(<span style="color: #E27E8D; font-weight: bold;">4</span>))
+ax[<span style="color: #E27E8D; font-weight: bold;">1</span>].scatter(x, x)
+<span style="color: #41505E;"># </span><span style="color: #41505E;">save the figure (for now)</span>
+plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>, dpi=<span style="color: #E27E8D; font-weight: bold;">300</span>)
+</pre>
+</div>
+<p>
+The <code>figsize</code> argument in <code>plt.subplots</code> controls the width and the height of the figure, each in inches.
+The <code>dpi</code> argument in <code>plt.savefig</code> controls the number of dots (pixels) per inch.
+Combining the two settings, the resolution of the output figure should be \(2400 \times 1200\) pixels.
+</p>
+
+
+<figure id="org98cbc41">
+<img src="../../misc/coding/paper-figures-1.png" alt="paper-figures-1.png">
+
+</figure>
+</div>
+</section>
+
+<section id="outline-container-orgcef5688" class="outline-2">
+<h2 id="orgcef5688"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Before drawing in Inkscape, we must set the page&rsquo;s size in the <code>File &gt;&gt; Document properties...</code> menu.
+In our spatial arrangement, the height and the width of the schematics should be half of those of the whole figure.
+The white space around the figure takes up about 20% of the width and height, so the page&rsquo;s width and height in inches should be \(8 \times 0.8 / 2 = 3.2\).
+How to draw in Inkscape is beyond the scope of this post, but Inkscape includes a wonderful, interactive tutorial in the <code>Help &gt;&gt; Tutorials</code> menu.
+After finishing the schematics, save it as an <code>.svg</code> file for future modification, and export to a <code>.png</code> file to merge with the figure from Python.
+To export to PNG, find the <code>File &gt;&gt; Export...</code> menu and set the DPI to be 300 before exporting.
+</p>
+</div>
+</section>
+
+<section id="outline-container-org044cd8c" class="outline-2">
+<h2 id="org044cd8c"><span class="section-number-2">3.</span> Combining the schematics and the plots</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Now the read the PNG file exported from Inkscape back to Python and plot in the first panel:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #718CA1;">img</span> = plt.imread(<span style="color: #539AFC;">"my-path-to-the-inscape-image.png"</span>)
+ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].imshow(img) <span style="color: #41505E;"># </span><span style="color: #41505E;">you may try aspect="auto"</span>
+<span style="color: #41505E;"># </span><span style="color: #41505E;">hide the x and y axis</span>
+ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].axis(<span style="color: #539AFC;">"off"</span>)
+</pre>
+</div>
+
+<p>
+The last thing is to automatically add the labels A, B, C&#x2026; to the panels, which is adapted from <a href="https://stackoverflow.com/questions/25543978/matplotlib-annotate-subplots-in-a-figure-with-a-b-c">here</a>:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #5EC4FF;">import</span> string
+<span style="color: #5EC4FF;">for</span> n, axis <span style="color: #5EC4FF;">in</span> <span style="color: #5EC4FF;">enumerate</span>(ax): <span style="color: #41505E;"># </span><span style="color: #41505E;">ax.flat if `ax` is an array</span>
+    axis.text(
+        -<span style="color: #E27E8D; font-weight: bold;">0.05</span>,
+        <span style="color: #E27E8D; font-weight: bold;">1.05</span>,
+        string.ascii_uppercase[n],
+        transform=axis.transAxes,
+        size=<span style="color: #E27E8D; font-weight: bold;">20</span>,
+        weight=<span style="color: #539AFC;">"bold"</span>,
+    )
+</pre>
+</div>
+<p>
+And don&rsquo;t forget to save the figure:
+</p>
+<div class="org-src-container">
+<pre class="src src-python">plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>, dpi=<span style="color: #E27E8D; font-weight: bold;">300</span>)
+</pre>
+</div>
+<p>
+Now we can place both the SVG file from Inkscape and the Python under version control!
+There&rsquo;s no need to place the generated PNG file under version control, because we&rsquo;ll get it back once we run the Python code again.
+</p>
+
+<p>
+One issue of this workflow is that the label of the schematics panel is not placed at the same level of other panel labels.
+This is because the size we used in the Inkscape section, \(3.2 \times 3.2\) inches, does not exactly match the size of the panel.
+To solve this, we can either (1) fine-tune the size in Inkscape or (2) set <code>aspect="auto"</code> when calling <code>ax[0].imshow()</code>, or (3) adjust the whitespace between subplots using <code>plt.subplots_adjust()</code>.
+</p>
+
+
+<figure id="org2ae0d3b">
+<img src="../../misc/coding/paper-figures-2.png" alt="paper-figures-2.png">
+
+</figure>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-18, Last updated 2023-02-18, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+</footer>
+</body>
+</html>

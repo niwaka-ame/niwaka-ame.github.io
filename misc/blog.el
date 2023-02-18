@@ -26,7 +26,7 @@
       (format "%s" (capitalize (substring entry 0 -1)))
     (format "[[file:%s][%s]] --- %s"
             entry
-            (capitalize (org-publish-find-title entry project))
+            (org-publish-find-title entry project)
             (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))))
 
 (setq org-publish-project-alist

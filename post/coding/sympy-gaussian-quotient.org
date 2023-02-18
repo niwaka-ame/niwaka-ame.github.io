@@ -5,7 +5,7 @@
 We know that the ratio of two Gaussian variables both with mean zero [[https://en.wikipedia.org/wiki/Ratio_distribution][follows the Cauchy distribution]], but how about the more general case?
 
 This post serves two purposes:
-1. as an primitive investigation of the distribution of the ratio of two Gaussian variables;
+1. as a primitive investigation of the distribution of the ratio of two Gaussian variables;
 2. as an example on how to use [[https://www.sympy.org/en/index.html][SymPy]], a free and open source alternative of Mathematica.
 
 A key property that I'll show in this post: the mean and variance of the ratio diverge, regardless of the two variables' mean and variance.
@@ -15,7 +15,7 @@ Note: there's [[https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quo
 * Standard way of deriving a ratio's distribution
 Before we get into SymPy, perhaps it's best to do some math work on paper first.
 Let's consider the ratio \(R \equiv X/Y\), and both \(X\sim \text{Normal}(\mu_1, \sigma_1^2)\) and \(Y\sim \text{Normal}(\mu_2, \sigma_2^2)\).
-Then, we first consider the cumulative density function (CDF) of R, \(F(r)\), which consists of two parts:
+Then, we first consider the cumulative density function (CDF) of \(R\), \(F(r)\), which consists of two parts:
 #+NAME: eq:cdf-R
 \begin{equation}
     F(r) = P(R \leq r) = P(X \leq rY, Y>0) + P(X \geq rY, Y<0)
@@ -156,7 +156,7 @@ plt.show()
 [[../../misc/coding/sympy-gaussian-quotient.png]]
 
 We know that when \(\mu_1 = 0\) and \(\mu_2 = 0\), \(p(r)\) is a Cauchy distribution, whose mean and variance diverge.
-*Below I show that the mean and variance diverge for any real values of \(\mu_1\) and \(\mu_2\).*
+Below I show that the mean and variance diverge for any real values of \(\mu_1\) and \(\mu_2\).
 
 /Proof/:
 
@@ -177,3 +177,6 @@ r p(r) & \geq r \frac{2 \sigma_{1}^2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2
 & \equiv g(r) \nonumber
 \end{align}
 and \(\int_1^{+\infty} g(r) dr\) diverges, so \(\int_1^{ +\infty} r p(r) dr\) diverges, by the [[https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex)/06%3A_Techniques_of_Integration/6.08%3A_Improper_Integration][direct comparison test for improper integrals]]. \(\blacksquare\)
+
+I was hoping to get the mean of the ratio of, say, \(X \sim \textrm{Normal}(0, 1)\) and \(Y \sim \textrm{Normal}(10, 1)\), which seems benign because the distribution of the denominator \(Y\) is far away from zero.
+Yet, now I know that is impossible.

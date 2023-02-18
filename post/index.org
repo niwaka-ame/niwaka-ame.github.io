@@ -1,14 +1,15 @@
 #+TITLE: Yu Huo
 
 - Coding
-  - [[file:coding/sympy-gaussian-quotient.org][Derive The Distribution Of Two Gaussian Variables' Ratio With Sympy]] --- 2023-02-14
-  - [[file:coding/script-fu.org][Scripting With Script-Fu In Gimp To Compress Photos In Batch]] --- 2023-02-05
+  - [[file:coding/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]] --- 2023-02-18
+  - [[file:coding/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]] --- 2023-02-14
+  - [[file:coding/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]] --- 2023-02-05
 - About
   - [[file:about/me.org][Me]] --- 2023-02-06
 - Happy-Life
-  - [[file:happy-life/melrose.org][Melrose: The River Tweed, Eildon Hills And Middle-Age Abbey]] --- 2023-02-05
-  - [[file:happy-life/raiden2.org][Getting Raiden 2 Working On Retropie]] --- 2023-01-20
+  - [[file:happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]] --- 2023-02-05
+  - [[file:happy-life/raiden2.org][Getting Raiden 2 working on Retropie]] --- 2023-01-20
 - Emacs
-  - [[file:emacs/synced-encrypted-journal.org][Automatically Encrypt My Org Journal Diary While Syncing]] --- 2023-01-01
-  - [[file:emacs/build-blog.org][How Did I Build This Blog With Org Mode?]] --- 2022-07-02
-  - [[file:emacs/test.org][Test Of Blog Post Elements]] --- 2022-06-27
+  - [[file:emacs/synced-encrypted-journal.org][Automatically Encrypt my Org Journal Diary while Syncing]] --- 2023-01-01
+  - [[file:emacs/build-blog.org][How did I build this blog with Org Mode?]] --- 2022-07-02
+  - [[file:emacs/test.org][Test of blog post elements]] --- 2022-06-27

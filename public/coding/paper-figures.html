@@ -63,7 +63,7 @@ Below, I show how to combine Python and Inkscape to streamline this process:
 <h2 id="orga15ab76"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-For example, I want a 4-panel figure in a \(2 \times 2\) format, with the first being the schematics.
+For example, I want a 2-panel figure in a \(1 \times 2\) format, with the first being the schematics.
 I prepare the spacial arrangement and plot the data within one script:
 </p>
 <div class="org-src-container">
@@ -84,7 +84,7 @@ Combining the two settings, the resolution of the output figure should be \(2400
 </p>
 
 
-<figure id="org98cbc41">
+<figure id="orgaef4f7e">
 <img src="../../misc/coding/paper-figures-1.png" alt="paper-figures-1.png">
 
 </figure>
@@ -154,10 +154,20 @@ To solve this, we can either (1) fine-tune the size in Inkscape or (2) set <code
 </p>
 
 
-<figure id="org2ae0d3b">
+<figure id="org9feeaaf">
 <img src="../../misc/coding/paper-figures-2.png" alt="paper-figures-2.png">
 
 </figure>
+</div>
+</section>
+
+<section id="outline-container-org02170b4" class="outline-2">
+<h2 id="org02170b4"><span class="section-number-2">4.</span> More sophisticated cases</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>matplotlib</code> also supports more sophisticated spacial arrangement.
+See the official documentation of its <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec">GridSpec</a> module.
+</p>
 </div>
 </section>
 </main>

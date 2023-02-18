@@ -16,7 +16,7 @@ Below, I show how to combine Python and Inkscape to streamline this process:
 3. use Python again to combine the Python output and the schematics, and generate panel labels (A, B, C...).
 
 * Generating spatial arrangement and plots of data
-For example, I want a 4-panel figure in a \(2 \times 2\) format, with the first being the schematics.
+For example, I want a 2-panel figure in a \(1 \times 2\) format, with the first being the schematics.
 I prepare the spacial arrangement and plot the data within one script:
 #+begin_src python
 import matplotlib.pyplot as plt
@@ -76,3 +76,7 @@ This is because the size we used in the Inkscape section, \(3.2 \times 3.2\) inc
 To solve this, we can either (1) fine-tune the size in Inkscape or (2) set ~aspect="auto"~ when calling ~ax[0].imshow()~, or (3) adjust the whitespace between subplots using ~plt.subplots_adjust()~.
 
 [[../../misc/coding/paper-figures-2.png]]
+
+* More sophisticated cases
+~matplotlib~ also supports more sophisticated spacial arrangement.
+See the official documentation of its [[https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec][GridSpec]] module.

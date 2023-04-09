@@ -7,6 +7,7 @@
 - About
   - [[file:about/me.org][Me]] --- 2023-02-06
 - Happy-Life
+  - [[file:happy-life/aberfoyle-callander.org][Aberfoyle to Callander: an early spring walk near the Highlands]] --- 2023-04-09
   - [[file:happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]] --- 2023-02-05
   - [[file:happy-life/raiden2.org][Getting Raiden 2 working on Retropie]] --- 2023-01-20
 - Emacs

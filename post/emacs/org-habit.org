@@ -1,0 +1,37 @@
+#+title: Tracking my habits with Org Habit
+#+date: <2023-04-18 Tue>
+#+options: toc:nil
+#+PROPERTY: header-args :eval never-export :results verbatim
+
+Motivated by the [[https://sachachua.com/blog/2012/05/org-mode-and-habits/][blog post]] by Sacha Chua, I began to use Org Habit to track my habits.
+I failed once in my first attempt last year, but this time, starting two weeks ago, is so far so good.
+
+How does Org Habit work?
+In short, Org Habit reads from an ~org~ file my habits and frequency, and then display the habits together with the consistency map of each on my Org agenda list.
+The colour on the map shows whether I followed the scheduled habit or not, and details are in the [[https://orgmode.org/manual/Tracking-your-habits.html][Org Mode Manual]].
+So the rule is simple: try not to break the blue/green streaks.
+But I found that it can be used to track /bad/ habits too, with a reverted rule: try not to break the /red/ streaks.
+
+And I realised some tricks to keep alive the habit of tracking my habits:
++ Build habits gradually. Do not overload myself with every ambitious habit in my mind at the very beginning.
++ Include some easy-to-achieve habits. Recording the completion of such a habit will remind me of the other harder ones.
++ Record with a convenient device. So I can easily record something like "go to bed at 11pm". Now I use the [[https://www.emacswiki.org/emacs/EmacsOnAndroid][Android port of Emacs]] on my phone.
+
+What's my configuration?
+
+#+begin_src elisp
+(add-to-list 'org-modules 'org-habit)
+(setq org-agenda-files (list (concat emacs-dir "habits.org"))
+      org-habit-show-all-today t
+      org-agenda-span 1
+      org-agenda-start-day "+0d"
+      org-habit-preceding-days 14
+      org-habit-following-days 6
+      org-habit-graph-column 27
+      )
+#+end_src
+
+Here I tweaked Org Agenda so it's only for displaying habits (for agenda I use the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Diary.html][Diary Mode]]) by setting ~org-agenda-span~ and ~org-agenda-start-day~,
+and I like to see all habits whether it is to be completed today or not, so I set ~org-habit-show-all-today~ as ~t~.
+The rest are just how many days in the past and future to display and where to display the consistency map.
+

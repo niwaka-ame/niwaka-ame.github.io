@@ -91,7 +91,17 @@ fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 <span style="colo
 fcitx5-frontend-qt5
 </pre>
 </div></li>
-<li>重新在 <code>Fcitx 配置</code> 中配置所需输入法即可.</li>
+<li>重新在 <code>Fcitx 配置</code> 中配置所需输入法.</li>
+<li><p>
+设置环境变量, 在 <code>/etc/profile</code> 文件中写入:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #5EC4FF;">export</span> <span style="color: #718CA1;">XMODIFIERS</span>=@<span style="color: #718CA1;">im</span>=fcitx
+<span style="color: #5EC4FF;">export</span> <span style="color: #718CA1;">GTK_IM_MODULE</span>=fcitx
+<span style="color: #5EC4FF;">export</span> <span style="color: #718CA1;">QT_IM_MODULE</span>=fcitx
+</pre>
+</div></li>
+<li>令 Fcitx 随系统启动时自启动. 在 <code>控制中心</code> 中找到 <code>启动应用程序</code>, 点击 <code>添加</code>, 名称为 <code>fcitx5</code>, 命令为 <code>/usr/bin/fcitx5</code>.</li>
 </ol>
 </div>
 </section>

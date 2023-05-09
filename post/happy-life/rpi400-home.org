@@ -40,7 +40,14 @@ fcitx5-chinese-addons \
 fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 \
 fcitx5-frontend-qt5
     #+end_src
-3. 重新在 ~Fcitx 配置~ 中配置所需输入法即可.
+3. 重新在 ~Fcitx 配置~ 中配置所需输入法.
+4. 设置环境变量, 在 ~/etc/profile~ 文件中写入:
+   #+begin_src shell
+export XMODIFIERS=@im=fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+   #+end_src
+5. 令 Fcitx 随系统启动时自启动. 在 ~控制中心~ 中找到 ~启动应用程序~, 点击 ~添加~, 名称为 ~fcitx5~, 命令为 ~/usr/bin/fcitx5~.
 
 * 改变外观布局
 Ubuntu MATE 的默认外观为 Gnome 2 的经典样式, 而家里人习惯使用类似于 Windows XP 的体验.

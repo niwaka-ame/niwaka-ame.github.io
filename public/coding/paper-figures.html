@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-02-18 -->
+<!-- 2023-05-09 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Streamlining creation of multi-panel paper figures with Python</title>
@@ -59,8 +59,8 @@ Below, I show how to combine Python and Inkscape to streamline this process:
 <li>use Python again to combine the Python output and the schematics, and generate panel labels (A, B, C&#x2026;).</li>
 </ol>
 
-<section id="outline-container-orga15ab76" class="outline-2">
-<h2 id="orga15ab76"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
+<section id="outline-container-org8be932b" class="outline-2">
+<h2 id="org8be932b"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 For example, I want a 2-panel figure in a \(1 \times 2\) format, with the first being the schematics.
@@ -71,7 +71,7 @@ I prepare the spacial arrangement and plot the data within one script:
 <span style="color: #41505E;"># </span><span style="color: #41505E;">create the figure</span>
 <span style="color: #718CA1;">fig</span>, <span style="color: #718CA1;">ax</span> = plt.subplots(<span style="color: #E27E8D; font-weight: bold;">1</span>, <span style="color: #E27E8D; font-weight: bold;">2</span>, figsize=(<span style="color: #E27E8D; font-weight: bold;">8</span>,<span style="color: #E27E8D; font-weight: bold;">4</span>), dpi=<span style="color: #E27E8D; font-weight: bold;">300</span>)
 <span style="color: #41505E;"># </span><span style="color: #41505E;">plot something on the second panel</span>
-x = <span style="color: #5EC4FF;">list</span>(<span style="color: #5EC4FF;">range</span>(<span style="color: #E27E8D; font-weight: bold;">4</span>))
+<span style="color: #718CA1;">x</span> = <span style="color: #5EC4FF;">list</span>(<span style="color: #5EC4FF;">range</span>(<span style="color: #E27E8D; font-weight: bold;">4</span>))
 ax[<span style="color: #E27E8D; font-weight: bold;">1</span>].scatter(x, x)
 <span style="color: #41505E;"># </span><span style="color: #41505E;">save the figure (for now)</span>
 plt.savefig(<span style="color: #539AFC;">"my-path-to-the-figure.png"</span>)
@@ -83,15 +83,15 @@ Combining the two settings, the resolution of the output figure should be \(2400
 </p>
 
 
-<figure id="org5d19f77">
+<figure id="org9cb6379">
 <img src="../../misc/coding/paper-figures-1.png" alt="paper-figures-1.png">
 
 </figure>
 </div>
 </section>
 
-<section id="outline-container-orgcef5688" class="outline-2">
-<h2 id="orgcef5688"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
+<section id="outline-container-org14a760b" class="outline-2">
+<h2 id="org14a760b"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Before drawing in Inkscape, we must get the schematics&rsquo; size from Python:
@@ -111,8 +111,8 @@ To export to PNG, find the <code>File &gt;&gt; Export...</code> menu and within 
 </div>
 </section>
 
-<section id="outline-container-org044cd8c" class="outline-2">
-<h2 id="org044cd8c"><span class="section-number-2">3.</span> Combining the schematics and the plots</h2>
+<section id="outline-container-org4f57dc4" class="outline-2">
+<h2 id="org4f57dc4"><span class="section-number-2">3.</span> Combining the schematics and the plots</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Now the read the PNG file exported from Inkscape back to Python and plot in the first panel:
@@ -154,15 +154,15 @@ There&rsquo;s no need to place the generated PNG file under version control, bec
 </p>
 
 
-<figure id="org87d7e82">
+<figure id="org93c7a12">
 <img src="../../misc/coding/paper-figures-2.png" alt="paper-figures-2.png">
 
 </figure>
 </div>
 </section>
 
-<section id="outline-container-org02170b4" class="outline-2">
-<h2 id="org02170b4"><span class="section-number-2">4.</span> More sophisticated cases</h2>
+<section id="outline-container-org6b8d7f9" class="outline-2">
+<h2 id="org6b8d7f9"><span class="section-number-2">4.</span> More sophisticated cases</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>matplotlib</code> also supports more sophisticated spacial arrangement.
@@ -173,7 +173,7 @@ We can also create an inset panel within a panel with <code>ax[0].inset_axes()</
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-18, Last updated 2023-02-18, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-18, Last updated 2023-05-09, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

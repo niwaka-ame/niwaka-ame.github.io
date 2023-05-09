@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-02-18 -->
+<!-- 2023-05-09 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Derive the distribution of two Gaussian variables' ratio with SymPy</title>
@@ -58,8 +58,8 @@ A key property that I&rsquo;ll show in this post: the mean and variance of the r
 Note: there&rsquo;s <a href="https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient">another blog post</a> which shows that the ratio of two Gaussian <i>densities</i> still being Gaussian, which is not to be confused with.
 </p>
 
-<section id="outline-container-org805d85a" class="outline-2">
-<h2 id="org805d85a"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
+<section id="outline-container-org6e9dbdf" class="outline-2">
+<h2 id="org6e9dbdf"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Before we get into SymPy, perhaps it&rsquo;s best to do some math work on paper first.
@@ -67,14 +67,14 @@ Let&rsquo;s consider the ratio \(R \equiv X/Y\), and both \(X\sim \text{Normal}(
 Then, we first consider the cumulative density function (CDF) of \(R\), \(F(r)\), which consists of two parts:
 </p>
 \begin{equation}
-\label{org6fe0c28}
+\label{org6cee05e}
     F(r) = P(R \leq r) = P(X \leq rY, Y>0) + P(X \geq rY, Y<0)
 \end{equation}
 <p>
 and the probability density \(p(r)\) is
 </p>
 \begin{align}
-\label{org4f50bbf}
+\label{org8eda0f7}
     p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \nonumber \\
         &\equiv p_{+}(r) + p_{-}(r)
 \end{align}
@@ -83,14 +83,14 @@ and the probability density \(p(r)\) is
 When \(Y>0\),
 </p>
 \begin{equation}
-\label{orge268b34}
+\label{org369097d}
     P(X \leq RY) = \int_0^{+\infty} p(y) \left(\int_{-\infty}^{ry} p(x) dx\right) dy
 \end{equation}
 <p>
 and we&rsquo;re interested in the PDF:
 </p>
 \begin{align}
-\label{org60e41d8}
+\label{org69dd62b}
     p_+(r) &= \frac{d}{dr}P(X \leq RY) \\
     & = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
     & = \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
@@ -103,20 +103,20 @@ where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X
 Similarly, when \(Y<0\), we have
 </p>
 \begin{align}
-\label{org0db716c}
+\label{org25c8716}
     p_-(r) &= \frac{d}{dr}P(X \geq RY) \\
     & = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \nonumber \\
     & = - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
 \end{align}
 
 <p>
-Now we can use SymPy to analytically integrate Eqs \eqref{org60e41d8} and \eqref{org0db716c}.
+Now we can use SymPy to analytically integrate Eqs \eqref{org69dd62b} and \eqref{org25c8716}.
 </p>
 </div>
 </section>
 
-<section id="outline-container-orgde27057" class="outline-2">
-<h2 id="orgde27057"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
+<section id="outline-container-org1801077" class="outline-2">
+<h2 id="org1801077"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We first import the module and generate symbols:
@@ -137,7 +137,7 @@ Type in the Gaussian densities of \(X\) and \(Y\):
 </div>
 
 <p>
-Integrate Eqs \eqref{org60e41d8} and \eqref{org0db716c}:
+Integrate Eqs \eqref{org69dd62b} and \eqref{org25c8716}:
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #41505E;"># </span><span style="color: #41505E;">substitute ry into px first</span>
@@ -162,7 +162,7 @@ So I need to select the case of interest with <code>args</code>, replace the <co
 Now the get the expression of \(p(r)\):
 </p>
 \begin{align}
-\label{org9d19231}
+\label{org6157794}
 p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \\
 & \times \Bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
 & + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\Bigg] \nonumber
@@ -179,7 +179,7 @@ It is best to check if \(p(r)\) is a Cauchy distribution when \(\mu_1 = 0\) and 
 which prints
 </p>
 \begin{equation}
-\label{orgd4ddb9a}
+\label{orgfb5d4e8}
     \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}
 \end{equation}
 <p>
@@ -204,8 +204,8 @@ We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the 
 </div>
 </section>
 
-<section id="outline-container-orgf109418" class="outline-2">
-<h2 id="orgf109418"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
+<section id="outline-container-orgf3ba566" class="outline-2">
+<h2 id="orgf3ba566"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 \(p(r)\) is even when \(\mu_1 = 0\):
@@ -218,7 +218,7 @@ We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the 
 which gives
 </p>
 \begin{align}
-\label{org22327f6}
+\label{org5869356}
 p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \\
 & \times \Bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
 & + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg] \nonumber
@@ -235,7 +235,7 @@ The expression does not seem to be even at first sight when \(\mu_2 = 0\):
 </pre>
 </div>
 \begin{align}
-\label{org4056564}
+\label{org29ac1dd}
 p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \\
 & \times \Bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
 & + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg] \nonumber
@@ -261,7 +261,7 @@ plt.show()
 </div>
 
 
-<figure id="org55183ec">
+<figure id="org0aefd76">
 <img src="../../misc/coding/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png">
 
 </figure>
@@ -281,10 +281,10 @@ To prove \(\int_{-\infty}^{+ \infty} r p(r) dr\) diverge, we only need to prove 
 </p>
 
 <p>
-The second term within the square bracket of Eq \eqref{org9d19231}
+The second term within the square bracket of Eq \eqref{org6157794}
 </p>
 \begin{equation}
-\label{org5d32029}
+\label{org81857c1}
 \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0
 \end{equation}
 <p>
@@ -292,7 +292,7 @@ because \(z \cdot \mathrm{erf}(Az) \geq 0\) for any real \(z\) when \(A > 0\), a
 Thus, given \(r \geq 1\),
 </p>
 \begin{align}
-\label{org4335f02}
+\label{orgde3d64b}
 r p(r) & \geq r \frac{2 \sigma_{1}^2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}}{2 \pi \sigma_1 \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \\
 & = r \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
 & \equiv g(r) \nonumber
@@ -309,7 +309,7 @@ Yet, now I know that is impossible.
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-14, Last updated 2023-02-18, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-14, Last updated 2023-05-09, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

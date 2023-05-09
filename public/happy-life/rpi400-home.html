@@ -46,6 +46,7 @@ Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支�
 
 <p>
 存储卡用的是 Ubuntu MATE 官网推荐的 Kingston microSDXC Canvas Go Plus, 容量 128 GB (88 元).
+<a href="https://ubuntu-mate.org/raspberry-pi/compatibility/">据官网所述</a>, 存储卡对性能影响较大, 须谨慎选择存储卡, 不要贪便宜.
 </p>
 </div>
 </section>
@@ -63,10 +64,10 @@ Ubuntu MATE 提供了预制的镜像, 只需按照<a href="https://ubuntu-mate.o
 <h2 id="org6f3fc76"><span class="section-number-2">3.</span> 换源, 安装中文支持和输入法</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-安装完毕的系统中文支持并不完善, 需安装中文支持, 而默认的国外软件源十分缓慢.
+安装完毕的系统中文支持并不完善, 需下载并安装中文支持, 而默认的国外软件源十分缓慢.
 因此首先换源, 可参见<a href="https://blog.csdn.net/Brendon_Tan/article/details/107107550">这篇博客</a>.
 之后在 <code>菜单</code> 中进入 <code>控制中心</code>, 选择 <code>语言支持</code>, 会自动检查语言支持, 提示&ldquo;语言支持没有安装完整&rdquo;, 此时安装语言支持.
-安装完语言支持后, 在 <code>语言支持</code> 菜单中的 <code>键盘输入法系统</code> 选择 Fcitx 5, 然后在 <code>菜单</code> 中找到 <code>Fcitx 配置</code>, 把所需的输入法移动到当前输入法中, 此时中文输入法应该可以使用了.
+安装完语言支持后, 在 <code>语言支持</code> 菜单中的 <code>键盘输入法系统</code> 选择 Fcitx 5 (也就是小企鹅输入法), 然后在 <code>菜单</code> 中找到 <code>Fcitx 配置</code>, 把所需的输入法移动到当前输入法中, 此时从菜单中运行 Fcitx 5, 中文输入法应该可以使用了.
 </p>
 
 <p>
@@ -138,7 +139,7 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 </ol>
 
 <p>
-其它有用的插件, 比如 Dark Reader, 可以直接从火狐官网安装.
+其它有用的插件, 比如 <a href="https://addons.mozilla.org/zh-CN/firefox/addon/darkreader/">Dark Reader</a>, 可以直接从火狐官网安装.
 </p>
 </div>
 </section>
@@ -149,7 +150,7 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 <ul class="org-ul">
 <li>腾讯会议 (Linux 版的 QQ 暂不支持视频通话), 直接从官网下载 ARM64 版本的 <code>deb</code> 包安装即可. 家里的罗技 USB 摄像头可以即插即用. 视频效果良好不卡顿.</li>
 <li><a href="https://github.com/qier222/YesPlayMusic">YesPlayMusic</a>, 优秀的网易云音乐第三方客户端.
-直接在 Releases 页面中下载 ARM64 版本的 <code>tar.gz</code> 文件, 解压缩, 运行 yesplaymusic 即可. 国内 GitHub 下载速度缓慢, 可使用 <a href="https://ghproxy.net/">ghproxy</a> 加速下载.</li>
+直接在 Releases 页面中下载 ARM64 版本的 <code>tar.gz</code> 文件, 解压缩, 运行 <code>yesplaymusic</code> 文件即可. 国内 GitHub 下载速度缓慢, 可使用 <a href="https://ghproxy.net/">ghproxy</a> 加速下载.</li>
 </ul>
 </div>
 </section>

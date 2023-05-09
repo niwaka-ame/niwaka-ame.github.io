@@ -17,15 +17,16 @@ Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支�
 淘宝上似乎没有 micro HDMI 直接转 VGA 的线, 因此购买了一根 micro HDMI 转 HDMI 线, 外加一根 HDMI 转 VGA 带 3.5 mm 母口的线 (共 45 元).
 
 存储卡用的是 Ubuntu MATE 官网推荐的 Kingston microSDXC Canvas Go Plus, 容量 128 GB (88 元).
+[[https://ubuntu-mate.org/raspberry-pi/compatibility/][据官网所述]], 存储卡对性能影响较大, 须谨慎选择存储卡, 不要贪便宜.
 
 * 系统安装
 Ubuntu MATE 提供了预制的镜像, 只需按照[[https://ubuntu-mate.org/raspberry-pi/install/][官方教程]]把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
 
 * 换源, 安装中文支持和输入法
-安装完毕的系统中文支持并不完善, 需安装中文支持, 而默认的国外软件源十分缓慢.
+安装完毕的系统中文支持并不完善, 需下载并安装中文支持, 而默认的国外软件源十分缓慢.
 因此首先换源, 可参见[[https://blog.csdn.net/Brendon_Tan/article/details/107107550][这篇博客]].
 之后在 ~菜单~ 中进入 ~控制中心~, 选择 ~语言支持~, 会自动检查语言支持, 提示"语言支持没有安装完整", 此时安装语言支持.
-安装完语言支持后, 在 ~语言支持~ 菜单中的 ~键盘输入法系统~ 选择 Fcitx 5, 然后在 ~菜单~ 中找到 ~Fcitx 配置~, 把所需的输入法移动到当前输入法中, 此时中文输入法应该可以使用了.
+安装完语言支持后, 在 ~语言支持~ 菜单中的 ~键盘输入法系统~ 选择 Fcitx 5 (也就是小企鹅输入法), 然后在 ~菜单~ 中找到 ~Fcitx 配置~, 把所需的输入法移动到当前输入法中, 此时从菜单中运行 Fcitx 5, 中文输入法应该可以使用了.
 
 然而此时遇到一个 bug, 也就是在火狐或者 Chromium 浏览器中无法显示选字框, 但在其它软件中正常, 原因未明.
 解决方案为重新安装 Fcitx 5:
@@ -65,12 +66,12 @@ snap remove firefox
 2. 在火狐中打开 ~about:config~ 页面, 搜索 ~xpinstall.signatures.required~, 把值设置为 ~false~.
 3. 在 ~扩展与主题~ 菜单中点击齿轮按钮, 选择 ~从文件安装附加组件...~, 选择之前下载的 ~.xpi~ 文件即可安装.
 
-其它有用的插件, 比如 Dark Reader, 可以直接从火狐官网安装.
+其它有用的插件, 比如 [[https://addons.mozilla.org/zh-CN/firefox/addon/darkreader/][Dark Reader]], 可以直接从火狐官网安装.
 
 * 其它有用的软件
 + 腾讯会议 (Linux 版的 QQ 暂不支持视频通话), 直接从官网下载 ARM64 版本的 ~deb~ 包安装即可. 家里的罗技 USB 摄像头可以即插即用. 视频效果良好不卡顿.
 + [[https://github.com/qier222/YesPlayMusic][YesPlayMusic]], 优秀的网易云音乐第三方客户端.
-  直接在 Releases 页面中下载 ARM64 版本的 ~tar.gz~ 文件, 解压缩, 运行 yesplaymusic 即可. 国内 GitHub 下载速度缓慢, 可使用 [[https://ghproxy.net/][ghproxy]] 加速下载.
+  直接在 Releases 页面中下载 ARM64 版本的 ~tar.gz~ 文件, 解压缩, 运行 ~yesplaymusic~ 文件即可. 国内 GitHub 下载速度缓慢, 可使用 [[https://ghproxy.net/][ghproxy]] 加速下载.
 
 * 未实现的功能
 + 使用 VNC 通过公网 IP 实现远程控制, 远程帮助家里解决软件问题.

@@ -20,7 +20,7 @@ Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支�
 [[https://ubuntu-mate.org/raspberry-pi/compatibility/][据官网所述]], 存储卡对性能影响较大, 须谨慎选择存储卡, 不要贪便宜.
 
 * 系统安装
-Ubuntu MATE 提供了预制的镜像, 只需按照[[https://ubuntu-mate.org/raspberry-pi/install/][官方教程]]把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
+Ubuntu MATE 提供了预制的镜像, 只需下载 ARM64 版本的镜像([[https://ubuntu-mate.org/raspberry-pi/download/][页面]]), 按照[[https://ubuntu-mate.org/raspberry-pi/install/][官方教程]]把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
 
 * 换源, 安装中文支持和输入法
 安装完毕的系统中文支持并不完善, 需下载并安装中文支持, 而默认的国外软件源十分缓慢.
@@ -59,7 +59,7 @@ Ubuntu MATE 已经内置了相应的功能, 在 ~控制中心~ 中找到 ~MATE T
 Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未经签名的插件, 比如广告屏蔽的 [[https://github.com/gorhill/uBlock][uBlock Origin]] 将无法安装 (火狐在中国不提供 uBlock Origin).
 而 ESR 版本的火狐并不在 Ubuntu 的软件源中, 因此在 ~Boutique 商店~ 中使用第三方源安装 Firefox ESR (在国内速度比较缓慢), 并从终端卸载自带的火狐:
 #+begin_src shell
-snap remove firefox
+sudo snap remove firefox
 #+end_src
 然后:
 1. 从[[https://github.com/gorhill/uBlock/releases][uBlock Origin 的 Releases页面]]中下载后缀为 ~.xpi~ 的火狐插件文件.
@@ -72,6 +72,15 @@ snap remove firefox
 + 腾讯会议 (Linux 版的 QQ 暂不支持视频通话), 直接从官网下载 ARM64 版本的 ~deb~ 包安装即可. 家里的罗技 USB 摄像头可以即插即用. 视频效果良好不卡顿.
 + [[https://github.com/qier222/YesPlayMusic][YesPlayMusic]], 优秀的网易云音乐第三方客户端.
   直接在 Releases 页面中下载 ARM64 版本的 ~tar.gz~ 文件, 解压缩, 运行 ~yesplaymusic~ 文件即可. 国内 GitHub 下载速度缓慢, 可使用 [[https://ghproxy.net/][ghproxy]] 加速下载.
++ 星际译王, 类似于金山词霸的词典软件. 在终端输入 ~sudo apt install stardict~ 安装.
+  星际译王自身不带有词典, 可从作者的[[http://download.huzheng.org/][网站]]下载词典, 个人较为喜欢的是[[http://download.huzheng.org/zh_CN/][此页面]]中的朗道英汉和朗道汉英词典.
+  下载后, 运行:
+  #+begin_src shell
+tar xvf ~/下载/<某字典>.tar.bz2
+cd ~/下载/<某字典>
+sudo cp * /usr/share/stardict/dic/stardict-dict
+  #+end_src
+  重启星际译王即可.
 
 * 未实现的功能
 + 使用 VNC 通过公网 IP 实现远程控制, 远程帮助家里解决软件问题.

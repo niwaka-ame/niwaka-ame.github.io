@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-05-09 -->
+<!-- 2023-05-10 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>给家里装了一台树莓派400</title>
@@ -55,7 +55,7 @@ Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支�
 <h2 id="org550bb72"><span class="section-number-2">2.</span> 系统安装</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Ubuntu MATE 提供了预制的镜像, 只需按照<a href="https://ubuntu-mate.org/raspberry-pi/install/">官方教程</a>把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
+Ubuntu MATE 提供了预制的镜像, 只需下载 ARM64 版本的镜像(<a href="https://ubuntu-mate.org/raspberry-pi/download/">页面</a>), 按照<a href="https://ubuntu-mate.org/raspberry-pi/install/">官方教程</a>把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
 </p>
 </div>
 </section>
@@ -126,7 +126,7 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 而 ESR 版本的火狐并不在 Ubuntu 的软件源中, 因此在 <code>Boutique 商店</code> 中使用第三方源安装 Firefox ESR (在国内速度比较缓慢), 并从终端卸载自带的火狐:
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">snap remove firefox
+<pre class="src src-shell"><span style="color: #EBBF83;">sudo</span> snap remove firefox
 </pre>
 </div>
 <p>
@@ -151,6 +151,20 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 <li>腾讯会议 (Linux 版的 QQ 暂不支持视频通话), 直接从官网下载 ARM64 版本的 <code>deb</code> 包安装即可. 家里的罗技 USB 摄像头可以即插即用. 视频效果良好不卡顿.</li>
 <li><a href="https://github.com/qier222/YesPlayMusic">YesPlayMusic</a>, 优秀的网易云音乐第三方客户端.
 直接在 Releases 页面中下载 ARM64 版本的 <code>tar.gz</code> 文件, 解压缩, 运行 <code>yesplaymusic</code> 文件即可. 国内 GitHub 下载速度缓慢, 可使用 <a href="https://ghproxy.net/">ghproxy</a> 加速下载.</li>
+<li><p>
+星际译王, 类似于金山词霸的词典软件. 在终端输入 <code>sudo apt install stardict</code> 安装.
+星际译王自身不带有词典, 可从作者的<a href="http://download.huzheng.org/">网站</a>下载词典, 个人较为喜欢的是<a href="http://download.huzheng.org/zh_CN/">此页面</a>中的朗道英汉和朗道汉英词典.
+下载后, 运行:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tar xvf ~/&#19979;&#36733;/&lt;&#26576;&#23383;&#20856;&gt;.tar.bz2
+<span style="color: #EBBF83;">cd</span> ~/&#19979;&#36733;/&lt;&#26576;&#23383;&#20856;&gt;
+<span style="color: #EBBF83;">sudo</span> <span style="color: #EBBF83;">cp</span> * /usr/share/stardict/dic/stardict-dict
+</pre>
+</div>
+<p>
+重启星际译王即可.
+</p></li>
 </ul>
 </div>
 </section>
@@ -165,7 +179,7 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-05-09, Last updated 2023-05-09, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-05-09, Last updated 2023-05-10, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

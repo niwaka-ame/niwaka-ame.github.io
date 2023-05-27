@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-05-10 -->
+<!-- 2023-05-27 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>给家里装了一台树莓派400</title>
@@ -31,8 +31,8 @@ Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支�
 兹记录安装配置过程如下.
 </p>
 
-<section id="outline-container-orga2666e0" class="outline-2">
-<h2 id="orga2666e0"><span class="section-number-2">1.</span> 硬件</h2>
+<section id="outline-container-orgde35227" class="outline-2">
+<h2 id="orgde35227"><span class="section-number-2">1.</span> 硬件</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 卖家已经提供了一根网线和一个无线鼠标.
@@ -51,8 +51,8 @@ Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支�
 </div>
 </section>
 
-<section id="outline-container-org550bb72" class="outline-2">
-<h2 id="org550bb72"><span class="section-number-2">2.</span> 系统安装</h2>
+<section id="outline-container-orgf705fa5" class="outline-2">
+<h2 id="orgf705fa5"><span class="section-number-2">2.</span> 系统安装</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Ubuntu MATE 提供了预制的镜像, 只需下载 ARM64 版本的镜像(<a href="https://ubuntu-mate.org/raspberry-pi/download/">页面</a>), 按照<a href="https://ubuntu-mate.org/raspberry-pi/install/">官方教程</a>把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
@@ -60,8 +60,8 @@ Ubuntu MATE 提供了预制的镜像, 只需下载 ARM64 版本的镜像(<a href
 </div>
 </section>
 
-<section id="outline-container-org6f3fc76" class="outline-2">
-<h2 id="org6f3fc76"><span class="section-number-2">3.</span> 换源, 安装中文支持和输入法</h2>
+<section id="outline-container-org73af83f" class="outline-2">
+<h2 id="org73af83f"><span class="section-number-2">3.</span> 换源, 安装中文支持和输入法</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 安装完毕的系统中文支持并不完善, 需下载并安装中文支持, 而默认的国外软件源十分缓慢.
@@ -107,8 +107,8 @@ fcitx5-frontend-qt5
 </div>
 </section>
 
-<section id="outline-container-org076f553" class="outline-2">
-<h2 id="org076f553"><span class="section-number-2">4.</span> 改变外观布局</h2>
+<section id="outline-container-orgf49b585" class="outline-2">
+<h2 id="orgf49b585"><span class="section-number-2">4.</span> 改变外观布局</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Ubuntu MATE 的默认外观为 Gnome 2 的经典样式, 而家里人习惯使用类似于 Windows XP 的体验.
@@ -118,8 +118,8 @@ Ubuntu MATE 已经内置了相应的功能, 在 <code>控制中心</code> 中找
 </div>
 </section>
 
-<section id="outline-container-org3cfc576" class="outline-2">
-<h2 id="org3cfc576"><span class="section-number-2">5.</span> 安装 ESR 版的火狐浏览器和 uBlock Origin</h2>
+<section id="outline-container-org28d1148" class="outline-2">
+<h2 id="org28d1148"><span class="section-number-2">5.</span> 安装 ESR 版的火狐浏览器和 uBlock Origin</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未经签名的插件, 比如广告屏蔽的 <a href="https://github.com/gorhill/uBlock">uBlock Origin</a> 将无法安装 (火狐在中国不提供 uBlock Origin).
@@ -144,8 +144,8 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 </div>
 </section>
 
-<section id="outline-container-org7491f87" class="outline-2">
-<h2 id="org7491f87"><span class="section-number-2">6.</span> 其它有用的软件</h2>
+<section id="outline-container-org76e65df" class="outline-2">
+<h2 id="org76e65df"><span class="section-number-2">6.</span> 其它有用的软件</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li>腾讯会议 (Linux 版的 QQ 暂不支持视频通话), 直接从官网下载 ARM64 版本的 <code>deb</code> 包安装即可. 家里的罗技 USB 摄像头可以即插即用. 视频效果良好不卡顿.</li>
@@ -169,8 +169,8 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 </div>
 </section>
 
-<section id="outline-container-org449026a" class="outline-2">
-<h2 id="org449026a"><span class="section-number-2">7.</span> 未实现的功能</h2>
+<section id="outline-container-orgaa588af" class="outline-2">
+<h2 id="orgaa588af"><span class="section-number-2">7.</span> 未实现的功能</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li>使用 VNC 通过公网 IP 实现远程控制, 远程帮助家里解决软件问题.</li>
@@ -179,7 +179,7 @@ Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未�
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-05-09, Last updated 2023-05-10, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.1 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-05-09, Last updated 2023-05-27, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

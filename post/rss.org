@@ -1,0 +1,19 @@
+#+TITLE: Yu Huo: niwaka-ame.github.io
+
+- emacs
+  - [[file:emacs/synced-encrypted-journal.org][Automatically Encrypt my Org Journal Diary while Syncing]]
+  - [[file:emacs/build-blog.org][How did I build this blog with Org Mode?]]
+  - [[file:emacs/test.org][Test of blog post elements]]
+- happy-life
+  - [[file:happy-life/rpi400-home.org][给家里装了一台树莓派400]]
+  - [[file:happy-life/aberfoyle-callander.org][Aberfoyle to Callander: an early spring walk near the Highlands]]
+  - [[file:happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]]
+  - [[file:happy-life/raiden2.org][Getting Raiden 2 working on Retropie]]
+- misc
+  - [[file:misc/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]]
+- coding
+  - [[file:coding/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]]
+  - [[file:coding/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]]
+  - [[file:coding/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]]
+- about
+  - [[file:about/me.org][Me]]

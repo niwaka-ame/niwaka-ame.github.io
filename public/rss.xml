@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+	 xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	 xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	 xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	 xmlns:georss="http://www.georss.org/georss"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:media="http://search.yahoo.com/mrss/"><channel>
+  <title>Yu Huo: niwaka-ame.github.io</title>
+  <atom:link href="/rss.xml" rel="self" type="application/rss+xml" />
+  <link>/</link>
+  <description><![CDATA[]]></description>
+  <language>en</language>
+  <pubDate>Sun, 28 May 2023 18:29:42 +0100</pubDate>
+  <lastBuildDate>Sun, 28 May 2023 18:29:42 +0100</lastBuildDate>
+  <generator>Emacs 28.2 Org-mode 9.6</generator>
+  <webMaster>s1856140@ed.ac.uk (Yu Huo)</webMaster>
+  <image>
+    <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
+    <title>Yu Huo: niwaka-ame.github.io</title>
+    <link>/</link>
+  </image>
+
+  <ul class="org-ul">
+    <li>emacs
+    <ul class="org-ul">
+      <li><a href="emacs/synced-encrypted-journal.html">Automatically Encrypt my Org Journal Diary while Syncing</a></li>
+      <li><a href="emacs/build-blog.html">How did I build this blog with Org Mode?</a></li>
+      <li><a href="emacs/test.html">Test of blog post elements</a></li>
+    </ul></li>
+    <li>happy-life
+    <ul class="org-ul">
+      <li><a href="happy-life/rpi400-home.html">给家里装了一台树莓派400</a></li>
+      <li><a href="happy-life/aberfoyle-callander.html">Aberfoyle to Callander: an early spring walk near the Highlands</a></li>
+      <li><a href="happy-life/melrose.html">Melrose: the River Tweed, Eildon Hills and middle-age abbey</a></li>
+      <li><a href="happy-life/raiden2.html">Getting Raiden 2 working on Retropie</a></li>
+    </ul></li>
+    <li>misc
+    <ul class="org-ul">
+      <li><a href="misc/sync-zotero.html">Syncing Zotero with cloud storage like Google Drive</a></li>
+    </ul></li>
+    <li>coding
+    <ul class="org-ul">
+      <li><a href="coding/paper-figures.html">Streamlining creation of multi-panel paper figures with Python</a></li>
+      <li><a href="coding/sympy-gaussian-quotient.html">Derive the distribution of two Gaussian variables' ratio with SymPy</a></li>
+      <li><a href="coding/script-fu.html">Scripting with Script-Fu in GIMP to compress photos in batch</a></li>
+    </ul></li>
+    <li>about
+    <ul class="org-ul">
+      <li><a href="about/me.html">Me</a></li>
+    </ul></li>
+  </ul>
+</channel>
+</rss>

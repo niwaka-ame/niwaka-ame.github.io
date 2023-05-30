@@ -1,67 +1,62 @@
 #+TITLE: Yu Huo: niwaka-ame.github.io
 
-- emacs
-  - * [[file:/home/yu/blog/post/emacs/synced-encrypted-journal.org][Automatically Encrypt my Org Journal Diary while Syncing]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/emacs/synced-encrypted-journal.html
-    :PUBDATE:  2023-01-01
-    :END:
-  - * [[file:/home/yu/blog/post/emacs/build-blog.org][How did I build this blog with Org Mode?]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/emacs/build-blog.html
-    :PUBDATE:  2022-07-02
-    :END:
-  - * [[file:/home/yu/blog/post/emacs/test.org][Test of blog post elements]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/emacs/test.html
-    :PUBDATE:  2022-06-27
-    :END:
-- happy-life
-  - * [[file:/home/yu/blog/post/happy-life/rpi400-home.org][给家里装了一台树莓派400]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/rpi400-home.html
-    :PUBDATE:  2023-05-09
-    :END:
-  - * [[file:/home/yu/blog/post/happy-life/aberfoyle-callander.org][Aberfoyle to Callander: an early spring walk near the Highlands]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/aberfoyle-callander.html
-    :PUBDATE:  2023-04-09
-    :END:
-  - * [[file:/home/yu/blog/post/happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/melrose.html
-    :PUBDATE:  2023-02-05
-    :END:
-  - * [[file:/home/yu/blog/post/happy-life/raiden2.org][Getting Raiden 2 working on Retropie]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/raiden2.html
-    :PUBDATE:  2023-01-20
-    :END:
-- misc
-  - * [[file:/home/yu/blog/post/misc/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/misc/sync-zotero.html
-    :PUBDATE:  2023-05-27
-    :END:
-- coding
-  - * [[file:/home/yu/blog/post/coding/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/paper-figures.html
-    :PUBDATE:  2023-02-18
-    :END:
-  - * [[file:/home/yu/blog/post/coding/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html
-    :PUBDATE:  2023-02-14
-    :END:
-  - * [[file:/home/yu/blog/post/coding/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/script-fu.html
-    :PUBDATE:  2023-02-05
-    :END:
-- about
-  - * [[file:/home/yu/blog/post/about/me.org][Me]]
-    :PROPERTIES:
-    :RSS_PERMALINK: https://niwaka-ame.github.io/public/about/me.html
-    :PUBDATE:  2023-02-06
-    :END:
+- * [[file:/home/yu/blog/post/misc/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/misc/sync-zotero.html
+  :PUBDATE:  2023-05-27
+  :END:
+- * [[file:/home/yu/blog/post/happy-life/rpi400-home.org][给家里装了一台树莓派400]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/rpi400-home.html
+  :PUBDATE:  2023-05-09
+  :END:
+- * [[file:/home/yu/blog/post/happy-life/aberfoyle-callander.org][Aberfoyle to Callander: an early spring walk near the Highlands]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/aberfoyle-callander.html
+  :PUBDATE:  2023-04-09
+  :END:
+- * [[file:/home/yu/blog/post/coding/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/paper-figures.html
+  :PUBDATE:  2023-02-18
+  :END:
+- * [[file:/home/yu/blog/post/coding/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html
+  :PUBDATE:  2023-02-14
+  :END:
+- * [[file:/home/yu/blog/post/about/me.org][Me]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/about/me.html
+  :PUBDATE:  2023-02-06
+  :END:
+- * [[file:/home/yu/blog/post/coding/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/script-fu.html
+  :PUBDATE:  2023-02-05
+  :END:
+- * [[file:/home/yu/blog/post/happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/melrose.html
+  :PUBDATE:  2023-02-05
+  :END:
+- * [[file:/home/yu/blog/post/happy-life/raiden2.org][Getting Raiden 2 working on Retropie]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/raiden2.html
+  :PUBDATE:  2023-01-20
+  :END:
+- * [[file:/home/yu/blog/post/emacs/synced-encrypted-journal.org][Automatically Encrypt my Org Journal Diary while Syncing]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/emacs/synced-encrypted-journal.html
+  :PUBDATE:  2023-01-01
+  :END:
+- * [[file:/home/yu/blog/post/emacs/build-blog.org][How did I build this blog with Org Mode?]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/emacs/build-blog.html
+  :PUBDATE:  2022-07-02
+  :END:
+- * [[file:/home/yu/blog/post/emacs/test.org][Test of blog post elements]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/emacs/test.html
+  :PUBDATE:  2022-06-27
+  :END:

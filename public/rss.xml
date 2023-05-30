@@ -10,47 +10,119 @@
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:media="http://search.yahoo.com/mrss/"><channel>
   <title>Yu Huo: niwaka-ame.github.io</title>
-  <atom:link href="/rss.xml" rel="self" type="application/rss+xml" />
-  <link>/</link>
+  <atom:link href="https://niwaka-ame.github.io/public/rss.xml" rel="self" type="application/rss+xml" />
+  <link>https://niwaka-ame.github.io/public/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 28 May 2023 18:29:42 +0100</pubDate>
-  <lastBuildDate>Sun, 28 May 2023 18:29:42 +0100</lastBuildDate>
+  <pubDate>Tue, 30 May 2023 23:03:00 +0100</pubDate>
+  <lastBuildDate>Tue, 30 May 2023 23:03:00 +0100</lastBuildDate>
   <generator>Emacs 28.2 Org-mode 9.6</generator>
-  <webMaster>s1856140@ed.ac.uk (Yu Huo)</webMaster>
+  <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
     <title>Yu Huo: niwaka-ame.github.io</title>
-    <link>/</link>
+    <link>https://niwaka-ame.github.io/public/</link>
   </image>
 
   <ul class="org-ul">
     <li>emacs
     <ul class="org-ul">
-      <li><a href="emacs/synced-encrypted-journal.html">Automatically Encrypt my Org Journal Diary while Syncing</a></li>
-      <li><a href="emacs/build-blog.html">How did I build this blog with Org Mode?</a></li>
-      <li><a href="emacs/test.html">Test of blog post elements</a></li>
+      <li><p>
+        * <a href="emacs/synced-encrypted-journal.html">Automatically Encrypt my Org Journal Diary while Syncing</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/emacs/synced-encrypted-journal.html">https://niwaka-ame.github.io/public/emacs/synced-encrypted-journal.html</a>
+        :PUBDATE:  2023-01-01
+      </p></li>
+      <li><p>
+        * <a href="emacs/build-blog.html">How did I build this blog with Org Mode?</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/emacs/build-blog.html">https://niwaka-ame.github.io/public/emacs/build-blog.html</a>
+        :PUBDATE:  2022-07-02
+      </p></li>
+      <li><p>
+        * <a href="emacs/test.html">Test of blog post elements</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/emacs/test.html">https://niwaka-ame.github.io/public/emacs/test.html</a>
+        :PUBDATE:  2022-06-27
+      </p></li>
     </ul></li>
     <li>happy-life
     <ul class="org-ul">
-      <li><a href="happy-life/rpi400-home.html">给家里装了一台树莓派400</a></li>
-      <li><a href="happy-life/aberfoyle-callander.html">Aberfoyle to Callander: an early spring walk near the Highlands</a></li>
-      <li><a href="happy-life/melrose.html">Melrose: the River Tweed, Eildon Hills and middle-age abbey</a></li>
-      <li><a href="happy-life/raiden2.html">Getting Raiden 2 working on Retropie</a></li>
+      <li><p>
+        * <a href="happy-life/rpi400-home.html">给家里装了一台树莓派400</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/happy-life/rpi400-home.html">https://niwaka-ame.github.io/public/happy-life/rpi400-home.html</a>
+        :PUBDATE:  2023-05-09
+      </p></li>
+      <li><p>
+        * <a href="happy-life/aberfoyle-callander.html">Aberfoyle to Callander: an early spring walk near the Highlands</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/happy-life/aberfoyle-callander.html">https://niwaka-ame.github.io/public/happy-life/aberfoyle-callander.html</a>
+        :PUBDATE:  2023-04-09
+      </p></li>
+      <li><p>
+        * <a href="happy-life/melrose.html">Melrose: the River Tweed, Eildon Hills and middle-age abbey</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/happy-life/melrose.html">https://niwaka-ame.github.io/public/happy-life/melrose.html</a>
+        :PUBDATE:  2023-02-05
+      </p></li>
+      <li><p>
+        * <a href="happy-life/raiden2.html">Getting Raiden 2 working on Retropie</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/happy-life/raiden2.html">https://niwaka-ame.github.io/public/happy-life/raiden2.html</a>
+        :PUBDATE:  2023-01-20
+      </p></li>
     </ul></li>
     <li>misc
     <ul class="org-ul">
-      <li><a href="misc/sync-zotero.html">Syncing Zotero with cloud storage like Google Drive</a></li>
+      <li><p>
+        * <a href="misc/sync-zotero.html">Syncing Zotero with cloud storage like Google Drive</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/misc/sync-zotero.html">https://niwaka-ame.github.io/public/misc/sync-zotero.html</a>
+        :PUBDATE:  2023-05-27
+      </p></li>
     </ul></li>
     <li>coding
     <ul class="org-ul">
-      <li><a href="coding/paper-figures.html">Streamlining creation of multi-panel paper figures with Python</a></li>
-      <li><a href="coding/sympy-gaussian-quotient.html">Derive the distribution of two Gaussian variables' ratio with SymPy</a></li>
-      <li><a href="coding/script-fu.html">Scripting with Script-Fu in GIMP to compress photos in batch</a></li>
+      <li><p>
+        * <a href="coding/paper-figures.html">Streamlining creation of multi-panel paper figures with Python</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/coding/paper-figures.html">https://niwaka-ame.github.io/public/coding/paper-figures.html</a>
+        :PUBDATE:  2023-02-18
+      </p></li>
+      <li><p>
+        * <a href="coding/sympy-gaussian-quotient.html">Derive the distribution of two Gaussian variables' ratio with SymPy</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html">https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html</a>
+        :PUBDATE:  2023-02-14
+      </p></li>
+      <li><p>
+        * <a href="coding/script-fu.html">Scripting with Script-Fu in GIMP to compress photos in batch</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/coding/script-fu.html">https://niwaka-ame.github.io/public/coding/script-fu.html</a>
+        :PUBDATE:  2023-02-05
+      </p></li>
     </ul></li>
     <li>about
     <ul class="org-ul">
-      <li><a href="about/me.html">Me</a></li>
+      <li><p>
+        * <a href="about/me.html">Me</a>
+      </p>
+      <p>
+        :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/about/me.html">https://niwaka-ame.github.io/public/about/me.html</a>
+        :PUBDATE:  2023-02-06
+      </p></li>
     </ul></li>
   </ul>
 </channel>

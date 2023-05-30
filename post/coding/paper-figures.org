@@ -78,5 +78,6 @@ There's no need to place the generated PNG file under version control, because w
 
 * More sophisticated cases
 ~matplotlib~ also supports more sophisticated spacial arrangement.
-See the official documentation of its [[https://matplotlib.org/stable/api/_as_gen/matplotlib.gridspec.GridSpec.html#matplotlib.gridspec.GridSpec][GridSpec]] module.
+Instead of ~plt.subplots~, it is straight-forward to use the ~plt.subplot_mosaic~ function --- see the official example [[https://matplotlib.org/stable/gallery/text_labels_and_annotations/label_subplots.html#sphx-glr-gallery-text-labels-and-annotations-label-subplots-py][here]].
+
 We can also create an inset panel within a panel with ~ax[0].inset_axes()~, see the official Documentation [[https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html][here]].

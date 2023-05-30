@@ -32,14 +32,18 @@ After login, the dialog should look like this:
 
 Follow the step numbers in the screenshot to untick those boxes.
 
+Then go to ~Advanced~, and then the ~Files and folders~ tab, here we'll need to choose a base directory of the attachments (i.e. the PDFs).
+Choose a custom location --- *this folder will be the folder to be synced via a non-Zotero cloud storage*, which stores all PDFs.
+
+[[../../misc/screenshots/sync-zotero/advanced.png]]
+
 * Go to ZotFile's preference dialog
 Go to the ~Tools~ menu at the top and choose ~ZotFile Preferences...~.
 The new dialog should look like this:
 
 [[../../misc/screenshots/sync-zotero/zotfile-1.png]]
 
-Choose a custom location --- *this folder will be the folder to be synced via a non-Zotero cloud storage*, which stores all PDFs.
-Then go to ~Renaming Rules~ and change the following:
+Enter the same custom location as previous, and then go to ~Renaming Rules~ and change the following:
 
 [[../../misc/screenshots/sync-zotero/zotfile-2.png]]
 

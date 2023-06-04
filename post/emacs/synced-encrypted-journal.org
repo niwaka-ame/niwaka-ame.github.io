@@ -24,11 +24,15 @@ Windows users will need to install [[https://www.gpg4win.org/][GPG4win]].
 The first step is to generate a GPG key pair, see Steps 1--12 in this [[https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key][Github tutorial]].
 
 I would like to edit my journal on multiple machines, and it's therefore necessary to export this key pair to my other machines.
+First, to list all keys:
+#+begin_src bash
+gpg -k
+#+end_src
 To export the public key:
 #+begin_src bash
-gpg --armor --export example@email.com --output pub.key
+gpg --armor --output pub.key --export example@email.com
 #+end_src
-where ~pub.key~ is the file name, and the email address is the recipient I entered when generating the key pair, which can be shown with command: ~gpg -k~.
+where ~pub.key~ is the file name, and the email address is corresponds to the key to be exported.
 To export the private key, use [fn:1]:
 #+begin_src bash
 gpg --armor --export-secret-keys example@email.com | gpg --armor --symmetric --output mykey.sec.asc

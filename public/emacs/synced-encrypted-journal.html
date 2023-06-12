@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-05-27 -->
+<!-- 2023-06-12 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Automatically Encrypt my Org Journal Diary while Syncing</title>
@@ -56,14 +56,21 @@ The first step is to generate a GPG key pair, see Steps 1&#x2013;12 in this <a h
 
 <p>
 I would like to edit my journal on multiple machines, and it&rsquo;s therefore necessary to export this key pair to my other machines.
-To export the public key:
+First, to list all keys:
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">gpg --armor --export example@email.com --output pub.key
+<pre class="src src-bash">gpg -k
 </pre>
 </div>
 <p>
-where <code>pub.key</code> is the file name, and the email address is the recipient I entered when generating the key pair, which can be shown with command: <code>gpg -k</code>.
+To export the public key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">gpg --armor --output pub.key --export example@email.com
+</pre>
+</div>
+<p>
+where <code>pub.key</code> is the file name, and the email address is corresponds to the key to be exported.
 To export the private key, use <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>:
 </p>
 <div class="org-src-container">
@@ -225,7 +232,7 @@ see the <a href="https://www.openkeychain.org/faq/">FAQ of the Openkeychain webs
 </div>
 </div></main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-01-01, Last updated 2023-01-03, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-01-01, Last updated 2023-06-12, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

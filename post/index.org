@@ -7,6 +7,7 @@ I am most interested in microbiology, computation and software development, and 
 
 I use [[https://www.gnu.org/software/emacs/][GNU Emacs]] daily and this blog was edited and built with [[https://orgmode.org/][Orgmode]] in Emacs.
 In this blog, I mostly write about how I use my computer, and sometimes happy moments in my life.
+You'll see all my [[Posts]] and [[Softwares]] in this page.
 
 This is a simple, static blog which doesn't support comments, but please feel free to contact me at: yhuo ~at~ tuta ~dot~ io.
 

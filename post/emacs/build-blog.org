@@ -3,6 +3,8 @@
 #+options: toc:t
 #+PROPERTY: header-args :eval never-export :results verbatim
 
+(Note 2023-06-12: I've updated my config since I wrote this blog, so the output, especially the index page, will be different. I'll update this blog post when I'm free.)
+
 * Motivation
 As a daily user of Org Mode, I want a minimalistic blogging workflow with Org Mode, without too many overheads in hacking and maintaining and with minimal knowledge of HTML.
 While it's possible to combine Org Mode with Jekyll or Hugo, it seems blogging with the built-in ~org-publish~ module to me is good enough.

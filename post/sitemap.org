@@ -1,0 +1,17 @@
+#+TITLE: Yu Huo
+
+- Emacs
+  - [[file:emacs/synced-encrypted-journal.org][Automatically Encrypt my Org Journal Diary while Syncing]] --- 2023-01-01
+  - [[file:emacs/build-blog.org][How did I build this blog with Org Mode?]] --- 2022-07-02
+  - [[file:emacs/test.org][Test of blog post elements]] --- 2022-06-27
+- Happy-Life
+  - [[file:happy-life/rpi400-home.org][给家里装了一台树莓派400]] --- 2023-05-09
+  - [[file:happy-life/aberfoyle-callander.org][Aberfoyle to Callander: an early spring walk near the Highlands]] --- 2023-04-09
+  - [[file:happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]] --- 2023-02-05
+  - [[file:happy-life/raiden2.org][Getting Raiden 2 working on Retropie]] --- 2023-01-20
+- Misc
+  - [[file:misc/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]] --- 2023-05-27
+- Coding
+  - [[file:coding/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]] --- 2023-02-18
+  - [[file:coding/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]] --- 2023-02-14
+  - [[file:coding/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]] --- 2023-02-05

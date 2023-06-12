@@ -1,5 +1,15 @@
 #+TITLE: Yu Huo: niwaka-ame.github.io
 
+- * [[file:/home/yu/blog/post/software.org][Software]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/software.html
+  :PUBDATE:  2023-06-12
+  :END:
+- * [[file:/home/yu/blog/post/sitemap.org][Yu Huo]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/sitemap.html
+  :PUBDATE:  2023-06-12
+  :END:
 - * [[file:/home/yu/blog/post/misc/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]]
   :PROPERTIES:
   :RSS_PERMALINK: https://niwaka-ame.github.io/public/misc/sync-zotero.html
@@ -24,11 +34,6 @@
   :PROPERTIES:
   :RSS_PERMALINK: https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html
   :PUBDATE:  2023-02-14
-  :END:
-- * [[file:/home/yu/blog/post/about/me.org][Me]]
-  :PROPERTIES:
-  :RSS_PERMALINK: https://niwaka-ame.github.io/public/about/me.html
-  :PUBDATE:  2023-02-06
   :END:
 - * [[file:/home/yu/blog/post/coding/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]]
   :PROPERTIES:

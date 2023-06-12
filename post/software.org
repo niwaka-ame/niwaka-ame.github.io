@@ -1,0 +1,8 @@
+#+title: Software
+
++ [[https://git.ecdf.ed.ac.uk/s1856140/nunchaku][nunchaku]]: (Python) Optimally partitioning data into piece-wise linear segments with Bayesian statistics.
+  Available on [[https://pypi.org/project/nunchaku/][PyPI]].
+  See also our [[https://www.biorxiv.org/content/10.1101/2023.05.26.542406v1][preprint]] on BioRxiv.
++ [[https://github.com/niwaka-ame/sgd-lookup.el][sgd-lookup.el]]: (Emacs Lisp) An Emacs API wrapper for Saccharomyces Genome Database (SGD).
++ [[https://github.com/niwaka-ame/emacs-gene-tools][emacs-gene-tools]]: (Emacs Lisp) An interactive UI to query gene info in a given organism in Emacs (for now works on budding yeast only).
++ [[https://git.ecdf.ed.ac.uk/s1856140/metaplate][metaplate]]: (Python) Automatically parse the metadata of many plate reader experiments and fuzzy-search for the desired datasets.

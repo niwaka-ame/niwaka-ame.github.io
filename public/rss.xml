@@ -14,8 +14,8 @@
   <link>https://niwaka-ame.github.io/public/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Tue, 30 May 2023 23:22:52 +0100</pubDate>
-  <lastBuildDate>Tue, 30 May 2023 23:22:52 +0100</lastBuildDate>
+  <pubDate>Mon, 12 Jun 2023 22:21:34 +0100</pubDate>
+  <lastBuildDate>Mon, 12 Jun 2023 22:21:34 +0100</lastBuildDate>
   <generator>Emacs 28.2 Org-mode 9.6</generator>
   <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
   <image>
@@ -25,6 +25,20 @@
   </image>
 
   <ul class="org-ul">
+    <li><p>
+      * <a href="software.html">Software</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/software.html">https://niwaka-ame.github.io/public/software.html</a>
+      :PUBDATE:  2023-06-12
+    </p></li>
+    <li><p>
+      * <a href="sitemap.html">Yu Huo</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/sitemap.html">https://niwaka-ame.github.io/public/sitemap.html</a>
+      :PUBDATE:  2023-06-12
+    </p></li>
     <li><p>
       * <a href="misc/sync-zotero.html">Syncing Zotero with cloud storage like Google Drive</a>
     </p>
@@ -59,13 +73,6 @@
     <p>
       :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html">https://niwaka-ame.github.io/public/coding/sympy-gaussian-quotient.html</a>
       :PUBDATE:  2023-02-14
-    </p></li>
-    <li><p>
-      * <a href="about/me.html">Me</a>
-    </p>
-    <p>
-      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/about/me.html">https://niwaka-ame.github.io/public/about/me.html</a>
-      :PUBDATE:  2023-02-06
     </p></li>
     <li><p>
       * <a href="coding/script-fu.html">Scripting with Script-Fu in GIMP to compress photos in batch</a>

@@ -2,8 +2,7 @@
 
 Welcome to my personal blog.
 
-I am a finishing PhD student in systems biology at the University of Edinburgh.
-I am most interested in microbiology, computation and software development, and will work on the interfaces between the three.
+I have a PhD in quantitative biology at the University of Edinburgh and am most interested in microbiology and computational biology.
 
 I use [[https://www.gnu.org/software/emacs/][GNU Emacs]] daily and this blog was edited and built with [[https://orgmode.org/][Orgmode]] in Emacs.
 In this blog, I mostly write about how I use my computer, and sometimes happy moments in my life.

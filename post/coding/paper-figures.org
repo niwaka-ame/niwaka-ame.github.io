@@ -37,7 +37,7 @@ Combining the two settings, the resolution of the output figure should be \(2400
 Before drawing in Inkscape, we must get the schematics' size from Python:
 #+begin_src python
 bbox = ax[0].get_tightbbox(fig.canvas.get_renderer())
-print(bbox.x1, bbox.y1) # the height (x1) and the width (y1)
+print(bbox.width, bbox.height)
 #+end_src
 
 Now we set the page's size in the ~File >> Document properties...~ menu, using ~custom~ format in unit of ~px~ (pixel), and then filling in the height and width and make sure the orientation is correct.

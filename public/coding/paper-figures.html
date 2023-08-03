@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-05-30 -->
+<!-- 2023-08-03 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Streamlining creation of multi-panel paper figures with Python</title>
@@ -83,7 +83,7 @@ Combining the two settings, the resolution of the output figure should be \(2400
 </p>
 
 
-<figure id="org74948a9">
+<figure id="orga06bf7c">
 <img src="../../misc/coding/paper-figures-1.png" alt="paper-figures-1.png">
 
 </figure>
@@ -98,7 +98,7 @@ Before drawing in Inkscape, we must get the schematics&rsquo; size from Python:
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #718CA1;">bbox</span> = ax[<span style="color: #E27E8D; font-weight: bold;">0</span>].get_tightbbox(fig.canvas.get_renderer())
-<span style="color: #5EC4FF;">print</span>(bbox.x1, bbox.y1) <span style="color: #41505E;"># </span><span style="color: #41505E;">the height (x1) and the width (y1)</span>
+<span style="color: #5EC4FF;">print</span>(bbox.width, bbox.height)
 </pre>
 </div>
 
@@ -154,7 +154,7 @@ There&rsquo;s no need to place the generated PNG file under version control, bec
 </p>
 
 
-<figure id="orgbc495bf">
+<figure id="org5dc22c1">
 <img src="../../misc/coding/paper-figures-2.png" alt="paper-figures-2.png">
 
 </figure>
@@ -176,7 +176,7 @@ We can also create an inset panel within a panel with <code>ax[0].inset_axes()</
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-18, Last updated 2023-05-30, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-18, Last updated 2023-08-03, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

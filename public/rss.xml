@@ -14,8 +14,8 @@
   <link>https://niwaka-ame.github.io/public/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Mon, 12 Jun 2023 23:03:38 +0100</pubDate>
-  <lastBuildDate>Mon, 12 Jun 2023 23:03:38 +0100</lastBuildDate>
+  <pubDate>Sat, 19 Aug 2023 23:40:39 +0100</pubDate>
+  <lastBuildDate>Sat, 19 Aug 2023 23:40:39 +0100</lastBuildDate>
   <generator>Emacs 28.2 Org-mode 9.6</generator>
   <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
   <image>
@@ -25,6 +25,20 @@
   </image>
 
   <ul class="org-ul">
+    <li><p>
+      * <a href="happy-life/loch-long.html">Loch Long: a Scottish fjord</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/happy-life/loch-long.html">https://niwaka-ame.github.io/public/happy-life/loch-long.html</a>
+      :PUBDATE:  2023-08-19
+    </p></li>
+    <li><p>
+      * <a href="misc/grandmother.html">怀念我的祖母</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/misc/grandmother.html">https://niwaka-ame.github.io/public/misc/grandmother.html</a>
+      :PUBDATE:  2023-08-03
+    </p></li>
     <li><p>
       * <a href="software.html">Software</a>
     </p>

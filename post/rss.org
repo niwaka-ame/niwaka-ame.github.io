@@ -1,5 +1,15 @@
 #+TITLE: Yu Huo: niwaka-ame.github.io
 
+- * [[file:/home/yu/blog/post/happy-life/loch-long.org][Loch Long: a Scottish fjord]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/loch-long.html
+  :PUBDATE:  2023-08-19
+  :END:
+- * [[file:/home/yu/blog/post/misc/grandmother.org][怀念我的祖母]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/misc/grandmother.html
+  :PUBDATE:  2023-08-03
+  :END:
 - * [[file:/home/yu/blog/post/software.org][Software]]
   :PROPERTIES:
   :RSS_PERMALINK: https://niwaka-ame.github.io/public/software.html

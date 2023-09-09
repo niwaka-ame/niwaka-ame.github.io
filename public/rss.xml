@@ -14,8 +14,8 @@
   <link>https://niwaka-ame.github.io/public/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sat, 19 Aug 2023 23:40:39 +0100</pubDate>
-  <lastBuildDate>Sat, 19 Aug 2023 23:40:39 +0100</lastBuildDate>
+  <pubDate>Sat, 09 Sep 2023 21:03:59 +0100</pubDate>
+  <lastBuildDate>Sat, 09 Sep 2023 21:03:59 +0100</lastBuildDate>
   <generator>Emacs 28.2 Org-mode 9.6</generator>
   <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
   <image>
@@ -25,6 +25,13 @@
   </image>
 
   <ul class="org-ul">
+    <li><p>
+      * <a href="misc/morocco.html">摩洛哥的中餐馆, Riad和里面的人</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/misc/morocco.html">https://niwaka-ame.github.io/public/misc/morocco.html</a>
+      :PUBDATE:  2023-09-09
+    </p></li>
     <li><p>
       * <a href="happy-life/loch-long.html">Loch Long: a Scottish fjord</a>
     </p>

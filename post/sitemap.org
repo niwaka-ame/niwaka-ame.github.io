@@ -11,6 +11,7 @@
   - [[file:happy-life/melrose.org][Melrose: the River Tweed, Eildon Hills and middle-age abbey]] --- 2023-02-05
   - [[file:happy-life/raiden2.org][Getting Raiden 2 working on Retropie]] --- 2023-01-20
 - Misc
+  - [[file:misc/morocco.org][摩洛哥的中餐馆, Riad和里面的人]] --- 2023-09-09
   - [[file:misc/grandmother.org][怀念我的祖母]] --- 2023-08-03
   - [[file:misc/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]] --- 2023-05-27
 - Coding

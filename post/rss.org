@@ -1,5 +1,10 @@
 #+TITLE: Yu Huo: niwaka-ame.github.io
 
+- * [[file:/home/yu/blog/post/misc/morocco.org][摩洛哥的中餐馆, Riad和里面的人]]
+  :PROPERTIES:
+  :RSS_PERMALINK: https://niwaka-ame.github.io/public/misc/morocco.html
+  :PUBDATE:  2023-09-09
+  :END:
 - * [[file:/home/yu/blog/post/happy-life/loch-long.org][Loch Long: a Scottish fjord]]
   :PROPERTIES:
   :RSS_PERMALINK: https://niwaka-ame.github.io/public/happy-life/loch-long.html

@@ -46,18 +46,22 @@ Here it is:
 #+begin_src scheme
 (define (batch-resize dir)
   (let* ((filelist (cadr (file-glob (string-append dir "/*.JPG") 1))))
-        (batch-resize-list filelist)))
+        (batch-resize-list filelist)
+        (gimp-quit 1)))
 
 (define (batch-resize-list filelist)
   (unless (null? filelist)
     (let* (
            (filename (car filelist))
+           (size (file-size filename))
+           (target-size 500000)  ; 500 KB
+           (scale-factor (sqrt (/ size target-size)))
            (image (car (gimp-file-load 1 filename filename)))
            (drawable   (car (gimp-image-active-drawable image)))
            (cur-width  (car (gimp-image-width image)))
            (cur-height (car (gimp-image-height image)))
-           (width      (/ cur-width 4))
-           (height     (/ cur-height 4))
+           (width      (round (/ cur-width scale-factor)))
+           (height     (round (/ cur-height scale-factor)))
            )
       (gimp-message filename)
       (gimp-image-scale-full image width height INTERPOLATION-CUBIC)

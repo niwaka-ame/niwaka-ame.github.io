@@ -6,15 +6,9 @@ I have a PhD in quantitative biology at the University of Edinburgh and am most 
 
 I use [[https://www.gnu.org/software/emacs/][GNU Emacs]] daily and this blog was edited and built with [[https://orgmode.org/][Orgmode]] in Emacs.
 In this blog, I mostly write about how I use my computer, and sometimes happy moments in my life.
-You'll see all my [[Posts]] and [[Softwares]] in this page.
 
 This is a simple, static blog which doesn't support comments, but please feel free to contact me at: yhuo ~at~ tuta ~dot~ io.
 
-* Softwares
+* Latest Posts
 
-#+INCLUDE: software.org :lines "3-"
-
-* Posts
-
-#+INCLUDE: sitemap.org :lines "3-"
-
+#+INCLUDE: ../post/sitemap-chrono.org :lines "3-13"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-05-30 -->
+<!-- 2023-09-27 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Syncing Zotero with cloud storage like Google Drive</title>
@@ -10,11 +10,16 @@
 <link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="/"> UP </a>
- |
- <a accesskey="H" href="/"> HOME </a>
-</div><main id="content" class="content">
+<header id="top" class="status">
+<body> <div id='preamble' class='status'>
+        <nav>
+                <a href='/'>Home</a>
+                <a href='/public/sitemap.html'>Posts</a>
+                <a href='/public/software.html'>Softwares</a>
+        </nav>
+</div>
+</header>
+<main id="content" class="content">
 <header>
 <h1 class="title">Syncing Zotero with cloud storage like Google Drive</h1>
 </header><p>
@@ -33,8 +38,8 @@ Tom Saunders used to have a step-by-step <a href="https://tomsaunders.co.nz/zote
 So, I decided to re-write one, largely based on what he has done.
 </p>
 
-<section id="outline-container-org185284a" class="outline-2">
-<h2 id="org185284a"><span class="section-number-2">1.</span> Installing ZotFile and Better BibTeX</h2>
+<section id="outline-container-org5546311" class="outline-2">
+<h2 id="org5546311"><span class="section-number-2">1.</span> Installing ZotFile and Better BibTeX</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This workflow requires two amazing Zotero add-ons: <a href="http://zotfile.com/">ZotFile</a> and <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX</a>.
@@ -55,8 +60,8 @@ To circumvent this issue, right-click on the link and choose <code>Save link as.
 </section>
 
 
-<section id="outline-container-org966512d" class="outline-2">
-<h2 id="org966512d"><span class="section-number-2">2.</span> Go to Zotero&rsquo;s preference dialog</h2>
+<section id="outline-container-org9390588" class="outline-2">
+<h2 id="org9390588"><span class="section-number-2">2.</span> Go to Zotero&rsquo;s preference dialog</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Go to the <code>Edit</code> menu at the top and choose <code>Preference</code>.
@@ -65,7 +70,7 @@ After login, the dialog should look like this:
 </p>
 
 
-<figure id="orgc518b97">
+<figure id="orgc45b8e5">
 <img src="../../misc/screenshots/sync-zotero/sync.png" alt="sync.png">
 
 </figure>
@@ -80,15 +85,15 @@ Choose a custom location &#x2014; <b>this folder will be the folder to be synced
 </p>
 
 
-<figure id="orgb523d44">
+<figure id="orgba7915e">
 <img src="../../misc/screenshots/sync-zotero/advanced.png" alt="advanced.png">
 
 </figure>
 </div>
 </section>
 
-<section id="outline-container-org03d3758" class="outline-2">
-<h2 id="org03d3758"><span class="section-number-2">3.</span> Go to ZotFile&rsquo;s preference dialog</h2>
+<section id="outline-container-orge80af5b" class="outline-2">
+<h2 id="orge80af5b"><span class="section-number-2">3.</span> Go to ZotFile&rsquo;s preference dialog</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Go to the <code>Tools</code> menu at the top and choose <code>ZotFile Preferences...</code>.
@@ -96,7 +101,7 @@ The new dialog should look like this:
 </p>
 
 
-<figure id="org2c3ab6d">
+<figure id="org764eacc">
 <img src="../../misc/screenshots/sync-zotero/zotfile-1.png" alt="zotfile-1.png">
 
 </figure>
@@ -106,7 +111,7 @@ Enter the same custom location as previous, and then go to <code>Renaming Rules<
 </p>
 
 
-<figure id="orgdf9c5e8">
+<figure id="org1fec636">
 <img src="../../misc/screenshots/sync-zotero/zotfile-2.png" alt="zotfile-2.png">
 
 </figure>

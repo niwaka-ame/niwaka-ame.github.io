@@ -10,21 +10,35 @@
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:media="http://search.yahoo.com/mrss/"><channel>
   <title>Yu Huo: niwaka-ame.github.io</title>
-  <atom:link href="https://niwaka-ame.github.io/public/rss.xml" rel="self" type="application/rss+xml" />
-  <link>https://niwaka-ame.github.io/public/</link>
+  <atom:link href="./rss.xml" rel="self" type="application/rss+xml" />
+  <link></link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sat, 09 Sep 2023 21:03:59 +0100</pubDate>
-  <lastBuildDate>Sat, 09 Sep 2023 21:03:59 +0100</lastBuildDate>
+  <pubDate>Wed, 27 Sep 2023 12:19:07 +0100</pubDate>
+  <lastBuildDate>Wed, 27 Sep 2023 12:19:07 +0100</lastBuildDate>
   <generator>Emacs 28.2 Org-mode 9.6</generator>
   <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
   <image>
     <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
     <title>Yu Huo: niwaka-ame.github.io</title>
-    <link>https://niwaka-ame.github.io/public/</link>
+    <link></link>
   </image>
 
   <ul class="org-ul">
+    <li><p>
+      * <a href="sitemap-chrono.html">Yu Huo</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/sitemap-chrono.html">https://niwaka-ame.github.io/public/sitemap-chrono.html</a>
+      :PUBDATE:  2023-09-27
+    </p></li>
+    <li><p>
+      * <a href="sitemap.html">Yu Huo</a>
+    </p>
+    <p>
+      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/sitemap.html">https://niwaka-ame.github.io/public/sitemap.html</a>
+      :PUBDATE:  2023-09-27
+    </p></li>
     <li><p>
       * <a href="misc/morocco.html">摩洛哥的中餐馆, Riad和里面的人</a>
     </p>
@@ -45,20 +59,6 @@
     <p>
       :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/misc/grandmother.html">https://niwaka-ame.github.io/public/misc/grandmother.html</a>
       :PUBDATE:  2023-08-03
-    </p></li>
-    <li><p>
-      * <a href="software.html">Software</a>
-    </p>
-    <p>
-      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/software.html">https://niwaka-ame.github.io/public/software.html</a>
-      :PUBDATE:  2023-06-12
-    </p></li>
-    <li><p>
-      * <a href="sitemap.html">Yu Huo</a>
-    </p>
-    <p>
-      :RSS<sub>PERMALINK</sub>: <a href="https://niwaka-ame.github.io/public/sitemap.html">https://niwaka-ame.github.io/public/sitemap.html</a>
-      :PUBDATE:  2023-06-12
     </p></li>
     <li><p>
       * <a href="misc/sync-zotero.html">Syncing Zotero with cloud storage like Google Drive</a>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-05-27 -->
+<!-- 2023-09-27 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Scripting with Script-Fu in GIMP to compress photos in batch</title>
@@ -10,11 +10,16 @@
 <link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="/"> UP </a>
- |
- <a accesskey="H" href="/"> HOME </a>
-</div><main id="content" class="content">
+<header id="top" class="status">
+<body> <div id='preamble' class='status'>
+        <nav>
+                <a href='/'>Home</a>
+                <a href='/public/sitemap.html'>Posts</a>
+                <a href='/public/software.html'>Softwares</a>
+        </nav>
+</div>
+</header>
+<main id="content" class="content">
 <header>
 <h1 class="title">Scripting with Script-Fu in GIMP to compress photos in batch</h1>
 </header><p>
@@ -24,8 +29,8 @@ Today, I was trying to compress some photos to be uploaded to my blog.
 Instead of opening and editing the photos one by one, why don&rsquo;t I try out Script-Fu to do the job in batch?
 </p>
 
-<section id="outline-container-org3151270" class="outline-2">
-<h2 id="org3151270"><span class="section-number-2">1.</span> Running functions inside a <code>*.scm</code> script file from the console</h2>
+<section id="outline-container-orgf226d84" class="outline-2">
+<h2 id="orgf226d84"><span class="section-number-2">1.</span> Running functions inside a <code>*.scm</code> script file from the console</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Each of my script file ends with <code>.scm</code>, which stands for Scheme.
@@ -73,8 +78,8 @@ After the call was run, we can type <code>^C</code> (<code>Ctrl+C</code>) to exi
 </div>
 </section>
 
-<section id="outline-container-org0933c60" class="outline-2">
-<h2 id="org0933c60"><span class="section-number-2">2.</span> Getting help</h2>
+<section id="outline-container-org3087852" class="outline-2">
+<h2 id="org3087852"><span class="section-number-2">2.</span> Getting help</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 I&rsquo;m new to Scheme, but I know Emacs Lisp, another Lisp dialect, so reading Lisp code is fine with me.
@@ -84,8 +89,8 @@ I found that the <a href="https://en.wikipedia.org/wiki/Scheme_(programming_lang
 </div>
 </section>
 
-<section id="outline-container-orgc999346" class="outline-2">
-<h2 id="orgc999346"><span class="section-number-2">3.</span> Now implement the code</h2>
+<section id="outline-container-org28d0373" class="outline-2">
+<h2 id="org28d0373"><span class="section-number-2">3.</span> Now implement the code</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 I found a <a href="https://stackoverflow.com/questions/51337105/batch-resize-images-with-gimp">Script</a> on Stackoverflow, so I only need to adapt the code for my own use (many thanks!).
@@ -96,18 +101,22 @@ Here it is:
 <div class="org-src-container">
 <pre class="src src-scheme">(<span style="color: #5EC4FF;">define</span> (<span style="color: #33CED8;">batch-resize</span> dir)
   (<span style="color: #5EC4FF;">let*</span> ((filelist (cadr (file-glob (string-append dir <span style="color: #539AFC;">"/*.JPG"</span>) <span style="color: #E27E8D; font-weight: bold;">1</span>))))
-        (batch-resize-list filelist)))
+        (batch-resize-list filelist)
+        (gimp-quit <span style="color: #E27E8D; font-weight: bold;">1</span>)))
 
 (<span style="color: #5EC4FF;">define</span> (<span style="color: #33CED8;">batch-resize-list</span> filelist)
   (<span style="color: #5EC4FF;">unless</span> (null? filelist)
     (<span style="color: #5EC4FF;">let*</span> (
            (filename (car filelist))
+           (size (file-size filename))
+           (target-size <span style="color: #E27E8D; font-weight: bold;">500000</span>)  <span style="color: #41505E;">; </span><span style="color: #41505E;">500 KB</span>
+           (scale-factor (sqrt (/ size target-size)))
            (image (car (gimp-file-load <span style="color: #E27E8D; font-weight: bold;">1</span> filename filename)))
            (drawable   (car (gimp-image-active-drawable image)))
            (cur-width  (car (gimp-image-width image)))
            (cur-height (car (gimp-image-height image)))
-           (width      (/ cur-width <span style="color: #E27E8D; font-weight: bold;">4</span>))
-           (height     (/ cur-height <span style="color: #E27E8D; font-weight: bold;">4</span>))
+           (width      (round (/ cur-width scale-factor)))
+           (height     (round (/ cur-height scale-factor)))
            )
       (gimp-message filename)
       (gimp-image-scale-full image width height INTERPOLATION-CUBIC)
@@ -138,7 +147,7 @@ Now you may see why I hard-coded the <code>*.JPG</code> pattern within the funct
 </section>
 </main>
 <footer id="postamble" class="status">
-<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-05, Last updated 2023-02-06, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-02-05, Last updated 2023-09-27, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.6)</div>
 </footer>
 </body>
 </html>

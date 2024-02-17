@@ -3,6 +3,7 @@
 I set up an N100 mini PC as a server to sync files between multiple devices, running Fedora 39.
 However, connection to the WiFi at home is lost from time to time, so I need a script to automatically reconnect.
 
+* The Bash script
 ChatGPT wrote me a perfect script for detecting loss of connection and automatic reconnecting:
 #+begin_src bash
 #!/bin/bash
@@ -27,6 +28,13 @@ To allow this script to be executed, type in terminal:
 chmod +x <path-to-the-script-above>
 #+end_src
 
+We can manually test whether this script is working by disconnecting WiFi and type in the terminal:
+#+begin_src bash
+bash <path-to-the-script-above>
+#+end_src
+The WiFi should re-connect.
+
+* Creating a Cron job and resolving authority issues
 The next step is to create a ~cron~ job to run this script every minute.
 In the terminal, type:
 #+begin_src bash

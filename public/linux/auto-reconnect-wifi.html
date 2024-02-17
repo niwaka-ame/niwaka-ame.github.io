@@ -26,7 +26,9 @@
 I set up an N100 mini PC as a server to sync files between multiple devices, running Fedora 39.
 However, connection to the WiFi at home is lost from time to time, so I need a script to automatically reconnect.
 </p>
-
+<section id="outline-container-org4a2656d" class="outline-2">
+<h2 id="org4a2656d"><span class="section-number-2">1.</span> The Bash script</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 ChatGPT wrote me a perfect script for detecting loss of connection and automatic reconnecting:
 </p>
@@ -57,6 +59,21 @@ To allow this script to be executed, type in terminal:
 </pre>
 </div>
 
+<p>
+We can manually test whether this script is working by disconnecting WiFi and type in the terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">bash &lt;path-to-the-script-above&gt;
+</pre>
+</div>
+<p>
+The WiFi should re-connect.
+</p>
+</div>
+</section>
+<section id="outline-container-org1844206" class="outline-2">
+<h2 id="org1844206"><span class="section-number-2">2.</span> Creating a Cron job and resolving authority issues</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 The next step is to create a <code>cron</code> job to run this script every minute.
 In the terminal, type:
@@ -140,6 +157,8 @@ Then we need to reload <code>polkit</code> by typing in the terminal:
 <p>
 Now manually disconnect, and it should reconnect within one minute!
 </p>
+</div>
+</section>
 </main>
 <footer id="postamble" class="status">
 <div class='footer'> © Yu Huo 2022-2023. Created , Last updated 2024-02-17, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7)</div>

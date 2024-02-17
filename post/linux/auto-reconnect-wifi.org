@@ -1,0 +1,78 @@
+#+title: Automatically Reconnecting to WiFi in Fedora 39
+
+I set up an N100 mini PC as a server to sync files between multiple devices, running Fedora 39.
+However, connection to the WiFi at home is lost from time to time, so I need a script to automatically reconnect.
+
+ChatGPT wrote me a perfect script for detecting loss of connection and automatic reconnecting:
+#+begin_src bash
+#!/bin/bash
+
+# Replace "your_wifi_connection_name" with your actual WiFi connection name
+
+WIFI_CONNECTION="your_wifi_connection_name"
+
+# Check if the WiFi is connected
+if ! nmcli connection show --active | grep -q "$WIFI_CONNECTION"; then
+    echo "WiFi disconnected. Reconnecting..."
+
+    # Attempt to reconnect
+    nmcli connection up "$WIFI_CONNECTION"
+else
+    echo "WiFi is already connected."
+fi
+
+#+end_src
+To allow this script to be executed, type in terminal:
+#+begin_src bash
+chmod +x <path-to-the-script-above>
+#+end_src
+
+The next step is to create a ~cron~ job to run this script every minute.
+In the terminal, type:
+#+begin_src bash
+crontab -e
+#+end_src
+and add the following line:
+#+begin_src
+*/1 * * * * bash <path-to-the-script-above>
+#+end_src
+and save and exit.
+
+We can test by manually disconnect WiFi and see if it reconnects within one minute.
+However, this may not work because ~cron~ may not have the right authority to reconnect.
+To check if this is truly the issue, type in the terminal:
+#+begin_src bash
+sudo cat /var/log/cron
+#+end_src
+If the output contains information like: ~CMDOUT (Error: Connection activation failed: Not authorized to control networking.)~, ~cron~ doesn't have the right authority.
+
+In this case, to further check which authority is missing, run ~crontab -e~ again and add the following line:
+#+begin_src
+*/1 * * * * nmcli general permissions > <output-path-and-filename-as-you-like>
+#+end_src
+and save and exit.
+Then, in the terminal, type:
+#+begin_src bash
+cat <output-path-and-filename-above>
+#+end_src
+which should contain a line saying:
+#+begin_src
+org.freedesktop.NetworkManager.network-control                    auth
+#+end_src
+and we want this value to be yes.
+
+To give ~cron~ the authority, following the solution in [[https://unix.stackexchange.com/questions/727580/nmcli-error-connection-activation-failed-not-authorized-to-control-networking][this link]], I added a ~x.pkla~ file to ~/etc/polkit-1/localauthority/50-local.d/~:
+#+begin_src
+[Let wheel group modify system settings for network]
+Identity=unix-group:wheel
+Action=org.freedesktop.NetworkManager.network-control
+ResultAny=yes
+#+end_src
+Note that the group name ~wheel~ may depend on the system. In the link's example, the name is ~adm~.
+
+Then we need to reload ~polkit~ by typing in the terminal:
+#+begin_src bash
+systemctl restart polkit
+#+end_src
+
+Now manually disconnect, and it should reconnect within one minute!

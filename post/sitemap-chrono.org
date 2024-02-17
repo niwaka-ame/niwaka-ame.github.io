@@ -1,5 +1,6 @@
 #+TITLE: Yu Huo
 
+- [[file:linux/auto-reconnect-wifi.org][Automatically Reconnecting to WiFi]] --- 2024-02-17
 - [[file:misc/morocco.org][摩洛哥的中餐馆, Riad和里面的人]] --- 2023-09-09
 - [[file:happy-life/loch-long.org][Loch Long: a Scottish fjord]] --- 2023-08-19
 - [[file:misc/grandmother.org][怀念我的祖母]] --- 2023-08-03

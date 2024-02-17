@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-02-17 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Automatically Reconnecting to WiFi in Fedora 39</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header id="top" class="status">
+<body> <div id='preamble' class='status'>
+        <nav>
+                <a href='/'>Home</a>
+                <a href='/public/sitemap.html'>Posts</a>
+                <a href='/public/software.html'>Softwares</a>
+        </nav>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Automatically Reconnecting to WiFi in Fedora 39</h1>
+</header><p>
+I set up an N100 mini PC as a server to sync files between multiple devices, running Fedora 39.
+However, connection to the WiFi at home is lost from time to time, so I need a script to automatically reconnect.
+</p>
+
+<p>
+ChatGPT wrote me a perfect script for detecting loss of connection and automatic reconnecting:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #41505E;">#</span><span style="color: #41505E;">!/bin/</span><span style="color: #5EC4FF;">bash</span>
+
+<span style="color: #41505E;"># </span><span style="color: #41505E;">Replace "your_wifi_connection_name" with your actual WiFi connection name</span>
+
+<span style="color: #718CA1;">WIFI_CONNECTION</span>=<span style="color: #539AFC;">"your_wifi_connection_name"</span>
+
+<span style="color: #41505E;"># </span><span style="color: #41505E;">Check if the WiFi is connected</span>
+<span style="color: #5EC4FF;">if</span> <span style="color: #5EC4FF; font-weight: bold;">!</span> nmcli connection show --active | <span style="color: #EBBF83;">grep</span> -q <span style="color: #539AFC;">"</span><span style="color: #E27E8D;">$</span><span style="color: #718CA1;">WIFI_CONNECTION</span><span style="color: #539AFC;">"</span>; <span style="color: #5EC4FF;">then</span>
+    <span style="color: #EBBF83;">echo</span> <span style="color: #539AFC;">"WiFi disconnected. Reconnecting..."</span>
+
+    <span style="color: #41505E;"># </span><span style="color: #41505E;">Attempt to reconnect</span>
+    nmcli connection up <span style="color: #539AFC;">"</span><span style="color: #E27E8D;">$</span><span style="color: #718CA1;">WIFI_CONNECTION</span><span style="color: #539AFC;">"</span>
+<span style="color: #5EC4FF;">else</span>
+    <span style="color: #EBBF83;">echo</span> <span style="color: #539AFC;">"WiFi is already connected."</span>
+<span style="color: #5EC4FF;">fi</span>
+
+</pre>
+</div>
+<p>
+To allow this script to be executed, type in terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #EBBF83;">chmod</span> +x &lt;path-to-the-script-above&gt;
+</pre>
+</div>
+
+<p>
+The next step is to create a <code>cron</code> job to run this script every minute.
+In the terminal, type:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">crontab -e
+</pre>
+</div>
+<p>
+and add the following line:
+</p>
+<div class="org-src-container">
+<pre class="src src-nil">*/1 * * * * bash &lt;path-to-the-script-above&gt;
+</pre>
+</div>
+<p>
+and save and exit.
+</p>
+
+<p>
+We can test by manually disconnect WiFi and see if it reconnects within one minute.
+However, this may not work because <code>cron</code> may not have the right authority to reconnect.
+To check if this is truly the issue, type in the terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #EBBF83;">sudo</span> <span style="color: #EBBF83;">cat</span> /var/log/cron
+</pre>
+</div>
+<p>
+If the output contains information like: <code>CMDOUT (Error: Connection activation failed: Not authorized to control networking.)</code>, <code>cron</code> doesn&rsquo;t have the right authority.
+</p>
+
+<p>
+In this case, to further check which authority is missing, run <code>crontab -e</code> again and add the following line:
+</p>
+<div class="org-src-container">
+<pre class="src src-nil">*/1 * * * * nmcli general permissions &gt; &lt;output-path-and-filename-as-you-like&gt;
+</pre>
+</div>
+<p>
+and save and exit.
+Then, in the terminal, type:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #EBBF83;">cat</span> &lt;output-path-and-filename-above&gt;
+</pre>
+</div>
+<p>
+which should contain a line saying:
+</p>
+<div class="org-src-container">
+<pre class="src src-nil">org.freedesktop.NetworkManager.network-control                    auth
+</pre>
+</div>
+<p>
+and we want this value to be yes.
+</p>
+
+<p>
+To give <code>cron</code> the authority, following the solution in <a href="https://unix.stackexchange.com/questions/727580/nmcli-error-connection-activation-failed-not-authorized-to-control-networking">this link</a>, I added a <code>x.pkla</code> file to <code>/etc/polkit-1/localauthority/50-local.d/</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-nil">[Let wheel group modify system settings for network]
+Identity=unix-group:wheel
+Action=org.freedesktop.NetworkManager.network-control
+ResultAny=yes
+</pre>
+</div>
+<p>
+Note that the group name <code>wheel</code> may depend on the system. In the link&rsquo;s example, the name is <code>adm</code>.
+</p>
+
+<p>
+Then we need to reload <code>polkit</code> by typing in the terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">systemctl restart polkit
+</pre>
+</div>
+
+<p>
+Now manually disconnect, and it should reconnect within one minute!
+</p>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'> © Yu Huo 2022-2023. Created , Last updated 2024-02-17, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7)</div>
+</footer>
+</body>
+</html>

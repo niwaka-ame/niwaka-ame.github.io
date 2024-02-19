@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-02-19 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Replacing Dropbox with Tailscale + Syncthing</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header id="top" class="status">
+<body> <div id='preamble' class='status'>
+        <nav>
+                <a href='/'>Home</a>
+                <a href='/public/sitemap.html'>Posts</a>
+                <a href='/public/software.html'>Softwares</a>
+        </nav>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">Replacing Dropbox with Tailscale + Syncthing</h1>
+</header><p>
+Dropbox and Google Drive provide great convenience in syncing files between multiple devices.
+However, the free storage space is small and there can be privacy concerns.
+The solution is to have our own server (for example, N100 mini PCs with 500GB storage that cost about 100 GBP), sync our files with Syncthing, through a private VPN network built with Tailscale.
+</p>
+
+<p>
+This solution allows us to sync files between our PCs and phones free of charge.
+</p>
+<section id="outline-container-org2f7d492" class="outline-2">
+<h2 id="org2f7d492"><span class="section-number-2">1.</span> Building up a private VPN network with Tailscale</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Install Tailscale on your server &#x2014; there are official tutorials for different OS, for example <a href="https://tailscale.com/kb/1050/install-fedora">Fedora</a>.</li>
+<li>After the `tailscale up` command, you&rsquo;ll be shown a link to log into your tailscale account.</li>
+<li>Add another device (e.g. a smartphone) &#x2014; see 0:00&#x2013;2:32 in <a href="https://tailscale.com/kb/1017/install">this official video</a>.</li>
+</ol>
+</div>
+</section>
+<section id="outline-container-orgf3bfd9d" class="outline-2">
+<h2 id="orgf3bfd9d"><span class="section-number-2">2.</span> Syncing files using Tailscale</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li>Install Syncthing from your package manager or download from <a href="https://syncthing.net/downloads/">this page</a>.</li>
+<li><p>
+Ensure Syncthing starts now and will be automatically started in the future:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">systemctl enable --now syncthing@&lt;linux-username&gt;.service
+</pre>
+</div></li>
+<li>Configure the folders to sync following the <a href="https://docs.syncthing.net/intro/getting-started.html">official documentation</a>.</li>
+</ol>
+</div>
+</section>
+<section id="outline-container-org9b629a5" class="outline-2">
+<h2 id="org9b629a5"><span class="section-number-2">3.</span> See also</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I started with following <a href="https://silicon.blog/2022/06/06/synchronize-your-folders-using-syncthing-inside-a-tailscale-private-network/">this blog post</a>, which is sufficient to guide me through the process.
+My blog post here is meant to be complementary to that and the official documentations.
+</p>
+
+<p>
+If the server&rsquo;s WiFi connection is unstable, refer to <a href="./auto-reconnect-wifi.html">this blog post of mine</a> for auto-reconnecting the WiFi.
+</p>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'> © Yu Huo 2022-2023. Created , Last updated 2024-02-19, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7)</div>
+</footer>
+</body>
+</html>

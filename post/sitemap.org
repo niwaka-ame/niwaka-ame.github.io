@@ -1,6 +1,7 @@
 #+TITLE: Yu Huo
 
 - Linux
+  - [[file:linux/syncthing-tailscale.org][Replacing Dropbox with Tailscale + Syncthing]] --- 2024-02-19
   - [[file:linux/auto-reconnect-wifi.org][Automatically Reconnecting to WiFi in Fedora 39]] --- 2024-02-17
 - Coding
   - [[file:coding/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]] --- 2023-02-18

@@ -1,15 +1,26 @@
-#+title: Syncthing Tailscale
+#+title: Replacing Dropbox with Tailscale + Syncthing
 
-https://tailscale.com/kb/1050/install-fedora
+Dropbox and Google Drive provide great convenience in syncing files between multiple devices.
+However, the free storage space is small and there can be privacy concerns.
+The solution is to have our own server (for example, N100 mini PCs with 500GB storage that cost about 100 GBP), sync our files with Syncthing, through a private VPN network built with Tailscale.
 
-https://silicon.blog/2022/06/06/create-proxmox-cluster-over-a-private-network-using-tailscale/
-enable services
+This solution allows us to sync files between our PCs and phones free of charge.
 
-localhost:8384
+* Building up a private VPN network with Tailscale
+1. Install Tailscale on your server --- there are official tutorials for different OS, for example [[https://tailscale.com/kb/1050/install-fedora][Fedora]].
+2. After the `tailscale up` command, you'll be shown a link to log into your tailscale account.
+3. Add another device (e.g. a smartphone) --- see 0:00--2:32 in [[https://tailscale.com/kb/1017/install][this official video]].
 
-log into tailscale after tailscale up
+* Syncing files using Tailscale
+1. Install Syncthing from your package manager or download from [[https://syncthing.net/downloads/][this page]].
+2. Ensure Syncthing starts now and will be automatically started in the future:
+   #+begin_src bash
+systemctl enable --now syncthing@<linux-username>.service
+   #+end_src
+3. Configure the folders to sync following the [[https://docs.syncthing.net/intro/getting-started.html][official documentation]].
 
-add another device (e.g. a phone) see 0 - 2:32 in https://tailscale.com/kb/1017/install
+* See also
+I started with following [[https://silicon.blog/2022/06/06/synchronize-your-folders-using-syncthing-inside-a-tailscale-private-network/][this blog post]], which is sufficient to guide me through the process.
+My blog post here is meant to be complementary to that and the official documentations.
 
-syncthing
-https://docs.syncthing.net/intro/getting-started.html
+If the server's WiFi connection is unstable, refer to [[./auto-reconnect-wifi.org][this blog post of mine]] for auto-reconnecting the WiFi.

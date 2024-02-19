@@ -8,10 +8,10 @@ This solution allows us to sync files between our PCs and phones free of charge.
 
 * Building up a private VPN network with Tailscale
 1. Install Tailscale on your server --- there are official tutorials for different OS, for example [[https://tailscale.com/kb/1050/install-fedora][Fedora]].
-2. After the `tailscale up` command, you'll be shown a link to log into your tailscale account.
+2. After the ~tailscale up~ command, you'll be shown a link to log into your tailscale account.
 3. Add another device (e.g. a smartphone) --- see 0:00--2:32 in [[https://tailscale.com/kb/1017/install][this official video]].
 
-* Syncing files using Tailscale
+* Syncing files using Syncthing
 1. Install Syncthing from your package manager or download from [[https://syncthing.net/downloads/][this page]].
 2. Ensure Syncthing starts now and will be automatically started in the future:
    #+begin_src bash

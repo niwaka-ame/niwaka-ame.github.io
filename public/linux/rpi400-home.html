@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-02-19 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>给家里装了一台树莓派400</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link href="https://cdn.simplecss.org/simple.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header id="top" class="status">
+<body> <div id='preamble' class='status'>
+        <nav>
+                <a href='/'>Home</a>
+                <a href='/public/sitemap.html'>Posts</a>
+                <a href='/public/software.html'>Softwares</a>
+        </nav>
+</div>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">给家里装了一台树莓派400</h1>
+</header><p>
+家里的老电脑不行了, 趁着这次回国, 给家里换上了 <a href="https://www.raspberrypi.com/products/raspberry-pi-400/">树莓派 400</a> , 运行 Ubuntu MATE 22.04 系统.
+</p>
+
+<p>
+树莓派 400 的好处是键盘和主机一体, 节省空间, 布线简单, 价格便宜 (683 元), 配置对于家里老人来说也够用.
+Ubuntu MATE 配置要求低, 容易入门, 并且对树莓派电脑有官方支持.
+</p>
+
+<p>
+安装配置完毕后, 系统运行快速不卡顿, 中文支持良好, 完美满足家人上网, 管理手机照片和视频通话的需求, 家里人很快就上手了.
+兹记录安装配置过程如下.
+</p>
+<section id="outline-container-org68bdb3d" class="outline-2">
+<h2 id="org68bdb3d"><span class="section-number-2">1.</span> 硬件</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+卖家已经提供了一根网线和一个无线鼠标.
+</p>
+
+<p>
+树莓派 400 只有 micro HDMI 接口, 没有 HDMI 接口和 3.5 mm 的音频接口.
+而家里的显示器是 VGA 的, 音箱是 3.5 mm 口, 因此需要从 micro HDMI 转出一个视频口和一个音频口.
+淘宝上似乎没有 micro HDMI 直接转 VGA 的线, 因此购买了一根 micro HDMI 转 HDMI 线, 外加一根 HDMI 转 VGA 带 3.5 mm 母口的线 (共 45 元).
+</p>
+
+<p>
+存储卡用的是 Ubuntu MATE 官网推荐的 Kingston microSDXC Canvas Go Plus, 容量 128 GB (88 元).
+<a href="https://ubuntu-mate.org/raspberry-pi/compatibility/">据官网所述</a>, 存储卡对性能影响较大, 须谨慎选择存储卡, 不要贪便宜.
+</p>
+</div>
+</section>
+<section id="outline-container-org6604f5b" class="outline-2">
+<h2 id="org6604f5b"><span class="section-number-2">2.</span> 系统安装</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Ubuntu MATE 提供了预制的镜像, 只需下载 ARM64 版本的镜像(<a href="https://ubuntu-mate.org/raspberry-pi/download/">页面</a>), 按照<a href="https://ubuntu-mate.org/raspberry-pi/install/">官方教程</a>把镜像烧录到存储卡, 然后插入到卡槽, 给树莓派连接上屏幕, 鼠标和电源, 按提示或官方教程安装即可.
+</p>
+</div>
+</section>
+<section id="outline-container-org8e21098" class="outline-2">
+<h2 id="org8e21098"><span class="section-number-2">3.</span> 换源, 安装中文支持和输入法</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+安装完毕的系统中文支持并不完善, 需下载并安装中文支持, 而默认的国外软件源十分缓慢.
+因此首先换源, 可参见<a href="https://blog.csdn.net/Brendon_Tan/article/details/107107550">这篇博客</a>.
+之后在 <code>菜单</code> 中进入 <code>控制中心</code>, 选择 <code>语言支持</code>, 会自动检查语言支持, 提示&ldquo;语言支持没有安装完整&rdquo;, 此时安装语言支持.
+安装完语言支持后, 在 <code>语言支持</code> 菜单中的 <code>键盘输入法系统</code> 选择 Fcitx 5 (也就是小企鹅输入法), 然后在 <code>菜单</code> 中找到 <code>Fcitx 配置</code>, 把所需的输入法移动到当前输入法中, 此时从菜单中运行 Fcitx 5, 中文输入法应该可以使用了.
+</p>
+
+<p>
+然而此时遇到一个 bug, 也就是在火狐或者 Chromium 浏览器中无法显示选字框, 但在其它软件中正常, 原因未明.
+解决方案为重新安装 Fcitx 5:
+</p>
+<ol class="org-ol">
+<li><p>
+先在终端卸载 Fcitx 5:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #EBBF83;">sudo</span> apt remove fcitx*
+</pre>
+</div></li>
+<li><p>
+参考了<a href="https://zhuanlan.zhihu.com/p/508797663">这篇文章</a>, 运行以下命令:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #EBBF83;">sudo</span> apt install fcitx5 <span style="color: #539AFC;">\</span>
+fcitx5-chinese-addons <span style="color: #539AFC;">\</span>
+fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 <span style="color: #539AFC;">\</span>
+fcitx5-frontend-qt5
+</pre>
+</div></li>
+<li>重新在 <code>Fcitx 配置</code> 中配置所需输入法.</li>
+<li><p>
+设置环境变量, 在 <code>/etc/profile</code> 文件中写入:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #5EC4FF;">export</span> <span style="color: #718CA1;">XMODIFIERS</span>=@<span style="color: #718CA1;">im</span>=fcitx
+<span style="color: #5EC4FF;">export</span> <span style="color: #718CA1;">GTK_IM_MODULE</span>=fcitx
+<span style="color: #5EC4FF;">export</span> <span style="color: #718CA1;">QT_IM_MODULE</span>=fcitx
+</pre>
+</div></li>
+<li>令 Fcitx 随系统启动时自启动. 在 <code>控制中心</code> 中找到 <code>启动应用程序</code>, 点击 <code>添加</code>, 名称为 <code>fcitx5</code>, 命令为 <code>/usr/bin/fcitx5</code>.</li>
+</ol>
+</div>
+</section>
+<section id="outline-container-org12234f2" class="outline-2">
+<h2 id="org12234f2"><span class="section-number-2">4.</span> 改变外观布局</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Ubuntu MATE 的默认外观为 Gnome 2 的经典样式, 而家里人习惯使用类似于 Windows XP 的体验.
+Ubuntu MATE 已经内置了相应的功能, 在 <code>控制中心</code> 中找到 <code>MATE Tweak</code>, 选择 <code>面板</code>, 把面板改为 <code>Redmond</code> 即可.
+该面板的问题是似乎无法添加更多的快速启动按钮, 只能编辑现有的按钮,  并且如果试用了其它面板布局, 编辑过的快速启动按钮会丢失.
+</p>
+</div>
+</section>
+<section id="outline-container-orgb2d9b08" class="outline-2">
+<h2 id="orgb2d9b08"><span class="section-number-2">5.</span> 安装 ESR 版的火狐浏览器和 uBlock Origin</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Ubuntu MATE 自带一个火狐浏览器, 但是并非 ESR 版本, 意味着未经签名的插件, 比如广告屏蔽的 <a href="https://github.com/gorhill/uBlock">uBlock Origin</a> 将无法安装 (火狐在中国不提供 uBlock Origin).
+而 ESR 版本的火狐并不在 Ubuntu 的软件源中, 因此在 <code>Boutique 商店</code> 中使用第三方源安装 Firefox ESR (在国内速度比较缓慢), 并从终端卸载自带的火狐:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #EBBF83;">sudo</span> snap remove firefox
+</pre>
+</div>
+<p>
+然后:
+</p>
+<ol class="org-ol">
+<li>从<a href="https://github.com/gorhill/uBlock/releases">uBlock Origin 的 Releases页面</a>中下载后缀为 <code>.xpi</code> 的火狐插件文件.</li>
+<li>在火狐中打开 <code>about:config</code> 页面, 搜索 <code>xpinstall.signatures.required</code>, 把值设置为 <code>false</code>.</li>
+<li>在 <code>扩展与主题</code> 菜单中点击齿轮按钮, 选择 <code>从文件安装附加组件...</code>, 选择之前下载的 <code>.xpi</code> 文件即可安装.</li>
+</ol>
+
+<p>
+其它有用的插件, 比如 <a href="https://addons.mozilla.org/zh-CN/firefox/addon/darkreader/">Dark Reader</a>, 可以直接从火狐官网安装.
+</p>
+</div>
+</section>
+<section id="outline-container-orgbe1760e" class="outline-2">
+<h2 id="orgbe1760e"><span class="section-number-2">6.</span> 其它有用的软件</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>腾讯会议 (Linux 版的 QQ 暂不支持视频通话), 直接从官网下载 ARM64 版本的 <code>deb</code> 包安装即可. 家里的罗技 USB 摄像头可以即插即用. 视频效果良好不卡顿.</li>
+<li><a href="https://github.com/qier222/YesPlayMusic">YesPlayMusic</a>, 优秀的网易云音乐第三方客户端.
+直接在 Releases 页面中下载 ARM64 版本的 <code>tar.gz</code> 文件, 解压缩, 运行 <code>yesplaymusic</code> 文件即可. 国内 GitHub 下载速度缓慢, 可使用 <a href="https://ghproxy.net/">ghproxy</a> 加速下载.</li>
+<li><p>
+星际译王, 类似于金山词霸的词典软件. 在终端输入 <code>sudo apt install stardict</code> 安装.
+星际译王自身不带有词典, 可从作者的<a href="http://download.huzheng.org/">网站</a>下载词典, 个人较为喜欢的是<a href="http://download.huzheng.org/zh_CN/">此页面</a>中的朗道英汉和朗道汉英词典.
+下载后, 运行:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tar xvf ~/&#19979;&#36733;/&lt;&#26576;&#23383;&#20856;&gt;.tar.bz2
+<span style="color: #EBBF83;">cd</span> ~/&#19979;&#36733;/&lt;&#26576;&#23383;&#20856;&gt;
+<span style="color: #EBBF83;">sudo</span> <span style="color: #EBBF83;">cp</span> * /usr/share/stardict/dic/stardict-dict
+</pre>
+</div>
+<p>
+重启星际译王即可.
+</p></li>
+</ul>
+</div>
+</section>
+<section id="outline-container-org3214fa9" class="outline-2">
+<h2 id="org3214fa9"><span class="section-number-2">7.</span> 未实现的功能</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>使用 VNC 通过公网 IP 实现远程控制, 远程帮助家里解决软件问题.</li>
+</ul>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<div class='footer'> © Yu Huo 2022-2023. Created 2023-05-09, Last updated 2024-02-17, built with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7)</div>
+</footer>
+</body>
+</html>

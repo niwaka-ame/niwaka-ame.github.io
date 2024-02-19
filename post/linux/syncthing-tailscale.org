@@ -1,0 +1,15 @@
+#+title: Syncthing Tailscale
+
+https://tailscale.com/kb/1050/install-fedora
+
+https://silicon.blog/2022/06/06/create-proxmox-cluster-over-a-private-network-using-tailscale/
+enable services
+
+localhost:8384
+
+log into tailscale after tailscale up
+
+add another device (e.g. a phone) see 0 - 2:32 in https://tailscale.com/kb/1017/install
+
+syncthing
+https://docs.syncthing.net/intro/getting-started.html

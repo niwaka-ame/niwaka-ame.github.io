@@ -1,0 +1,58 @@
+#+TITLE: Yu Huo's Blog
+
+* CSS for Org-exported HTML (By Eli)
+:properties:
+:rss_permalink: articles/2024-02-29-org-CSS.html
+:pubdate: 2024-02-29
+:END:
+
+[[https://niwaka-ame.github.io/articles/2024-02-29-org-CSS.html][Read More]]
+* Replacing Dropbox with Tailscale + Syncthing
+:properties:
+:rss_permalink: articles/syncthing-tailscale.html
+:pubdate: 2024-02-19
+:END:
+
+[[https://niwaka-ame.github.io/articles/syncthing-tailscale.html][Read More]]
+* Automatically Reconnecting to WiFi in Fedora 39
+:properties:
+:rss_permalink: articles/auto-reconnect-wifi.html
+:pubdate: 2024-02-17
+:END:
+
+[[https://niwaka-ame.github.io/articles/auto-reconnect-wifi.html][Read More]]
+* Syncing Zotero with cloud storage like Google Drive
+:properties:
+:rss_permalink: articles/sync-zotero.html
+:pubdate: 2023-05-27
+:END:
+
+[[https://niwaka-ame.github.io/articles/sync-zotero.html][Read More]]
+* Streamlining creation of multi-panel paper figures with Python
+:properties:
+:rss_permalink: articles/paper-figures.html
+:pubdate: 2023-02-18
+:END:
+
+[[https://niwaka-ame.github.io/articles/paper-figures.html][Read More]]
+* Derive the distribution of two Gaussian variables' ratio with SymPy
+:properties:
+:rss_permalink: articles/sympy-gaussian-quotient.html
+:pubdate: 2023-02-14
+:END:
+
+[[https://niwaka-ame.github.io/articles/sympy-gaussian-quotient.html][Read More]]
+* Scripting with Script-Fu in GIMP to compress photos in batch
+:properties:
+:rss_permalink: articles/script-fu.html
+:pubdate: 2023-02-05
+:END:
+
+[[https://niwaka-ame.github.io/articles/script-fu.html][Read More]]
+* Getting Raiden 2 working on Retropie
+:properties:
+:rss_permalink: articles/raiden2.html
+:pubdate: 2023-01-20
+:END:
+
+[[https://niwaka-ame.github.io/articles/raiden2.html][Read More]]

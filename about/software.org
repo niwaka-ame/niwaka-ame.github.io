@@ -1,0 +1,10 @@
+#+title: Softwares
+
+I write Python codes in research and Emacs Lisp codes to make my life more fun and easier.
+
++ [[https://git.ecdf.ed.ac.uk/s1856140/nunchaku][nunchaku]]: (Python) Optimally partitioning data into piece-wise segments with Bayesian statistics.
+  Available on [[https://pypi.org/project/nunchaku/][PyPI]].
+  See also our [[https://doi.org/10.1093/bioinformatics/btad688][paper]] on /Bioinformatics/.
++ [[https://github.com/niwaka-ame/sgd-lookup.el][sgd-lookup.el]]: (Emacs Lisp) An Emacs API wrapper for Saccharomyces Genome Database (SGD).
++ [[https://github.com/niwaka-ame/emacs-gene-tools][emacs-gene-tools]]: (Emacs Lisp) An interactive UI to query gene info in a given organism in Emacs (for now works on budding yeast only).
++ [[https://github.com/niwaka-ame/wga.el][wga.el]] (Emacs Lisp): A small program to allow quick search in the art catalog of the Web Gallery of Art (WGA).

@@ -1,0 +1,28 @@
+#+title: Replacing Dropbox with Tailscale + Syncthing
+#+date:2024-02-19
+#+filetags: :research:linux:
+
+Dropbox and Google Drive provide great convenience in syncing files between multiple devices.
+However, the free storage space is small and there can be privacy concerns.
+The solution is to have our own server (for example, N100 mini PCs with 500GB storage that cost about 100 GBP), sync our files with Syncthing, through a private VPN network built with Tailscale.
+
+This solution allows us to sync files between our PCs and phones free of charge.
+
+* Building up a private VPN network with Tailscale
+1. Install Tailscale on your server --- there are official tutorials for different OS, for example [[https://tailscale.com/kb/1050/install-fedora][Fedora]].
+2. After the ~tailscale up~ command, you'll be shown a link to log into your tailscale account.
+3. Add another device (e.g. a smartphone) --- see 0:00--2:32 in [[https://tailscale.com/kb/1017/install][this official video]].
+
+* Syncing files using Syncthing
+1. Install Syncthing from your package manager or download from [[https://syncthing.net/downloads/][this page]].
+2. Ensure Syncthing starts now and will be automatically started in the future:
+   #+begin_src bash
+systemctl enable --now syncthing@<linux-username>.service
+   #+end_src
+3. Configure the folders to sync following the [[https://docs.syncthing.net/intro/getting-started.html][official documentation]].
+
+* See also
+I started with following [[https://silicon.blog/2022/06/06/synchronize-your-folders-using-syncthing-inside-a-tailscale-private-network/][this blog post]], which is sufficient to guide me through the process.
+My blog post here is meant to be complementary to that and the official documentations.
+
+If the server's WiFi connection is unstable, refer to [[./auto-reconnect-wifi.org][this blog post of mine]] for auto-reconnecting the WiFi.

@@ -1,4 +1,18 @@
 #+TITLE: Eli's Blog
 #+DATE: 2023-10-10
-
-- {{{timestamp(2024-02-29)}}}   [[file:articles/2024-02-29-org-CSS.org][CSS for Org-exported HTML(WIP)]]
+#+BEGIN_EXPORT html
+<section class="filter">
+<label class="category">
+<input type="radio" name="tag" value="all" checked/>
+<span>All</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="blog"/>
+<span>blog</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="CSS"/>
+<span>CSS</span>
+</label></section>
+#+END_EXPORT
+- {{{timestamp(2024-02-29)}}}   [[file:articles/2024-02-29-org-CSS.org][CSS for Org-exported HTML(WIP)]] {{{tags(#CSS #blog)}}}

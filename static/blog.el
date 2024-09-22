@@ -238,12 +238,47 @@ Return output file name."
                                   "html"))
                       plist pub-dir))
 ;; SITEMAP
+(defvar eli/blog-tags nil)
+
+(after! ox
+  (add-to-list 'org-export-global-macros
+               '("timestamp" . "@@html:<span class=\"timestamp\">[$1]</span>@@"))
+  (add-to-list 'org-export-global-macros
+               '("tags" . "@@html:<span class=\"tags\" data-tags=\"$1\"></span>@@"))
+  (add-to-list 'org-export-global-macros
+               '("kbd" . "@@html:<kbd>$1</kbd>@@")))
+
 (defun eli/org-publish-sitemap (title list)
   "Generate the sitemap with title."
+  (setq org-html-head-extra
+        (format "<style>\n%s\n%s\n</style>"
+                ".content:has([value=\"all\"]:checked) li{display: list-item;}\n"
+                (mapconcat
+                 (lambda (tag)
+                   (format ".content:has([value=\"%s\"]:checked)
+ li:has([data-tags~=\"%s\"]){display: list-item;}"
+                           tag (concat "#" tag)))
+                 eli/blog-tags "\n")))
   (concat "#+TITLE: " title
           "\n"
           "#+DATE: 2023-10-10"
-          "\n\n"
+          "\n"
+          (format "#+BEGIN_EXPORT html
+<section class=\"filter\">\n%s\n%s</section>
+#+END_EXPORT"
+                  "<label class=\"category\">
+<input type=\"radio\" name=\"tag\" value=\"all\" checked/>
+<span>All</span>
+</label>"
+                  (mapconcat
+                   (lambda (tag)
+                     (format "<label class=\"category\">
+<input type=\"radio\" name=\"tag\" value=\"%s\"/>
+<span>%s</span>
+</label>"
+                             tag tag))
+                   eli/blog-tags "\n"))
+          "\n"
           (org-list-to-org list)))
 
 (defun eli/sitemap-dated-entry-format (entry _style project)
@@ -254,18 +289,22 @@ Return output file name."
           (if parsed-title
               (org-no-properties
                (org-element-interpret-data parsed-title))
-            (file-name-nondirectory (file-name-sans-extension file)))))
+            (file-name-nondirectory (file-name-sans-extension file))))
+         (tags (org-publish-find-property file :filetags project))
+         (tags-string (mapconcat
+                       (lambda (tag)
+                         (concat "#" tag))
+                       tags " ")))
+    (dolist (tag tags)
+      (cl-pushnew tag eli/blog-tags :test #'string=))
     (org-publish-cache-set-file-property file :title title)
     (if (= (length title) 0)
         (format "*%s*" entry)
-      (format "{{{timestamp(%s)}}}   [[file:%s][%s]]"
+      (format "{{{timestamp(%s)}}}   [[file:%s][%s]] {{{tags(%s)}}}"
               (car (org-publish-find-property file :date project))
               (concat "articles/" entry)
-              title))))
-
-(after! ox
-  (add-to-list 'org-export-global-macros
-               '("timestamp" . "@@html:<span class=\"timestamp\">[$1]</span>@@")))
+              title
+              tags-string))))
 
 (defun eli/blog-publish-completion (project)
   (let* ((publishing-directory (plist-get project :publishing-directory))

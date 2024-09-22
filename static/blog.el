@@ -485,6 +485,47 @@ project."
                    :sitemap-filename "rss.org"
                    :sitemap-sort-files #'anti-chronologically
                    :sitemap-format-entry #'eli/org-publish-rss-entry))
+
+
+;; ABOUT PAGES
+(setq yh/blog-about-dir "~/blog/about")
+(add-to-list 'org-publish-project-alist
+             (list "about"
+                   :base-directory yh/blog-about-dir
+                   :publishing-directory eli/blog-publish-dir
+                   :base-extension "org"
+                   :recursive nil
+                   :htmlized-source t
+                   :publishing-function 'eli/org-blog-publish-to-html
+                   ;; :exclude "rss.org"
+
+                   :auto-sitemap nil
+
+                   :html-head "<link rel=\"icon\" href=\"/static/favion.png\">
+<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/styles.css\"/>
+<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/htmlize.css\" />
+                  <script src=\"/scripts/script.js\"></script>
+                  <script src=\"/scripts/toc.js\"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>"
+                   :html-preamble t
+                   :html-preamble-format '(("en" "<nav class=\"nav\">
+   <a href=\"/index.html\" class=\"button\">Home</a>
+   <a href=\"/articles/about.html\" class=\"button\">About Me</a>
+   <a href=\"/articles/software.html\" class=\"button\">Softwares</a>
+   <a href=\"/rss.xml\" class=\"button\">RSS</a>
+ </nav>
+ <hr>"))
+                   :html-postamble t
+                   :html-postamble-format '(("en" "<hr class=\"Solid\">
+ <div class=\"info\">
+   <span class=\"author\">Author: %a (%e)</span>
+   <span class=\"date\">Create Date: %d</span>
+   <span class=\"date\">Last modified: %C</span>
+   <span>Creator: %c</span>
+ </div>"))
+                   :with-creator nil))
+
+;; PUBLISH ALL COMPONENTS
 (add-to-list 'org-publish-project-alist
              (list "Eli's blog"
-                   :components '("blog articles" "blog rss")))
+                   :components '("blog articles" "about" "blog rss")))

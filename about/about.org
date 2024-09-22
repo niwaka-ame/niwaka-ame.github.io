@@ -1,7 +1,12 @@
-#+title: About Me
+#+title: About
 
-Welcome to my personal blog. I'm a quantitative biologist.
+Welcome to my personal blog! I'm a quantitative biologist, originally from China, now in the UK.
 
-The scope of this blog is mostly the tech aspect of my daily life.
+The scope of this blog is mostly the tech aspect of my research and daily life.
 
-This blog is built with [[https://orgmode.org/][Orgmode]] in [[https://www.gnu.org/software/emacs/][GNU Emacs]]. Kudos to [[https://elilif.github.io/][Eli]] who designed and wrote a tutorial about it.
+This blog is built with [[https://orgmode.org/][Orgmode]] in [[https://www.gnu.org/software/emacs/][GNU Emacs]].
+The template of this blog is written by [[https://elilif.github.io/][Eli]] who also wrote a tutorial series about it --- Kudos to Eli!
+
+Finally, there's a [[https://giscus.app/][Giscus]] dialog at the bottom of each page (you may need to scroll down).
+Please feel free to leave your comment there or just say hi :)
+I speak Chinese and English and read Japanese.

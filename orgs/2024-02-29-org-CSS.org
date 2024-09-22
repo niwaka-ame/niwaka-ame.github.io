@@ -9,6 +9,7 @@ _underline_
 =verbatim=
 ~code~
 +strike-through+
+{{{kbd(C-h h)}}}
 * Lists
 ** Todo List
 *** TODO First todo
@@ -47,7 +48,10 @@ DEADLINE: <2021-02-18 Thu>
 * Images
 
 #+CAPTION: org-mode
-[[../static/post-img/2024-02-29-org-CSS/org-mode.png]]
+[[../static/post-img/org-mode.png]]
+
+#+CAPTION: org-mode-2
+[[../static/post-img/org-mode.png]]
 * Math
 
 \begin{align}
@@ -62,8 +66,6 @@ H1 Text
 H2 Text
 *** H3
 H3 Text
-**** H4
-H4 Text
 * Table
 #+CAPTION: test
 |  a |  b |  c |  d |  e |  f |
@@ -124,18 +126,25 @@ I never writ, nor no man ever loved.x
 
 ** Source Blocks
 *** Elisp
-#+NAME: test-divider
 #+begin_src emacs-lisp
-  (message "--------------------------------")
+(message "This is a test.")
+(when x (1+ x))
+(symbol-name 'symbol)
 #+end_src
-
-#+NAME: test-example
-#+begin_src emacs-lisp
-  <<test-divider>>
-  (message "This is a test.")
-  <<test-divider>>
+*** Python
+#+begin_src python
+import numpy as np
+x = [1, 2, 3]
+for num in x:
+    print(np.sin(x))
+else:
+    print("done!")
 #+end_src
-
+*** Bash
+#+begin_src shell
+export HOMEDIR=/home/abc
+if [0 -ne 1]; then echo "good"; fi
+#+end_src
 * Footnotes
 
 [fn:1] =org-code= and =org-verbatim= are the same when exporting.

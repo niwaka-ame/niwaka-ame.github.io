@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Replacing Dropbox with Tailscale + Syncthing</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Replacing Dropbox with Tailscale + Syncthing</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2024-02-19</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/syncthing-tailscale.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgbcff948">1. Building up a private VPN network with Tailscale</a></li>
+<li><a href="#org2bfb9ce">2. Syncing files using Syncthing</a></li>
+<li><a href="#org9249360">3. See also</a></li>
+</ul>
+</div>
+</div>
+<p>
+Dropbox and Google Drive provide great convenience in syncing files between multiple devices.
+However, the free storage space is small and there can be privacy concerns.
+The solution is to have our own server (for example, N100 mini PCs with 500GB storage that cost about 100 GBP), sync our files with Syncthing, through a private VPN network built with Tailscale.
+</p>
+
+<p>
+This solution allows us to sync files between our PCs and phones free of charge.
+</p>
+<div id="outline-container-orgbcff948" class="outline-2">
+<h2 id="orgbcff948"><span class="section-number-2">1.</span> Building up a private VPN network with Tailscale</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Install Tailscale on your server &#x2014; there are official tutorials for different OS, for example <a href="https://tailscale.com/kb/1050/install-fedora">Fedora</a>.</li>
+<li>After the <code>tailscale up</code> command, you&rsquo;ll be shown a link to log into your tailscale account.</li>
+<li>Add another device (e.g. a smartphone) &#x2014; see 0:00&#x2013;2:32 in <a href="https://tailscale.com/kb/1017/install">this official video</a>.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org2bfb9ce" class="outline-2">
+<h2 id="org2bfb9ce"><span class="section-number-2">2.</span> Syncing files using Syncthing</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li>Install Syncthing from your package manager or download from <a href="https://syncthing.net/downloads/">this page</a>.</li>
+<li><p>
+Ensure Syncthing starts now and will be automatically started in the future:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>systemctl enable --now syncthing@&lt;linux-username&gt;.service
+</code></pre>
+</div></li>
+<li>Configure the folders to sync following the <a href="https://docs.syncthing.net/intro/getting-started.html">official documentation</a>.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org9249360" class="outline-2">
+<h2 id="org9249360"><span class="section-number-2">3.</span> See also</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I started with following <a href="https://silicon.blog/2022/06/06/synchronize-your-folders-using-syncthing-inside-a-tailscale-private-network/">this blog post</a>, which is sufficient to guide me through the process.
+My blog post here is meant to be complementary to that and the official documentations.
+</p>
+
+<p>
+If the server&rsquo;s WiFi connection is unstable, refer to <a href="./auto-reconnect-wifi.html">this blog post of mine</a> for auto-reconnecting the WiFi.
+</p>
+</div>
+</div>
+</div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2024-02-19</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Streamlining creation of multi-panel paper figures with Python</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Streamlining creation of multi-panel paper figures with Python</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2023-02-18</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/paper-figures.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org43f7c13">1. Generating spatial arrangement and plots of data</a></li>
+<li><a href="#org3ec1907">2. Generating a schematics with Inkscape</a></li>
+<li><a href="#org2729c75">3. Combining the schematics and the plots</a></li>
+<li><a href="#orgbce6f84">4. More sophisticated cases</a></li>
+</ul>
+</div>
+</div>
+<p>
+Papers published on scientific journals usually have limited space, so we usually have to generate figures with multiple panels.
+Within one figure, panels can be schematics (cartoons), example data (photos) and data analysis (plots).
+Usually, we manually combine the panels into a single figure in an image editing software, which makes it hard to be version-controlled.
+What&rsquo;s worse, the figures are subject to frequent update, which leads to:
+</p>
+<ol class="org-ol">
+<li>difficulty in reverting to, or recovering part of the previous version;</li>
+<li>repeated manual labour to combine panels;</li>
+<li>arbitrary positioning of the panels and their labels.</li>
+</ol>
+
+<p>
+Below, I show how to combine Python and Inkscape to streamline this process:
+</p>
+<ol class="org-ol">
+<li>use <code>matplotlib</code> in Python to generate the spatial arrangement of panels and plot data in data panels;</li>
+<li>(optional) use <a href="https://inkscape.org/">Inkscape</a> to generate schematics;</li>
+<li>use Python again to combine the Python output and the schematics, and generate panel labels (A, B, C&#x2026;).</li>
+</ol>
+<div id="outline-container-org43f7c13" class="outline-2">
+<h2 id="org43f7c13"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+For example, I want a 2-panel figure in a \(1 \times 2\) format, with the first being the schematics.
+I prepare the spacial arrangement and plot the data within one script:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-comment-delimiter"># </span><span class="org-comment">create the figure</span>
+<span class="org-variable-name">fig</span>, <span class="org-variable-name">ax</span> <span class="org-operator">=</span> plt.subplots(<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, figsize<span class="org-operator">=</span>(<span class="org-highlight-numbers-number">8</span>,<span class="org-highlight-numbers-number">4</span>), dpi<span class="org-operator">=</span><span class="org-highlight-numbers-number">300</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">plot something on the second panel</span>
+<span class="org-variable-name">x</span> <span class="org-operator">=</span> <span class="org-builtin">list</span>(<span class="org-builtin">range</span>(<span class="org-highlight-numbers-number">4</span>))
+ax[<span class="org-highlight-numbers-number">1</span>].scatter(x, x)
+<span class="org-comment-delimiter"># </span><span class="org-comment">save the figure (for now)</span>
+plt.savefig(<span class="org-string">"my-path-to-the-figure.png"</span>)
+</code></pre>
+</div>
+<p>
+The <code>figsize</code> argument in <code>plt.subplots</code> controls the width and the height of the figure, each in inches, and the <code>dpi</code> argument controls the number of dots (pixels) per inch.
+Combining the two settings, the resolution of the output figure should be \(2400 \times 1200\) pixels.
+</p>
+
+
+<div id="orgc91baa5" class="figure">
+<p><img src="../static/post-img/paper-figures-1.png" alt="paper-figures-1.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3ec1907" class="outline-2">
+<h2 id="org3ec1907"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Before drawing in Inkscape, we must get the schematics&rsquo; size from Python:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-variable-name">bbox</span> <span class="org-operator">=</span> ax[<span class="org-highlight-numbers-number">0</span>].get_tightbbox(fig.canvas.get_renderer())
+<span class="org-builtin">print</span>(bbox.width, bbox.height)
+</code></pre>
+</div>
+
+<p>
+Now we set the page&rsquo;s size in the <code>File &gt;&gt; Document properties...</code> menu, using <code>custom</code> format in unit of <code>px</code> (pixel), and then filling in the height and width and make sure the orientation is correct.
+How to draw in Inkscape is beyond the scope of this post, but Inkscape includes a wonderful, interactive tutorial in the <code>Help &gt;&gt; Tutorials</code> menu.
+After finishing the schematics, save it as an <code>.svg</code> file for future modification, and export to a <code>.png</code> file to merge with the figure from Python.
+To export to PNG, find the <code>File &gt;&gt; Export...</code> menu and within the prompted sidebar, choose the <code>page</code> menu and export with the default DPI (such that the width and height in <code>px</code> is correct).
+</p>
+</div>
+</div>
+<div id="outline-container-org2729c75" class="outline-2">
+<h2 id="org2729c75"><span class="section-number-2">3.</span> Combining the schematics and the plots</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Now the read the PNG file exported from Inkscape back to Python and plot in the first panel:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-variable-name">img</span> <span class="org-operator">=</span> plt.imread(<span class="org-string">"my-path-to-the-inscape-image.png"</span>)
+ax[<span class="org-highlight-numbers-number">0</span>].imshow(img)
+<span class="org-comment-delimiter"># </span><span class="org-comment">hide the x and y axis</span>
+ax[<span class="org-highlight-numbers-number">0</span>].axis(<span class="org-string">"off"</span>)
+</code></pre>
+</div>
+
+<p>
+The last thing is to automatically add the labels A, B, C&#x2026; to the panels, which is adapted from <a href="https://stackoverflow.com/questions/25543978/matplotlib-annotate-subplots-in-a-figure-with-a-b-c">here</a>:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-keyword">import</span> string
+<span class="org-keyword">for</span> n, axis <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(ax): <span class="org-comment-delimiter"># </span><span class="org-comment">ax.flat if `ax` is an array</span>
+    axis.text(
+        <span class="org-operator">-</span><span class="org-highlight-numbers-number">0.05</span>,
+        <span class="org-highlight-numbers-number">1.05</span>,
+        string.ascii_uppercase[n],
+        transform<span class="org-operator">=</span>axis.transAxes,
+        size<span class="org-operator">=</span><span class="org-highlight-numbers-number">20</span>,
+        weight<span class="org-operator">=</span><span class="org-string">"bold"</span>,
+    )
+</code></pre>
+</div>
+<p>
+And don&rsquo;t forget to save the figure:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code>plt.savefig(<span class="org-string">"my-path-to-the-figure.png"</span>)
+</code></pre>
+</div>
+<p>
+Now we can place both the SVG file from Inkscape and the Python under version control!
+There&rsquo;s no need to place the generated PNG file under version control, because we&rsquo;ll get it back once we run the Python code again.
+</p>
+
+
+<div id="orga303df8" class="figure">
+<p><img src="../static/post-img/paper-figures-2.png" alt="paper-figures-2.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbce6f84" class="outline-2">
+<h2 id="orgbce6f84"><span class="section-number-2">4.</span> More sophisticated cases</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>matplotlib</code> also supports more sophisticated spacial arrangement.
+Instead of <code>plt.subplots</code>, it is straight-forward to use the <code>plt.subplot_mosaic</code> function &#x2014; see the official example <a href="https://matplotlib.org/stable/gallery/text_labels_and_annotations/label_subplots.html#sphx-glr-gallery-text-labels-and-annotations-label-subplots-py">here</a>.
+</p>
+
+<p>
+We can also create an inset panel within a panel with <code>ax[0].inset_axes()</code>, see the official Documentation <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html">here</a>.
+</p>
+</div>
+</div>
+</div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2023-02-18</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

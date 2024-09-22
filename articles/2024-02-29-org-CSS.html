@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CSS for Org-exported HTML (By Eli)</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">CSS for Org-exported HTML (By Eli)</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2024-02-29</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/2024-02-29-org-CSS.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org974edd5">1. Markups</a></li>
+<li><a href="#org309abc9">2. Lists</a>
+<ul>
+<li><a href="#org5d3e45d">2.1. Todo List</a>
+<ul>
+<li><a href="#org32646c1">2.1.1. <span class="todo TODO">TODO</span> First todo</a></li>
+<li><a href="#orgaa86403">2.1.2. <span class="done DONE">DONE</span> First Done with Date</a></li>
+<li><a href="#org0f18115">2.1.3. Scheduled</a></li>
+<li><a href="#org7735594">2.1.4. Deadline</a></li>
+<li><a href="#org026ffe8">2.1.5. Date</a></li>
+</ul>
+</li>
+<li><a href="#orgf5e8546">2.2. Simple list</a></li>
+<li><a href="#orgc4dc3ff">2.3. Sorted List</a></li>
+<li><a href="#org1ba78b2">2.4. Checkbox</a></li>
+<li><a href="#org9a12773">2.5. Definition list</a></li>
+</ul>
+</li>
+<li><a href="#org9f6cee3">3. Images</a></li>
+<li><a href="#orgc3eb60c">4. Math</a></li>
+<li><a href="#org9ee3c67">5. Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></a></li>
+<li><a href="#orgafeec10">6. H1</a>
+<ul>
+<li><a href="#org9b20dc8">6.1. H2</a>
+<ul>
+<li><a href="#org51c61ab">6.1.1. H3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org357841b">7. Table</a></li>
+<li><a href="#orgf5141ce">8. Blocks</a>
+<ul>
+<li><a href="#orgd13f573">8.1. Center</a></li>
+<li><a href="#org222d54b">8.2. Comment</a></li>
+<li><a href="#org8f52446">8.3. Example</a></li>
+<li><a href="#org0335847">8.4. Quote</a></li>
+<li><a href="#org056909a">8.5. Verse</a></li>
+<li><a href="#org29c8376">8.6. Source Blocks</a>
+<ul>
+<li><a href="#org25da1fe">8.6.1. Elisp</a></li>
+<li><a href="#org314c638">8.6.2. Python</a></li>
+<li><a href="#org9558e2d">8.6.3. Bash</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+Please find the original post <a href="https://elilif.github.io/articles/2024-02-29-org-CSS.html">here</a>.
+</p>
+<div id="outline-container-org974edd5" class="outline-2">
+<h2 id="org974edd5"><span class="section-number-2">1.</span> Markups<sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox"></h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b>bold</b>
+<i>italic</i>
+<span class="underline">underline</span>
+<code>verbatim</code>
+<code>code</code>
+<del>strike-through</del>
+<kbd>C-h h</kbd>
+</p>
+</div>
+</div>
+<div id="outline-container-org309abc9" class="outline-2">
+<h2 id="org309abc9"><span class="section-number-2">2.</span> Lists</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org5d3e45d" class="outline-3">
+<h3 id="org5d3e45d"><span class="section-number-3">2.1.</span> Todo List</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org32646c1" class="outline-4">
+<h4 id="org32646c1"><span class="section-number-4">2.1.1.</span> <span class="todo TODO">TODO</span> First todo</h4>
+</div>
+<div id="outline-container-orgaa86403" class="outline-4">
+<h4 id="orgaa86403"><span class="section-number-4">2.1.2.</span> <span class="done DONE">DONE</span> First Done with Date</h4>
+<div class="outline-text-4" id="text-2-1-2">
+</div>
+</div>
+<div id="outline-container-org0f18115" class="outline-4">
+<h4 id="org0f18115"><span class="section-number-4">2.1.3.</span> Scheduled</h4>
+<div class="outline-text-4" id="text-2-1-3">
+</div>
+</div>
+<div id="outline-container-org7735594" class="outline-4">
+<h4 id="org7735594"><span class="section-number-4">2.1.4.</span> Deadline</h4>
+<div class="outline-text-4" id="text-2-1-4">
+</div>
+</div>
+<div id="outline-container-org026ffe8" class="outline-4">
+<h4 id="org026ffe8"><span class="section-number-4">2.1.5.</span> Date</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2021-02-18 Thu&gt;</span></span>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf5e8546" class="outline-3">
+<h3 id="orgf5e8546"><span class="section-number-3">2.2.</span> Simple list</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc4dc3ff" class="outline-3">
+<h3 id="orgc4dc3ff"><span class="section-number-3">2.3.</span> Sorted List</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org1ba78b2" class="outline-3">
+<h3 id="org1ba78b2"><span class="section-number-3">2.4.</span> Checkbox<sup><label for="fnr.2" class="footref">2</label></sup><input id="fnr.2" class="footref-toggle" type="checkbox"></h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li class="off"><input type='checkbox'
+onclick="return false;"/> List item</li>
+<li class="on"><input type='checkbox' checked='checked'
+onclick="return false;"/> List item</li>
+<li class="trans"><input type='checkbox'
+onclick="return false;"/> List item</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9a12773" class="outline-3">
+<h3 id="org9a12773"><span class="section-number-3">2.5.</span> Definition list</h3>
+<div class="outline-text-3" id="text-2-5">
+<dl class="org-dl">
+<dt>Lorem ipsum</dt><dd>dolor sit amet, consectetur adipiscing elit.  Mauris laoreet
+sollicitudin venenatis.  Duis sed consequat dolor.</dd>
+<dt>Etiam feugiat</dt><dd>pharetra sapien et semper.  Nunc ornare lacus sit amet massa
+auctor, vitae aliquam eros interdum.  Mauris arcu ante, imperdiet vel purus
+ac, bibendum faucibus diam.  Ut blandit nec mi at ultricies.  Donec eget
+mattis nisl.  In sed nibh felis.  Cras quis convallis orci.</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-org9f6cee3" class="outline-2">
+<h2 id="org9f6cee3"><span class="section-number-2">3.</span> Images</h2>
+<div class="outline-text-2" id="text-3">
+
+<div id="org37a8757" class="figure">
+<p><img src="../static/post-img/org-mode.png" alt="org-mode.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>org-mode</p>
+</div>
+
+
+<div id="orge143774" class="figure">
+<p><img src="../static/post-img/org-mode.png" alt="org-mode.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>org-mode-2</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc3eb60c" class="outline-2">
+<h2 id="orgc3eb60c"><span class="section-number-2">4.</span> Math</h2>
+<div class="outline-text-2" id="text-4">
+\begin{align}
+\mathcal{F}(a) &= \frac{1}{2\pi i}\oint_\gamma \frac{f(z)}{z - a}\,dz\\
+\int_D (\nabla\cdot \mathcal{F})\,dV &=\int_{\partial D}\mathcal{F}\cdot n\, dS
+\end{align}
+</div>
+</div>
+<div id="outline-container-org9ee3c67" class="outline-2">
+<h2 id="org9ee3c67"><span class="section-number-2">5.</span> Heading with tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag1">tag1</span>&#xa0;<span class="tag2">tag2</span></span></h2>
+</div>
+<div id="outline-container-orgafeec10" class="outline-2">
+<h2 id="orgafeec10"><span class="section-number-2">6.</span> H1</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+H1 Text
+</p>
+</div>
+<div id="outline-container-org9b20dc8" class="outline-3">
+<h3 id="org9b20dc8"><span class="section-number-3">6.1.</span> H2</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+H2 Text
+</p>
+</div>
+<div id="outline-container-org51c61ab" class="outline-4">
+<h4 id="org51c61ab"><span class="section-number-4">6.1.1.</span> H3</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+H3 Text
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org357841b" class="outline-2">
+<h2 id="org357841b"><span class="section-number-2">7.</span> Table</h2>
+<div class="outline-text-2" id="text-7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> test</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+<th scope="col" class="org-right">d</th>
+<th scope="col" class="org-right">e</th>
+<th scope="col" class="org-right">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">7</td>
+<td class="org-right">8</td>
+<td class="org-right">9</td>
+<td class="org-right">10</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-right">13</td>
+<td class="org-right">14</td>
+<td class="org-right">15</td>
+<td class="org-right">16</td>
+<td class="org-right">17</td>
+</tr>
+
+<tr>
+<td class="org-right">18</td>
+<td class="org-right">19</td>
+<td class="org-right">20</td>
+<td class="org-right">21</td>
+<td class="org-right">22</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-right">24</td>
+<td class="org-right">25</td>
+<td class="org-right">26</td>
+<td class="org-right">27</td>
+<td class="org-right">28</td>
+<td class="org-right">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orgf5141ce" class="outline-2">
+<h2 id="orgf5141ce"><span class="section-number-2">8.</span> Blocks</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orgd13f573" class="outline-3">
+<h3 id="orgd13f573"><span class="section-number-3">8.1.</span> Center</h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-center">
+<p>
+This is a center block. This is a center block. This is a center block. This is
+a center block. This is a center block. This is a center block.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org222d54b" class="outline-3">
+<h3 id="org222d54b"><span class="section-number-3">8.2.</span> Comment</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+Comment blocks are not exported.
+</p>
+</div>
+</div>
+<div id="outline-container-org8f52446" class="outline-3">
+<h3 id="org8f52446"><span class="section-number-3">8.3.</span> Example</h3>
+<div class="outline-text-3" id="text-8-3">
+<pre class="example" id="orgfa63375">
+This is an example block
+</pre>
+</div>
+</div>
+<div id="outline-container-org0335847" class="outline-3">
+<h3 id="org0335847"><span class="section-number-3">8.4.</span> Quote</h3>
+<div class="outline-text-3" id="text-8-4">
+<blockquote>
+<p>
+Words can be like X-rays, if you use them properly—they’ll go through anything.
+You read and you’re pierced.
+</p>
+
+
+<p>
+—Aldous Huxley, Brave New World
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-org056909a" class="outline-3">
+<h3 id="org056909a"><span class="section-number-3">8.5.</span> Verse</h3>
+<div class="outline-text-3" id="text-8-5">
+<p class="verse">
+Let me not to the marriage of true minds<br />
+Admit impediments. Love is not love<br />
+Which alters when it alteration finds,<br />
+Or bends with the remover to remove:<br />
+<br />
+O, no! it is an ever-fix`ed mark,<br />
+That looks on tempests and is never shaken;<br />
+It is the star to every wand&rsquo;ring bark,<br />
+Whose worth&rsquo;s unknown, although his heighth be taken.<br />
+<br />
+Love&rsquo;s not Time&rsquo;s fool, though rosy lips and cheeks<br />
+Within his bending sickle&rsquo;s compass come;<br />
+Love alters not with his brief hours and weeks,<br />
+But bears it out even to the edge of doom:<br />
+<br />
+If this be error and upon me proved,<br />
+I never writ, nor no man ever loved.x<br />
+</p>
+</div>
+</div>
+<div id="outline-container-org29c8376" class="outline-3">
+<h3 id="org29c8376"><span class="section-number-3">8.6.</span> Source Blocks</h3>
+<div class="outline-text-3" id="text-8-6">
+</div>
+<div id="outline-container-org25da1fe" class="outline-4">
+<h4 id="org25da1fe"><span class="section-number-4">8.6.1.</span> Elisp</h4>
+<div class="outline-text-4" id="text-8-6-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><code><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">message</span> <span class="org-string">"This is a test."</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">when</span> x <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">1+</span> x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">symbol-name</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">symbol</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org314c638" class="outline-4">
+<h4 id="org314c638"><span class="section-number-4">8.6.2.</span> Python</h4>
+<div class="outline-text-4" id="text-8-6-2">
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-variable-name">x</span> <span class="org-operator">=</span> [<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>]
+<span class="org-keyword">for</span> num <span class="org-keyword">in</span> x:
+    <span class="org-builtin">print</span>(np.sin(x))
+<span class="org-keyword">else</span>:
+    <span class="org-builtin">print</span>(<span class="org-string">"done!"</span>)
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9558e2d" class="outline-4">
+<h4 id="org9558e2d"><span class="section-number-4">8.6.3.</span> Bash</h4>
+<div class="outline-text-4" id="text-8-6-3">
+<div class="org-src-container">
+<pre class="src src-shell"><code><span class="org-builtin">export</span> <span class="org-variable-name">HOMEDIR</span>=/home/abc
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-highlight-numbers-number">0</span> -ne <span class="org-highlight-numbers-number">1</span><span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then </span><span class="org-type">echo</span> <span class="org-string">"good"</span>; <span class="org-keyword">fi</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<code>org-code</code> and <code>org-verbatim</code> are the same when exporting.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Only the ascii characters implement tri-state checkboxes. See
+<code>org-html-checkbox-types</code> for details.
+</p></div></div>
+
+
+</div>
+</div></div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2024-02-29</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

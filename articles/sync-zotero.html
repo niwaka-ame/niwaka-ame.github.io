@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Syncing Zotero with cloud storage like Google Drive</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Syncing Zotero with cloud storage like Google Drive</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2023-05-27</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/sync-zotero.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org065f067">1. Installing ZotFile and Better BibTeX</a></li>
+<li><a href="#orgc5da275">2. Go to Zotero&rsquo;s preference dialog</a></li>
+<li><a href="#orgdfdbffc">3. Go to ZotFile&rsquo;s preference dialog</a></li>
+</ul>
+</div>
+</div>
+<p>
+<a href="https://www.zotero.org/">Zotero</a> is an amazing tool for literature management (and more) &#x2014; a free and open-source software (FOSS) that enables much more flexibility in my workflow than, e.g. Mendeley.
+</p>
+
+<p>
+I work on multiple PCs and need to sync the metadata and the PDFs of literature between them.
+Zotero provides 300 MB free storage for each user, which is enough for syncing metadata but not PDFs.
+They provide subscription plans (e.g. 2GB storage for $20/year), which is a reasonable price, and more importantly, by subcription we support the development of Zotero.
+</p>
+
+<p>
+However, for students who have no income but free Google Drive-like cloud storage by the university, it is possible to sync metadata via Zotero and the (bulky) PDFs via another cloud storage.
+Tom Saunders used to have a step-by-step <a href="https://tomsaunders.co.nz/zotero-with-google-drive/">blog post</a> about this, but his blog is currently not available.
+So, I decided to re-write one, largely based on what he has done.
+</p>
+<div id="outline-container-org065f067" class="outline-2">
+<h2 id="org065f067"><span class="section-number-2">1.</span> Installing ZotFile and Better BibTeX</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This workflow requires two amazing Zotero add-ons: <a href="http://zotfile.com/">ZotFile</a> and <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX</a>.
+Download the <code>.xpi</code> files.
+</p>
+
+<p>
+To install the add-ons, go to Zotero&rsquo;s <code>Tools</code> menu and select <code>Add-ons</code>.
+In the new dialog, click on the &ldquo;gear&rdquo; button and choose <code>Install Add-on From File...</code> and choose the <code>.xpi</code> file.
+Restart Zotero after installation.
+</p>
+
+<p>
+<b>For Firefox users:</b> Firefox&rsquo;s add-ons are also <code>.xpi</code> files, which means if you left-click the link to download, Firefox will ask if you&rsquo;d like to install the add-on, but provide no option to download the file.
+To circumvent this issue, right-click on the link and choose <code>Save link as...</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc5da275" class="outline-2">
+<h2 id="orgc5da275"><span class="section-number-2">2.</span> Go to Zotero&rsquo;s preference dialog</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Go to the <code>Edit</code> menu at the top and choose <code>Preference</code>.
+In the new dialog, choose <code>Sync</code> and register/log into your Zotero account.
+After login, the dialog should look like this:
+</p>
+
+
+<div id="org754735b" class="figure">
+<p><img src="../static/post-img/sync-zotero/sync.png" alt="sync.png" />
+</p>
+</div>
+
+<p>
+Follow the step numbers in the screenshot to untick those boxes.
+</p>
+
+<p>
+Then go to <code>Advanced</code>, and then the <code>Files and folders</code> tab, here we&rsquo;ll need to choose a base directory of the attachments (i.e. the PDFs).
+Choose a custom location &#x2014; <b>this folder will be the folder to be synced via a non-Zotero cloud storage</b>, which stores all PDFs.
+</p>
+
+
+<div id="orga229a34" class="figure">
+<p><img src="../static/post-img/sync-zotero/advanced.png" alt="advanced.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdfdbffc" class="outline-2">
+<h2 id="orgdfdbffc"><span class="section-number-2">3.</span> Go to ZotFile&rsquo;s preference dialog</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Go to the <code>Tools</code> menu at the top and choose <code>ZotFile Preferences...</code>.
+The new dialog should look like this:
+</p>
+
+
+<div id="orge29f544" class="figure">
+<p><img src="../static/post-img/sync-zotero/zotfile-1.png" alt="zotfile-1.png" />
+</p>
+</div>
+
+<p>
+Enter the same custom location as previous, and then go to <code>Renaming Rules</code> and change the following:
+</p>
+
+
+<div id="orgd81b730" class="figure">
+<p><img src="../static/post-img/sync-zotero/zotfile-2.png" alt="zotfile-2.png" />
+</p>
+</div>
+
+<p>
+where <code>{%b}</code> means the PDF names are decided by the cite keys generated by Better BibTex.
+</p>
+
+<p>
+Now, Zotero should sync metadata via its own cloud storage but store the PDFs locally.
+You should set up another cloud storage to sync the folder containing the PDFs.
+Repeat this process on another PC and you&rsquo;ll get the library synced on both machines!
+</p>
+</div>
+</div>
+</div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2023-05-27</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

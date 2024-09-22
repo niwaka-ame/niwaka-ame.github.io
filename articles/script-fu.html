@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scripting with Script-Fu in GIMP to compress photos in batch</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Scripting with Script-Fu in GIMP to compress photos in batch</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2023-02-05</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/script-fu.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org77bb73d">1. Running functions inside a <code>*.scm</code> script file from the console</a></li>
+<li><a href="#org26bafcc">2. Getting help</a></li>
+<li><a href="#org08f6b19">3. Now implement the code</a></li>
+</ul>
+</div>
+</div>
+<p>
+I&rsquo;m now trying out <a href="https://www.gimp.org/">GIMP</a> for photo editing.
+I know it supports scripting with <a href="https://docs.gimp.org/en/gimp-using-script-fu-tutorial.html">Script-Fu</a>, a programming language based on Scheme, a minimalist Lisp dialect.
+Today, I was trying to compress some photos to be uploaded to my blog.
+Instead of opening and editing the photos one by one, why don&rsquo;t I try out Script-Fu to do the job in batch?
+</p>
+<div id="outline-container-org77bb73d" class="outline-2">
+<h2 id="org77bb73d"><span class="section-number-2">1.</span> Running functions inside a <code>*.scm</code> script file from the console</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Each of my script file ends with <code>.scm</code>, which stands for Scheme.
+To be loaded into GIMP, the file should be in
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><code>~/.config/GIMP/2.10/scripts
+</code></pre>
+</div>
+<p>
+on my computer, which runs Linux and has GIMP 2.10 installed.
+Within each file, there are just a collection of functions written by myself, and those functions will be loaded into GIMP and can be called from the Script-Fu console.
+</p>
+
+<p>
+For example, let&rsquo;s say I have a function <code>hello-world</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><code>(<span class="org-keyword">define</span> (<span class="org-function-name">hello-world</span>) (gimp-message <span class="org-string">"hello world"</span>))
+</code></pre>
+</div>
+<p>
+in the file, I can open the console in GIMP by finding <code>Filter &gt;&gt; Script-Fu &gt;&gt; Console</code> on the menu bar.
+If I call the function by typing
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><code>(hello-world)
+</code></pre>
+</div>
+<p>
+in the prompt, it will prompt a message saying &ldquo;hello world&rdquo; (and return a true value <code>#t</code>).
+</p>
+
+<p>
+We can also run the script from the operating system&rsquo;s console:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><code>gimp -i -b <span class="org-string">'(hello-world)'</span>
+</code></pre>
+</div>
+<p>
+where <code>-i</code> stands for no interface and <code>-b</code> stands for batch mode (which accepts function call).
+After the call was run, we can type <code>^C</code> (<code>Ctrl+C</code>) to exit.
+</p>
+</div>
+</div>
+<div id="outline-container-org26bafcc" class="outline-2">
+<h2 id="org26bafcc"><span class="section-number-2">2.</span> Getting help</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I&rsquo;m new to Scheme, but I know Emacs Lisp, another Lisp dialect, so reading Lisp code is fine with me.
+Still, I need to know (1) some basic functions and macros of Scheme (e.g. conditional statements) and (2) the APIs of GIMP (e.g. <code>gimp-image-resize</code>).
+I found that the <a href="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Wikipedia page of Scheme</a> has a good cheatsheet for the basics of Scheme, and right next to the prompt within the GIMP console, the <code>Browse...</code> button allows us to search the documentations of the GIMP API functions.
+</p>
+</div>
+</div>
+<div id="outline-container-org08f6b19" class="outline-2">
+<h2 id="org08f6b19"><span class="section-number-2">3.</span> Now implement the code</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I found a <a href="https://stackoverflow.com/questions/51337105/batch-resize-images-with-gimp">Script</a> on Stackoverflow, so I only need to adapt the code for my own use (many thanks!).
+To be fair, the code should work almost out-of-box in my case,
+but I modified it a bit to satisfy my own taste (to make it functional instead of imperative) and to simplify the call from command line.
+Here it is:
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><code>(<span class="org-keyword">define</span> (<span class="org-function-name">batch-resize</span> dir)
+  (<span class="org-keyword">let*</span> ((filelist (cadr (file-glob (string-append dir <span class="org-string">"/*.JPG"</span>) <span class="org-highlight-numbers-number">1</span>))))
+        (batch-resize-list filelist)
+        (gimp-quit <span class="org-highlight-numbers-number">1</span>)))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">batch-resize-list</span> filelist)
+  (<span class="org-keyword">unless</span> (null? filelist)
+    (<span class="org-keyword">let*</span> (
+           (filename (car filelist))
+           (size (file-size filename))
+           (target-size <span class="org-highlight-numbers-number">500000</span>)  <span class="org-comment-delimiter">; </span><span class="org-comment">500 KB</span>
+           (scale-factor (sqrt (/ size target-size)))
+           (image (car (gimp-file-load <span class="org-highlight-numbers-number">1</span> filename filename)))
+           (drawable   (car (gimp-image-active-drawable image)))
+           (cur-width  (car (gimp-image-width image)))
+           (cur-height (car (gimp-image-height image)))
+           (width      (round (/ cur-width scale-factor)))
+           (height     (round (/ cur-height scale-factor)))
+           )
+      (gimp-message filename)
+      (gimp-image-scale-full image width height INTERPOLATION-CUBIC)
+      (gimp-file-save RUN-NONINTERACTIVE image drawable filename filename))
+    (batch-resize-list (cdr filelist))))
+</code></pre>
+</div>
+<p>
+where <code>batch-resize</code> is the function I should call and <code>batch-resize-list</code> is a helper function.
+</p>
+
+<p>
+<b>WARNING</b>: This code will compress and REWRITE the original photo file, so make sure you have backups when testing it!
+</p>
+
+<p>
+To call it from command line:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><code><span class="org-type">cd</span> &lt;my-photo-directory&gt;
+gimp -i -b <span class="org-string">"(batch-resize \"</span><span class="org-string"><span class="org-sh-quoted-exec">`</span></span><span class="org-type"><span class="org-string"><span class="org-sh-quoted-exec">pwd</span></span></span><span class="org-string"><span class="org-sh-quoted-exec">`</span></span><span class="org-string">\")"</span>
+</code></pre>
+</div>
+<p>
+Now you may see why I hard-coded the <code>*.JPG</code> pattern within the function &#x2014; I don&rsquo;t want to type in another argument when calling this function.
+</p>
+</div>
+</div>
+</div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2023-02-05</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

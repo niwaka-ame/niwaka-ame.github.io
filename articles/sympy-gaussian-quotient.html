@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Derive the distribution of two Gaussian variables' ratio with SymPy</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Derive the distribution of two Gaussian variables&rsquo; ratio with SymPy</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2023-02-14</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/sympy-gaussian-quotient.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6ee7d22">1. Standard way of deriving a ratio&rsquo;s distribution</a></li>
+<li><a href="#org5747be4">2. Integrating with SymPy</a></li>
+<li><a href="#org7f4c8e0">3. Properties of \(p(r)\)</a></li>
+</ul>
+</div>
+</div>
+<p>
+We know that the ratio of two Gaussian variables both with mean zero <a href="https://en.wikipedia.org/wiki/Ratio_distribution">follows the Cauchy distribution</a>, but how about the more general case?
+</p>
+
+<p>
+This post serves two purposes:
+</p>
+<ol class="org-ol">
+<li>as a primitive investigation of the distribution of the ratio of two Gaussian variables;</li>
+<li>as an example on how to use <a href="https://www.sympy.org/en/index.html">SymPy</a>, a free and open source alternative of Mathematica.</li>
+</ol>
+
+<p>
+A key property that I&rsquo;ll show in this post: the mean and variance of the ratio diverge, regardless of the two variables&rsquo; mean and variance.
+</p>
+
+<p>
+Note: there&rsquo;s <a href="https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient">another blog post</a> which shows that the ratio of two Gaussian <i>densities</i> still being Gaussian, which is not to be confused with.
+</p>
+<div id="outline-container-org6ee7d22" class="outline-2">
+<h2 id="org6ee7d22"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Before we get into SymPy, perhaps it&rsquo;s best to do some math work on paper first.
+Let&rsquo;s consider the ratio \(R \equiv X/Y\), and both \(X\sim \text{Normal}(\mu_1, \sigma_1^2)\) and \(Y\sim \text{Normal}(\mu_2, \sigma_2^2)\).
+Then, we first consider the cumulative density function (CDF) of \(R\), \(F(r)\), which consists of two parts:
+</p>
+\begin{equation}
+\label{eq:cdf-R}
+    F(r) = P(R \leq r) = P(X \leq rY, Y>0) + P(X \geq rY, Y<0)
+\end{equation}
+<p>
+and the probability density \(p(r)\) is
+</p>
+\begin{align}
+\label{eq:pdf-R}
+    p(r) &= \frac{d}{dr} P(X \leq rY, Y>0) + \frac{d}{dr} P(X \geq rY, Y<0) \nonumber \\
+        &\equiv p_{+}(r) + p_{-}(r)
+\end{align}
+
+<p>
+When \(Y>0\),
+</p>
+\begin{equation}
+\label{eq:cdf-R-pos}
+    P(X \leq RY) = \int_0^{+\infty} p(y) \left(\int_{-\infty}^{ry} p(x) dx\right) dy
+\end{equation}
+<p>
+and we&rsquo;re interested in the PDF:
+</p>
+\begin{align}
+\label{eq:pdf-R-pos}
+    p_+(r) &= \frac{d}{dr}P(X \leq RY) \\
+    & = \int_0^{+ \infty} p_Y(y)  \left( \frac{d}{dr} \int_{-\infty}^{ry} p_X(x) dx\right) dy \nonumber \\
+    & = \int_0^{+\infty} y p_Y(y) p_X(ry) dy \nonumber
+\end{align}
+<p>
+where we use the fact that \(\frac{d}{d(ry)} \int_{-\infty}^{ry} p_X(x) dx = p_X(ry)\).
+</p>
+
+<p>
+Similarly, when \(Y<0\), we have
+</p>
+\begin{align}
+\label{eq:pdf-R-neg}
+    p_-(r) &= \frac{d}{dr}P(X \geq RY) \\
+    & = \int_{-\infty}^{0} p_Y(y)  \left( \frac{d}{dr} \int^{+ \infty}_{ry} p_X(x) dx\right) dy \nonumber \\
+    & = - \int^0_{-\infty} y p_Y(y) p_X(ry) dy \nonumber
+\end{align}
+
+<p>
+Now we can use SymPy to analytically integrate Eqs \eqref{eq:pdf-R-pos} and \eqref{eq:pdf-R-neg}.
+</p>
+</div>
+</div>
+<div id="outline-container-org5747be4" class="outline-2">
+<h2 id="org5747be4"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+We first import the module and generate symbols:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-keyword">from</span> sympy <span class="org-keyword">import</span> <span class="org-operator">*</span>
+<span class="org-variable-name">x</span>, <span class="org-variable-name">y</span>, <span class="org-variable-name">mu1</span>, <span class="org-variable-name">mu2</span>, <span class="org-variable-name">sig1</span>, <span class="org-variable-name">sig2</span>, <span class="org-variable-name">r</span> <span class="org-operator">=</span> symbols(<span class="org-string">"x y \mu_1 \mu_2 \sigma_1 \sigma_2 r"</span>, real<span class="org-operator">=</span><span class="org-constant">True</span>)
+</code></pre>
+</div>
+
+<p>
+Type in the Gaussian densities of \(X\) and \(Y\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-variable-name">px</span> <span class="org-operator">=</span> exp(<span class="org-operator">-</span>(x<span class="org-operator">-</span>mu1)<span class="org-operator">**</span><span class="org-highlight-numbers-number">2</span> <span class="org-operator">/</span> (<span class="org-highlight-numbers-number">2</span> <span class="org-operator">*</span> sig1<span class="org-operator">**</span><span class="org-highlight-numbers-number">2</span>)) <span class="org-operator">/</span> sqrt(<span class="org-highlight-numbers-number">2</span> <span class="org-operator">*</span> pi) <span class="org-operator">/</span> sig1
+<span class="org-variable-name">py</span> <span class="org-operator">=</span> exp(<span class="org-operator">-</span>(y<span class="org-operator">-</span>mu2)<span class="org-operator">**</span><span class="org-highlight-numbers-number">2</span> <span class="org-operator">/</span> (<span class="org-highlight-numbers-number">2</span> <span class="org-operator">*</span> sig2<span class="org-operator">**</span><span class="org-highlight-numbers-number">2</span>)) <span class="org-operator">/</span> sqrt(<span class="org-highlight-numbers-number">2</span> <span class="org-operator">*</span> pi) <span class="org-operator">/</span> sig2
+</code></pre>
+</div>
+
+<p>
+Integrate Eqs \eqref{eq:pdf-R-pos} and \eqref{eq:pdf-R-neg}:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-comment-delimiter"># </span><span class="org-comment">substitute ry into px first</span>
+<span class="org-variable-name">px_ry</span> <span class="org-operator">=</span> px.replace(x, r<span class="org-operator">*</span>y)
+<span class="org-variable-name">pr_pos</span> <span class="org-operator">=</span> integrate(y <span class="org-operator">*</span> px_ry <span class="org-operator">*</span> py, (y, <span class="org-highlight-numbers-number">0</span>, oo))
+<span class="org-variable-name">pr_neg</span> <span class="org-operator">=</span> integrate(<span class="org-operator">-</span>y <span class="org-operator">*</span> px_ry <span class="org-operator">*</span> py, (y, <span class="org-operator">-</span>oo, <span class="org-highlight-numbers-number">0</span>))
+</code></pre>
+</div>
+<p>
+If we check the results now, it will look ugly, because (1) we haven&rsquo;t simplified it, and (2)
+the results consider also the case in which variables or the square root are complex numbers.
+So I need to select the case of interest with <code>args</code>, replace the <code>polar_lift</code> function with the <code>Id</code> (identity) function and simplify the expression:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-variable-name">pr_pos</span> <span class="org-operator">=</span> simplify(pr_pos.args[<span class="org-highlight-numbers-number">0</span>][<span class="org-highlight-numbers-number">0</span>].replace(polar_lift, Id))
+<span class="org-variable-name">pr_neg</span> <span class="org-operator">=</span> simplify(pr_neg.args[<span class="org-highlight-numbers-number">0</span>][<span class="org-highlight-numbers-number">0</span>].replace(polar_lift, Id))
+<span class="org-variable-name">pr</span> <span class="org-operator">=</span> simplify(pr_pos <span class="org-operator">+</span> pr_neg)
+<span class="org-builtin">print</span>(latex(pr))
+</code></pre>
+</div>
+<p>
+Now the get the expression of \(p(r)\):
+</p>
+\begin{align}
+\label{eq:pr}
+p(r) &= \frac{\sqrt{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \\
+& \times \Bigg[\sqrt{2} \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}} \nonumber \\
+& + \sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)}\Bigg] \nonumber
+\end{align}
+
+<p>
+It is best to check if \(p(r)\) is a Cauchy distribution when \(\mu_1 = 0\) and \(\mu_2 = 0\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-builtin">print</span>(latex(simplify(pr.subs({mu1:<span class="org-highlight-numbers-number">0</span>, mu2:<span class="org-highlight-numbers-number">0</span>}))))
+</code></pre>
+</div>
+<p>
+which prints
+</p>
+\begin{equation}
+\label{eq:cauchy}
+    \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}
+\end{equation}
+<p>
+as expected.
+</p>
+
+<p>
+We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the \(\mu\)&rsquo;s and \(\sigma\)&rsquo;s:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-keyword">from</span> scipy.integrate <span class="org-keyword">import</span> quad
+<span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-comment-delimiter"># </span><span class="org-comment">substitute parameters into p(r)</span>
+<span class="org-variable-name">pr_subs</span> <span class="org-operator">=</span> pr.subs({sig1:<span class="org-highlight-numbers-number">1</span>, sig2:<span class="org-highlight-numbers-number">1</span>, mu1:<span class="org-highlight-numbers-number">1</span>, mu2:<span class="org-operator">-</span><span class="org-highlight-numbers-number">1</span>})
+<span class="org-comment-delimiter"># </span><span class="org-comment">make it a proper python function that takes one argument, r</span>
+<span class="org-variable-name">pr_subs</span> <span class="org-operator">=</span> lambdify((r,), pr_subs)
+<span class="org-comment-delimiter"># </span><span class="org-comment">numerically integrate</span>
+<span class="org-variable-name">intg</span>, <span class="org-variable-name">_</span> <span class="org-operator">=</span> quad(pr_subs, <span class="org-operator">-</span>np.inf, np.inf)
+<span class="org-builtin">print</span>(intg)
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7f4c8e0" class="outline-2">
+<h2 id="org7f4c8e0"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+\(p(r)\) is even when \(\mu_1 = 0\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-builtin">print</span>(latex(simplify(pr.subs({mu1:<span class="org-highlight-numbers-number">0</span>}))))
+</code></pre>
+</div>
+<p>
+which gives
+</p>
+\begin{align}
+\label{eq:pr-mu1-zero}
+p(r) & = \frac{\sigma_{1}}{2 \pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{2}^{2}}{2 \sigma_{2}^{2}}} \\
+& \times \Bigg[\sqrt{2\pi} \mu_{2} e^{\frac{\mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{2} \left|{\sigma_{1}}\right|}{2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg] \nonumber
+\end{align}
+<p>
+because all terms of \(r\) is in the form of \(r^2\).
+</p>
+
+<p>
+The expression does not seem to be even at first sight when \(\mu_2 = 0\):
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-builtin">print</span>(latex(simplify(pr.subs({mu2:<span class="org-highlight-numbers-number">0</span>}))))
+</code></pre>
+</div>
+\begin{align}
+\label{eq:pr-mu2-zero}
+p(r) &= \frac{\sigma_{2}}{2 \pi \sigma_{1} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2}}{2 \sigma_{1}^{2}}} \\
+& \times \Bigg[\sqrt{2\pi} \mu_{1} \sigma_{2} r e^{\frac{\mu_{1}^{2} \sigma_{2}^{2} r^{2}}{2 \sigma_{1}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \mu_{1} \sigma_{2} r \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \nonumber \\
+& + 2 \sigma_{1}^{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}\Bigg] \nonumber
+\end{align}
+<p>
+but it <i>is</i> even &#x2014;  because the first term within the square bracket can be written as \(g(f) \propto f \cdot \mathrm{erf}(f)\), which is even, and \(f(r) \propto \frac{r}{\sqrt{\sigma_1^2 + \sigma_2^2 r^2}}\), which is odd.
+The composition of an even function with an odd function is even.
+We can plot the graph to see the symmetry:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><code><span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-variable-name">x</span> <span class="org-operator">=</span> np.arange(<span class="org-operator">-</span><span class="org-highlight-numbers-number">10</span>, <span class="org-highlight-numbers-number">10</span>, <span class="org-highlight-numbers-number">0.1</span>)
+<span class="org-variable-name">pr_subs</span> <span class="org-operator">=</span> lambdify((r,), pr.subs({sig1:<span class="org-highlight-numbers-number">1</span>, sig2:<span class="org-highlight-numbers-number">1</span>, mu1:<span class="org-highlight-numbers-number">5</span>, mu2:<span class="org-highlight-numbers-number">0</span>}))
+<span class="org-variable-name">pr_subs_cauchy</span> <span class="org-operator">=</span> lambdify((r,), pr.subs({sig1:<span class="org-highlight-numbers-number">1</span>, sig2:<span class="org-highlight-numbers-number">1</span>, mu1:<span class="org-highlight-numbers-number">0</span>, mu2:<span class="org-highlight-numbers-number">0</span>}))
+<span class="org-variable-name">y</span> <span class="org-operator">=</span> pr_subs(x)
+<span class="org-variable-name">y_cauchy</span> <span class="org-operator">=</span> pr_subs_cauchy(x)
+plt.figure()
+plt.plot(x,y,label<span class="org-operator">=</span><span class="org-string">"$\mu_1 = 5,\ \mu_2 = 0$"</span>)
+plt.plot(x,y_cauchy,label<span class="org-operator">=</span><span class="org-string">"Cauchy: $\mu_1 = \mu_2 = 0$"</span>)
+plt.legend()
+plt.show()
+</code></pre>
+</div>
+
+
+<div id="org3216015" class="figure">
+<p><img src="../static/post-img/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png" />
+</p>
+</div>
+
+<p>
+We know that when \(\mu_1 = 0\) and \(\mu_2 = 0\), \(p(r)\) is a Cauchy distribution, whose mean and variance diverge.
+Below I show that the mean and variance diverge for any real values of \(\mu_1\) and \(\mu_2\).
+</p>
+
+<p>
+<i>Proof</i>:
+</p>
+
+<p>
+To prove that the variance diverges, we only need to prove that the mean diverges.
+To prove \(\int_{-\infty}^{+ \infty} r p(r) dr\) diverge, we only need to prove \(\int_1^{+\infty} r p(r) dr\) diverge.
+</p>
+
+<p>
+The second term within the square bracket of Eq \eqref{eq:pr}
+</p>
+\begin{equation}
+\label{first-term}
+\sqrt{\pi} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) e^{\frac{\left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right)^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2} \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)}} \left|{\sigma_{1}}\right| \operatorname{erf}{\left(\frac{\sqrt{2} \left(\mu_{1} \sigma_{2}^{2} r + \mu_{2} \sigma_{1}^{2}\right) \left|{\sigma_{1}}\right|}{2 \sigma_{1}^{2} \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}} \right)} \geq 0
+\end{equation}
+<p>
+because \(z \cdot \mathrm{erf}(Az) \geq 0\) for any real \(z\) when \(A > 0\), and here \(z = \mu_1 \sigma_2^2 r + \mu_2 \sigma_1^2\).
+Thus, given \(r \geq 1\),
+</p>
+\begin{align}
+\label{first-term-2}
+r p(r) & \geq r \frac{2 \sigma_{1}^2 \sigma_{2} \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}}}{2 \pi \sigma_1 \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)^{\frac{3}{2}}} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \\
+& = r \frac{\sigma_{1} \sigma_{2}}{\pi \left(\sigma_{1}^{2} + \sigma_{2}^{2} r^{2}\right)} e^{- \frac{\mu_{1}^{2} \sigma_{2}^{2} + \mu_{2}^{2} \sigma_{1}^{2}}{2 \sigma_{1}^{2} \sigma_{2}^{2}}} \nonumber \\
+& \equiv g(r) \nonumber
+\end{align}
+<p>
+and \(\int_1^{+\infty} g(r) dr\) diverges, so \(\int_1^{ +\infty} r p(r) dr\) diverges, by the <a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex)/06%3A_Techniques_of_Integration/6.08%3A_Improper_Integration">direct comparison test for improper integrals</a>. \(\blacksquare\)
+</p>
+
+<p>
+I was hoping to get the mean of the ratio of, say, \(X \sim \textrm{Normal}(0, 1)\) and \(Y \sim \textrm{Normal}(10, 1)\), which seems benign because the distribution of the denominator \(Y\) is far away from zero.
+Yet, now I know that is impossible.
+</p>
+</div>
+</div>
+</div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2023-02-14</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

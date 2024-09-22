@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Automatically Reconnecting to WiFi in Fedora 39</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Automatically Reconnecting to WiFi in Fedora 39</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2024-02-17</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-22</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/auto-reconnect-wifi.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgf3ba028">1. The Bash script</a></li>
+<li><a href="#org93368e5">2. Creating a Cron job and resolving authority issues</a></li>
+</ul>
+</div>
+</div>
+<p>
+I set up an N100 mini PC as a server to sync files between multiple devices, running Fedora 39.
+However, connection to the WiFi at home is lost from time to time, so I need a script to automatically reconnect.
+</p>
+<div id="outline-container-orgf3ba028" class="outline-2">
+<h2 id="orgf3ba028"><span class="section-number-2">1.</span> The Bash script</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+ChatGPT wrote me a perfect script for detecting loss of connection and automatic reconnecting:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Replace "your_wifi_connection_name" with your actual WiFi connection name</span>
+
+<span class="org-variable-name">WIFI_CONNECTION</span>=<span class="org-string">"your_wifi_connection_name"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Check if the WiFi is connected</span>
+<span class="org-keyword">if</span> <span class="org-negation-char">!</span> nmcli connection show --active | <span class="org-type">grep</span> -q <span class="org-string">"</span><span class="org-string"><span class="org-constant">$</span></span><span class="org-string"><span class="org-variable-name">WIFI_CONNECTION</span></span><span class="org-string">"</span>; <span class="org-keyword">then</span>
+    <span class="org-type">echo</span> <span class="org-string">"WiFi disconnected. Reconnecting..."</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Attempt to reconnect</span>
+    nmcli connection up <span class="org-string">"</span><span class="org-string"><span class="org-constant">$</span></span><span class="org-string"><span class="org-variable-name">WIFI_CONNECTION</span></span><span class="org-string">"</span>
+<span class="org-keyword">else</span>
+    <span class="org-type">echo</span> <span class="org-string">"WiFi is already connected."</span>
+<span class="org-keyword">fi</span>
+
+</code></pre>
+</div>
+<p>
+To allow this script to be executed, type in terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code><span class="org-type">chmod</span> +x &lt;path-to-the-script-above&gt;
+</code></pre>
+</div>
+
+<p>
+We can manually test whether this script is working by disconnecting WiFi and type in the terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>bash &lt;path-to-the-script-above&gt;
+</code></pre>
+</div>
+<p>
+The WiFi should re-connect.
+</p>
+</div>
+</div>
+<div id="outline-container-org93368e5" class="outline-2">
+<h2 id="org93368e5"><span class="section-number-2">2.</span> Creating a Cron job and resolving authority issues</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The next step is to create a <code>cron</code> job to run this script every minute.
+In the terminal, type:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>crontab -e
+</code></pre>
+</div>
+<p>
+and add the following line:
+</p>
+<pre class="example"><code>
+*/1 * * * * bash &lt;path-to-the-script-above&gt;
+</code></pre>
+<p>
+and save and exit.
+</p>
+
+<p>
+We can test by manually disconnect WiFi and see if it reconnects within one minute.
+However, this may not work because <code>cron</code> may not have the right authority to reconnect.
+To check if this is truly the issue, type in the terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code><span class="org-type">sudo</span> <span class="org-type">cat</span> /var/log/cron
+</code></pre>
+</div>
+<p>
+If the output contains information like: <code>CMDOUT (Error: Connection activation failed: Not authorized to control networking.)</code>, <code>cron</code> doesn&rsquo;t have the right authority.
+</p>
+
+<p>
+In this case, to further check which authority is missing, run <code>crontab -e</code> again and add the following line:
+</p>
+<pre class="example"><code>
+*/1 * * * * nmcli general permissions &gt; &lt;output-path-and-filename-as-you-like&gt;
+</code></pre>
+<p>
+and save and exit.
+Then, in the terminal, type:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code><span class="org-type">cat</span> &lt;output-path-and-filename-above&gt;
+</code></pre>
+</div>
+<p>
+which should contain a line saying:
+</p>
+<pre class="example"><code>
+org.freedesktop.NetworkManager.network-control                    auth
+</code></pre>
+<p>
+and we want this value to be yes.
+</p>
+
+<p>
+To give <code>cron</code> the authority, following the solution in <a href="https://unix.stackexchange.com/questions/727580/nmcli-error-connection-activation-failed-not-authorized-to-control-networking">this link</a>, I added a <code>x.pkla</code> file to <code>/etc/polkit-1/localauthority/50-local.d/</code>:
+</p>
+<pre class="example"><code>
+[Let wheel group modify system settings for network]
+Identity=unix-group:wheel
+Action=org.freedesktop.NetworkManager.network-control
+ResultAny=yes
+</code></pre>
+<p>
+Note that the group name <code>wheel</code> may depend on the system. In the link&rsquo;s example, the name is <code>adm</code>.
+</p>
+
+<p>
+Then we need to reload <code>polkit</code> by typing in the terminal:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>systemctl restart polkit
+</code></pre>
+</div>
+
+<p>
+Now manually disconnect, and it should reconnect within one minute!
+</p>
+</div>
+</div>
+</div>
+<script src="https://giscus.app/client.js"
+          data-repo="Elilif/Elilif.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-category="Announcements"
+          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2024-02-17</span>
+   <span class="date">Last modified: 2024-09-22</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

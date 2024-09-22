@@ -7,12 +7,27 @@
 <span>All</span>
 </label>
 <label class="category">
-<input type="radio" name="tag" value="blog"/>
-<span>blog</span>
+<input type="radio" name="tag" value="python"/>
+<span>python</span>
 </label>
 <label class="category">
-<input type="radio" name="tag" value="CSS"/>
-<span>CSS</span>
+<input type="radio" name="tag" value="linux"/>
+<span>linux</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="research"/>
+<span>research</span>
+</label>
+<label class="category">
+<input type="radio" name="tag" value="emacs"/>
+<span>emacs</span>
 </label></section>
 #+END_EXPORT
-- {{{timestamp(2024-02-29)}}}   [[file:articles/2024-02-29-org-CSS.org][CSS for Org-exported HTML(WIP)]] {{{tags(#CSS #blog)}}}
+- {{{timestamp(2024-02-29)}}}   [[file:articles/2024-02-29-org-CSS.org][CSS for Org-exported HTML (By Eli)]] {{{tags(#emacs)}}}
+- {{{timestamp(2024-02-19)}}}   [[file:articles/syncthing-tailscale.org][Replacing Dropbox with Tailscale + Syncthing]] {{{tags(#research #linux)}}}
+- {{{timestamp(2024-02-17)}}}   [[file:articles/auto-reconnect-wifi.org][Automatically Reconnecting to WiFi in Fedora 39]] {{{tags(#linux)}}}
+- {{{timestamp(2023-05-27)}}}   [[file:articles/sync-zotero.org][Syncing Zotero with cloud storage like Google Drive]] {{{tags(#research)}}}
+- {{{timestamp(2023-02-18)}}}   [[file:articles/paper-figures.org][Streamlining creation of multi-panel paper figures with Python]] {{{tags(#research #python)}}}
+- {{{timestamp(2023-02-14)}}}   [[file:articles/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]] {{{tags(#research #python)}}}
+- {{{timestamp(2023-02-05)}}}   [[file:articles/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]] {{{tags(#linux)}}}
+- {{{timestamp(2023-01-20)}}}   [[file:articles/raiden2.org][Getting Raiden 2 working on Retropie]] {{{tags(#linux)}}}

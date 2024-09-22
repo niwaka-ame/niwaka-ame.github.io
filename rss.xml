@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+	 xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	 xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	 xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	 xmlns:georss="http://www.georss.org/georss"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:media="http://search.yahoo.com/mrss/"><channel>
+  <title>Yu Huo's Blog</title>
+  <atom:link href="https://niwaka-ame.github.io/rss.xml" rel="self" type="application/rss+xml" />
+  <link>https://niwaka-ame.github.io/</link>
+  <description><![CDATA[]]></description>
+  <language>en</language>
+  <pubDate>Sun, 22 Sep 2024 17:25:20 +0100</pubDate>
+  <lastBuildDate>Sun, 22 Sep 2024 17:25:20 +0100</lastBuildDate>
+  <generator>Emacs 29.2 Org-mode 9.7.11</generator>
+  <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
+  <image>
+    <url>https://orgmode.org/img/org-mode-unicorn-logo.png</url>
+    <title>Yu Huo's Blog</title>
+    <link>https://niwaka-ame.github.io/</link>
+  </image>
+
+  <item>
+    <title>CSS for Org-exported HTML (By Eli)</title>
+    <link>https://niwaka-ame.github.io/articles/2024-02-29-org-CSS.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/2024-02-29-org-CSS.html</guid>
+    <pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/2024-02-29-org-CSS.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Replacing Dropbox with Tailscale + Syncthing</title>
+    <link>https://niwaka-ame.github.io/articles/syncthing-tailscale.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/syncthing-tailscale.html</guid>
+    <pubDate>Mon, 19 Feb 2024 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/syncthing-tailscale.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Automatically Reconnecting to WiFi in Fedora 39</title>
+    <link>https://niwaka-ame.github.io/articles/auto-reconnect-wifi.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/auto-reconnect-wifi.html</guid>
+    <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/auto-reconnect-wifi.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Syncing Zotero with cloud storage like Google Drive</title>
+    <link>https://niwaka-ame.github.io/articles/sync-zotero.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/sync-zotero.html</guid>
+    <pubDate>Sat, 27 May 2023 00:00:00 +0100</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/sync-zotero.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Streamlining creation of multi-panel paper figures with Python</title>
+    <link>https://niwaka-ame.github.io/articles/paper-figures.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/paper-figures.html</guid>
+    <pubDate>Sat, 18 Feb 2023 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/paper-figures.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Derive the distribution of two Gaussian variables' ratio with SymPy</title>
+    <link>https://niwaka-ame.github.io/articles/sympy-gaussian-quotient.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/sympy-gaussian-quotient.html</guid>
+    <pubDate>Tue, 14 Feb 2023 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/sympy-gaussian-quotient.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Scripting with Script-Fu in GIMP to compress photos in batch</title>
+    <link>https://niwaka-ame.github.io/articles/script-fu.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/script-fu.html</guid>
+    <pubDate>Sun, 05 Feb 2023 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/script-fu.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Getting Raiden 2 working on Retropie</title>
+    <link>https://niwaka-ame.github.io/articles/raiden2.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/raiden2.html</guid>
+    <pubDate>Fri, 20 Jan 2023 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/raiden2.html">Read More</a></p>
+    ]]></description>
+  </item>
+</channel>
+</rss>

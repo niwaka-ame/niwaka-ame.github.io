@@ -84,7 +84,7 @@
 <div id="preamble" class="status">
 <nav class="nav">
    <a href="/index.html" class="button">Home</a>
-   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/about.html" class="button">About</a>
    <a href="/articles/software.html" class="button">Softwares</a>
    <a href="/rss.xml" class="button">RSS</a>
  </nav>
@@ -98,9 +98,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7621cc3">1. Standard way of deriving a ratio&rsquo;s distribution</a></li>
-<li><a href="#org9ffc687">2. Integrating with SymPy</a></li>
-<li><a href="#orgd212f38">3. Properties of \(p(r)\)</a></li>
+<li><a href="#org9497542">1. Standard way of deriving a ratio&rsquo;s distribution</a></li>
+<li><a href="#orgd4ee4da">2. Integrating with SymPy</a></li>
+<li><a href="#org4135420">3. Properties of \(p(r)\)</a></li>
 </ul>
 </div>
 </div>
@@ -123,8 +123,8 @@ A key property that I&rsquo;ll show in this post: the mean and variance of the r
 <p>
 Note: there&rsquo;s <a href="https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient">another blog post</a> which shows that the ratio of two Gaussian <i>densities</i> still being Gaussian, which is not to be confused with.
 </p>
-<div id="outline-container-org7621cc3" class="outline-2">
-<h2 id="org7621cc3"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
+<div id="outline-container-org9497542" class="outline-2">
+<h2 id="org9497542"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Before we get into SymPy, perhaps it&rsquo;s best to do some math work on paper first.
@@ -179,8 +179,8 @@ Now we can use SymPy to analytically integrate Eqs \eqref{eq:pdf-R-pos} and \eqr
 </p>
 </div>
 </div>
-<div id="outline-container-org9ffc687" class="outline-2">
-<h2 id="org9ffc687"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
+<div id="outline-container-orgd4ee4da" class="outline-2">
+<h2 id="orgd4ee4da"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We first import the module and generate symbols:
@@ -267,8 +267,8 @@ We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the 
 </div>
 </div>
 </div>
-<div id="outline-container-orgd212f38" class="outline-2">
-<h2 id="orgd212f38"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
+<div id="outline-container-org4135420" class="outline-2">
+<h2 id="org4135420"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 \(p(r)\) is even when \(\mu_1 = 0\):
@@ -324,7 +324,7 @@ plt.show()
 </div>
 
 
-<div id="org8c18bdd" class="figure">
+<div id="org5edab1a" class="figure">
 <p><img src="../static/post-img/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png" />
 </p>
 </div>

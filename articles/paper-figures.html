@@ -84,7 +84,7 @@
 <div id="preamble" class="status">
 <nav class="nav">
    <a href="/index.html" class="button">Home</a>
-   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/about.html" class="button">About</a>
    <a href="/articles/software.html" class="button">Softwares</a>
    <a href="/rss.xml" class="button">RSS</a>
  </nav>
@@ -98,10 +98,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc3e8d5b">1. Generating spatial arrangement and plots of data</a></li>
-<li><a href="#org3876dea">2. Generating a schematics with Inkscape</a></li>
-<li><a href="#org4d557c3">3. Combining the schematics and the plots</a></li>
-<li><a href="#org1c6b9fd">4. More sophisticated cases</a></li>
+<li><a href="#org58913be">1. Generating spatial arrangement and plots of data</a></li>
+<li><a href="#orgf1d7da7">2. Generating a schematics with Inkscape</a></li>
+<li><a href="#orgd29cfce">3. Combining the schematics and the plots</a></li>
+<li><a href="#orge976121">4. More sophisticated cases</a></li>
 </ul>
 </div>
 </div>
@@ -125,8 +125,8 @@ Below, I show how to combine Python and Inkscape to streamline this process:
 <li>(optional) use <a href="https://inkscape.org/">Inkscape</a> to generate schematics;</li>
 <li>use Python again to combine the Python output and the schematics, and generate panel labels (A, B, C&#x2026;).</li>
 </ol>
-<div id="outline-container-orgc3e8d5b" class="outline-2">
-<h2 id="orgc3e8d5b"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
+<div id="outline-container-org58913be" class="outline-2">
+<h2 id="org58913be"><span class="section-number-2">1.</span> Generating spatial arrangement and plots of data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 For example, I want a 2-panel figure in a \(1 \times 2\) format, with the first being the schematics.
@@ -149,14 +149,14 @@ Combining the two settings, the resolution of the output figure should be \(2400
 </p>
 
 
-<div id="org0d8097e" class="figure">
+<div id="orgeff95e9" class="figure">
 <p><img src="../static/post-img/paper-figures-1.png" alt="paper-figures-1.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org3876dea" class="outline-2">
-<h2 id="org3876dea"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
+<div id="outline-container-orgf1d7da7" class="outline-2">
+<h2 id="orgf1d7da7"><span class="section-number-2">2.</span> Generating a schematics with Inkscape</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Before drawing in Inkscape, we must get the schematics&rsquo; size from Python:
@@ -175,8 +175,8 @@ To export to PNG, find the <code>File &gt;&gt; Export...</code> menu and within 
 </p>
 </div>
 </div>
-<div id="outline-container-org4d557c3" class="outline-2">
-<h2 id="org4d557c3"><span class="section-number-2">3.</span> Combining the schematics and the plots</h2>
+<div id="outline-container-orgd29cfce" class="outline-2">
+<h2 id="orgd29cfce"><span class="section-number-2">3.</span> Combining the schematics and the plots</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Now the read the PNG file exported from Inkscape back to Python and plot in the first panel:
@@ -218,14 +218,14 @@ There&rsquo;s no need to place the generated PNG file under version control, bec
 </p>
 
 
-<div id="orgdf5523c" class="figure">
+<div id="org8d0a797" class="figure">
 <p><img src="../static/post-img/paper-figures-2.png" alt="paper-figures-2.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org1c6b9fd" class="outline-2">
-<h2 id="org1c6b9fd"><span class="section-number-2">4.</span> More sophisticated cases</h2>
+<div id="outline-container-orge976121" class="outline-2">
+<h2 id="orge976121"><span class="section-number-2">4.</span> More sophisticated cases</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>matplotlib</code> also supports more sophisticated spacial arrangement.

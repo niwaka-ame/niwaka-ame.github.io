@@ -385,7 +385,7 @@ time in `current-time' format."
              :html-preamble t
              :html-preamble-format '(("en" "<nav class=\"nav\">
    <a href=\"/index.html\" class=\"button\">Home</a>
-   <a href=\"/articles/about.html\" class=\"button\">About Me</a>
+   <a href=\"/articles/about.html\" class=\"button\">About</a>
    <a href=\"/articles/software.html\" class=\"button\">Softwares</a>
    <a href=\"/rss.xml\" class=\"button\">RSS</a>
  </nav>
@@ -508,7 +508,7 @@ project."
                    :html-preamble t
                    :html-preamble-format '(("en" "<nav class=\"nav\">
    <a href=\"/index.html\" class=\"button\">Home</a>
-   <a href=\"/articles/about.html\" class=\"button\">About Me</a>
+   <a href=\"/articles/about.html\" class=\"button\">About</a>
    <a href=\"/articles/software.html\" class=\"button\">Softwares</a>
    <a href=\"/rss.xml\" class=\"button\">RSS</a>
  </nav>

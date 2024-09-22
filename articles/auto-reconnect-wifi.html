@@ -52,7 +52,7 @@
 <div id="preamble" class="status">
 <nav class="nav">
    <a href="/index.html" class="button">Home</a>
-   <a href="/articles/about.html" class="button">About Me</a>
+   <a href="/articles/about.html" class="button">About</a>
    <a href="/articles/software.html" class="button">Softwares</a>
    <a href="/rss.xml" class="button">RSS</a>
  </nav>
@@ -66,8 +66,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8afc205">1. The Bash script</a></li>
-<li><a href="#orgb5b23b3">2. Creating a Cron job and resolving authority issues</a></li>
+<li><a href="#org2c95e05">1. The Bash script</a></li>
+<li><a href="#org94a8203">2. Creating a Cron job and resolving authority issues</a></li>
 </ul>
 </div>
 </div>
@@ -75,8 +75,8 @@
 I set up an N100 mini PC as a server to sync files between multiple devices, running Fedora 39.
 However, connection to the WiFi at home is lost from time to time, so I need a script to automatically reconnect.
 </p>
-<div id="outline-container-org8afc205" class="outline-2">
-<h2 id="org8afc205"><span class="section-number-2">1.</span> The Bash script</h2>
+<div id="outline-container-org2c95e05" class="outline-2">
+<h2 id="org2c95e05"><span class="section-number-2">1.</span> The Bash script</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 ChatGPT wrote me a perfect script for detecting loss of connection and automatic reconnecting:
@@ -120,8 +120,8 @@ The WiFi should re-connect.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb5b23b3" class="outline-2">
-<h2 id="orgb5b23b3"><span class="section-number-2">2.</span> Creating a Cron job and resolving authority issues</h2>
+<div id="outline-container-org94a8203" class="outline-2">
+<h2 id="org94a8203"><span class="section-number-2">2.</span> Creating a Cron job and resolving authority issues</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The next step is to create a <code>cron</code> job to run this script every minute.

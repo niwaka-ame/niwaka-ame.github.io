@@ -186,7 +186,7 @@ holding export options."
 
 (defvar eli/blog-status-format "<span><i class='bx bx-calendar'></i>
 <span>%d</span></span>\n<span><i class='bx bx-edit'></i><span>%C</span></span>")
-(defvar eli/blog-history-base-url "https://github.com/Elilif/Elilif.github.io/commits/master/orgs/")
+(defvar eli/blog-history-base-url "https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/")
 
 (defun eli/blog-build-article-status (info)
   (let ((input-file (file-name-nondirectory (plist-get info :input-file))))
@@ -371,7 +371,7 @@ time in `current-time' format."
              :preparation-function 'eli/kill-sitemap-buffer
              :completion-function 'eli/blog-publish-completion
              :sitemap-filename eli/blog-sitemap
-             :sitemap-title "Eli's Blog"
+             :sitemap-title "Yu Huo's Blog"
              :sitemap-sort-files 'anti-chronologically
              :sitemap-function 'eli/org-publish-sitemap
              :sitemap-format-entry 'eli/sitemap-dated-entry-format
@@ -385,8 +385,9 @@ time in `current-time' format."
              :html-preamble t
              :html-preamble-format '(("en" "<nav class=\"nav\">
    <a href=\"/index.html\" class=\"button\">Home</a>
+   <a href=\"/articles/about.html\" class=\"button\">About Me</a>
+   <a href=\"/articles/software.html\" class=\"button\">Softwares</a>
    <a href=\"/rss.xml\" class=\"button\">RSS</a>
-   <a href=\"/config.html\" class=\"button\">Literate Emacs Config</a>
  </nav>
  <hr>"))
              :html-postamble t
@@ -471,7 +472,7 @@ project."
                    :base-directory eli/blog-base-dir
                    :rss-extension "xml"
                    :base-extension "org"
-                   :html-link-home "https://elilif.github.io/"
+                   :html-link-home "https://niwaka-ame.github.io/"
                    :html-link-use-abs-url t
                    :html-link-org-files-as-html t
                    :include '("rss.org")
@@ -480,7 +481,7 @@ project."
                    :publishing-function #'eli/org-publish-rss-feed
                    :auto-sitemap t
                    :sitemap-function #'eli/org-publish-rss-sitemap
-                   :sitemap-title "Eli's Blog"
+                   :sitemap-title "Yu Huo's Blog"
                    :sitemap-filename "rss.org"
                    :sitemap-sort-files #'anti-chronologically
                    :sitemap-format-entry #'eli/org-publish-rss-entry))

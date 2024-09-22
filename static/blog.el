@@ -199,18 +199,19 @@ holding export options."
                  history-url)
          "</div>")))))
 
-(defvar eli/blog-giscus-script "<script src=\"https://giscus.app/client.js\"
-          data-repo=\"Elilif/Elilif.github.io\"
-          data-repo-id=\"MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg=\"
+(defvar eli/blog-giscus-script
+  "<script src=\"https://giscus.app/client.js\"
+          data-repo=\"niwaka-ame/niwaka-ame.github.io\"
+          data-repo-id=\"R_kgDOM1VX0Q\"
           data-category=\"Announcements\"
-          data-category-id=\"DIC_kwDOEcWfFM4Cdz5V\"
+          data-category-id=\"DIC_kwDOM1VX0c4CisJf\"
           data-mapping=\"pathname\"
           data-strict=\"0\"
           data-reactions-enabled=\"1\"
           data-emit-metadata=\"0\"
           data-input-position=\"top\"
           data-theme=\"light\"
-          data-lang=\"zh-CN\"
+          data-lang=\"en\"
           crossorigin=\"anonymous\"
           async>
   </script>")

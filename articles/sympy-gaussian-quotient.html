@@ -98,9 +98,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6ee7d22">1. Standard way of deriving a ratio&rsquo;s distribution</a></li>
-<li><a href="#org5747be4">2. Integrating with SymPy</a></li>
-<li><a href="#org7f4c8e0">3. Properties of \(p(r)\)</a></li>
+<li><a href="#org7621cc3">1. Standard way of deriving a ratio&rsquo;s distribution</a></li>
+<li><a href="#org9ffc687">2. Integrating with SymPy</a></li>
+<li><a href="#orgd212f38">3. Properties of \(p(r)\)</a></li>
 </ul>
 </div>
 </div>
@@ -123,8 +123,8 @@ A key property that I&rsquo;ll show in this post: the mean and variance of the r
 <p>
 Note: there&rsquo;s <a href="https://davmre.github.io/blog/statistics/2015/03/27/gaussian_quotient">another blog post</a> which shows that the ratio of two Gaussian <i>densities</i> still being Gaussian, which is not to be confused with.
 </p>
-<div id="outline-container-org6ee7d22" class="outline-2">
-<h2 id="org6ee7d22"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
+<div id="outline-container-org7621cc3" class="outline-2">
+<h2 id="org7621cc3"><span class="section-number-2">1.</span> Standard way of deriving a ratio&rsquo;s distribution</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Before we get into SymPy, perhaps it&rsquo;s best to do some math work on paper first.
@@ -179,8 +179,8 @@ Now we can use SymPy to analytically integrate Eqs \eqref{eq:pdf-R-pos} and \eqr
 </p>
 </div>
 </div>
-<div id="outline-container-org5747be4" class="outline-2">
-<h2 id="org5747be4"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
+<div id="outline-container-org9ffc687" class="outline-2">
+<h2 id="org9ffc687"><span class="section-number-2">2.</span> Integrating with SymPy</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We first import the module and generate symbols:
@@ -267,8 +267,8 @@ We can also numerically check whether \(p(r)\)&rsquo;s integral is 1, given the 
 </div>
 </div>
 </div>
-<div id="outline-container-org7f4c8e0" class="outline-2">
-<h2 id="org7f4c8e0"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
+<div id="outline-container-orgd212f38" class="outline-2">
+<h2 id="orgd212f38"><span class="section-number-2">3.</span> Properties of \(p(r)\)</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 \(p(r)\) is even when \(\mu_1 = 0\):
@@ -324,7 +324,7 @@ plt.show()
 </div>
 
 
-<div id="org3216015" class="figure">
+<div id="org8c18bdd" class="figure">
 <p><img src="../static/post-img/sympy-gaussian-quotient.png" alt="sympy-gaussian-quotient.png" />
 </p>
 </div>
@@ -372,17 +372,17 @@ Yet, now I know that is impossible.
 </div>
 </div>
 <script src="https://giscus.app/client.js"
-          data-repo="Elilif/Elilif.github.io"
-          data-repo-id="MDEwOlJlcG9zaXRvcnkyOTgxNjM5ODg="
+          data-repo="niwaka-ame/niwaka-ame.github.io"
+          data-repo-id="R_kgDOM1VX0Q"
           data-category="Announcements"
-          data-category-id="DIC_kwDOEcWfFM4Cdz5V"
+          data-category-id="DIC_kwDOM1VX0c4CisJf"
           data-mapping="pathname"
           data-strict="0"
           data-reactions-enabled="1"
           data-emit-metadata="0"
           data-input-position="top"
           data-theme="light"
-          data-lang="zh-CN"
+          data-lang="en"
           crossorigin="anonymous"
           async>
   </script><div id="postamble" class="status">

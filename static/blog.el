@@ -260,7 +260,7 @@ Return output file name."
                  eli/blog-tags "\n")))
   (concat "#+TITLE: " title
           "\n"
-          "#+DATE: 2023-10-10"
+          "#+DATE: 2022-06-27"
           "\n"
           (format "#+BEGIN_EXPORT html
 <section class=\"filter\">\n%s\n%s</section>

@@ -31,7 +31,6 @@ onclick=\"return false;\"/>")))
     :translate-alist '((src-block . eli/org-blog-src-block)
                        (footnote-reference . eli/org-blog-footnote-reference)
                        (template . eli/org-blog-template))))
-                       ;; (link . eli/org-blog-link))))
 
 ;; ORG ARTICLES EXPORT
 
@@ -360,46 +359,46 @@ time in `current-time' format."
 (setq org-publish-project-alist
       (list
        (list "blog articles"
-       :base-directory eli/blog-base-dir
-       :publishing-directory eli/blog-publish-dir
-       :base-extension "org"
-       :recursive nil
-       :htmlized-source t
-       :publishing-function 'eli/org-blog-publish-to-html
-       :exclude "rss.org"
+             :base-directory eli/blog-base-dir
+             :publishing-directory eli/blog-publish-dir
+             :base-extension "org"
+             :recursive nil
+             :htmlized-source t
+             :publishing-function 'eli/org-blog-publish-to-html
+             :exclude "rss.org"
 
-       :auto-sitemap t
-       :preparation-function 'eli/kill-sitemap-buffer
-       :completion-function 'eli/blog-publish-completion
-       :sitemap-filename eli/blog-sitemap
-       :sitemap-title "Eli's Blog"
-       :sitemap-sort-files 'anti-chronologically
-       :sitemap-function 'eli/org-publish-sitemap
-       :sitemap-format-entry 'eli/sitemap-dated-entry-format
+             :auto-sitemap t
+             :preparation-function 'eli/kill-sitemap-buffer
+             :completion-function 'eli/blog-publish-completion
+             :sitemap-filename eli/blog-sitemap
+             :sitemap-title "Eli's Blog"
+             :sitemap-sort-files 'anti-chronologically
+             :sitemap-function 'eli/org-publish-sitemap
+             :sitemap-format-entry 'eli/sitemap-dated-entry-format
 
-       :html-head "<link rel=\"icon\" href=\"/static/favion.png\">
+             :html-head "<link rel=\"icon\" href=\"/static/favion.png\">
 <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/styles.css\"/>
 <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/htmlize.css\" />
                   <script src=\"/scripts/script.js\"></script>
                   <script src=\"/scripts/toc.js\"></script>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>"
-       :html-preamble t
-       :html-preamble-format '(("en" "<nav class=\"nav\">
+             :html-preamble t
+             :html-preamble-format '(("en" "<nav class=\"nav\">
    <a href=\"/index.html\" class=\"button\">Home</a>
    <a href=\"/rss.xml\" class=\"button\">RSS</a>
    <a href=\"/config.html\" class=\"button\">Literate Emacs Config</a>
  </nav>
  <hr>"))
-       :html-postamble t
-       :html-postamble-format '(("en" "<hr class=\"Solid\">
+             :html-postamble t
+             :html-postamble-format '(("en" "<hr class=\"Solid\">
  <div class=\"info\">
    <span class=\"author\">Author: %a (%e)</span>
    <span class=\"date\">Create Date: %d</span>
    <span class=\"date\">Last modified: %C</span>
    <span>Creator: %c</span>
  </div>"))
-       :with-creator nil
-       )))
+             :with-creator nil
+             )))
 
 ;; (org-publish-remove-all-timestamps)
 

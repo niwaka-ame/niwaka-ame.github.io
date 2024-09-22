@@ -352,14 +352,14 @@ time in `current-time' format."
 
 (advice-add 'org-publish-find-date :override 'eli/org-publish-find-date)
 
-;; ACTUAL PROJECT ALIST
+;; PUBLISH POSTS AND INDEX
 (setq eli/blog-base-dir "~/blog/orgs"
       eli/blog-publish-dir "~/blog/articles"
       eli/blog-sitemap "index.org")
 
 (setq org-publish-project-alist
       (list
-       (list "eli's blog"
+       (list "blog articles"
        :base-directory eli/blog-base-dir
        :publishing-directory eli/blog-publish-dir
        :base-extension "org"
@@ -402,3 +402,89 @@ time in `current-time' format."
        )))
 
 ;; (org-publish-remove-all-timestamps)
+
+;; RSS
+(use-package! ox-rss)
+(setq eli/blog-rss-dir "~/blog")
+
+(defun eli/org-publish-rss-feed (plist filename dir)
+  "Publish PLIST to Rss when FILENAME is rss.org.
+DIR is the location of the output."
+  (if (equal "rss.org" (file-name-nondirectory filename))
+      (org-publish-org-to
+       'rss filename (concat "." org-rss-extension) plist dir)))
+
+(defun eli/org-publish-rss-sitemap (title list)
+  "Generate a sitemap of posts that is exported as a RSS feed.
+TITLE is the title of the RSS feed.  LIST is an internal
+representation for the files to include.  PROJECT is the current
+project."
+  (concat
+   "#+TITLE: " title
+   "\n\n"
+   (org-list-to-subtree list)))
+
+(defun eli/blog-get-abstract (file)
+  "Get the contents of abstract block in FILE."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (goto-char (point-min))
+    (let ((beg (re-search-forward "^#\\+begin_abstract\n" nil t))
+          (end (progn (re-search-forward "^#\\+end_abstract$" nil t)
+                      (match-beginning 0))))
+      (if beg
+          (buffer-substring beg end)
+        ""))))
+
+(defun eli/org-publish-rss-entry (entry _style project)
+  "Format ENTRY for the posts RSS feed in PROJECT."
+  (let* ((file (org-publish--expand-file-name entry project))
+         (abstract (eli/blog-get-abstract file))
+         (parsed-title (org-publish-find-property file :title project))
+         (title
+          (if parsed-title
+              (org-no-properties
+               (org-element-interpret-data parsed-title))
+            (file-name-nondirectory (file-name-sans-extension file))))
+         (root (org-publish-property :html-link-home project))
+         (link (concat
+                "articles/"
+                (file-name-sans-extension entry) ".html"))
+         (pubdate (car (org-publish-find-property file :date project))))
+    (org-publish-cache-set-file-property file :title title)
+    (format "%s
+:properties:
+:rss_permalink: %s
+:pubdate: %s
+:end:\n%s\n[[%s][Read More]]"
+            title
+            link
+            pubdate
+            abstract
+            (concat
+             root
+             link))))
+
+(add-to-list 'org-publish-project-alist
+             (list "blog rss"
+                   :preparation-function #'eli/kill-sitemap-buffer
+                   :publishing-directory eli/blog-rss-dir
+                   :base-directory eli/blog-base-dir
+                   :rss-extension "xml"
+                   :base-extension "org"
+                   :html-link-home "https://elilif.github.io/"
+                   :html-link-use-abs-url t
+                   :html-link-org-files-as-html t
+                   :include '("rss.org")
+                   :exclude eli/blog-sitemap
+
+                   :publishing-function #'eli/org-publish-rss-feed
+                   :auto-sitemap t
+                   :sitemap-function #'eli/org-publish-rss-sitemap
+                   :sitemap-title "Eli's Blog"
+                   :sitemap-filename "rss.org"
+                   :sitemap-sort-files #'anti-chronologically
+                   :sitemap-format-entry #'eli/org-publish-rss-entry))
+(add-to-list 'org-publish-project-alist
+             (list "Eli's blog"
+                   :components '("blog articles" "blog rss")))

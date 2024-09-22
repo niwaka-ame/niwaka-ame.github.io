@@ -1,6 +1,8 @@
-#+TITLE: CSS for Org-exported HTML(WIP)
+#+TITLE: CSS for Org-exported HTML (By Eli)
 #+DATE: 2024-02-29
-#+FILETAGS: :CSS:blog:
+#+FILETAGS: :emacs:
+
+Please find the original post [[https://elilif.github.io/articles/2024-02-29-org-CSS.html][here]].
 
 * Markups[fn:1]
 *bold*

@@ -33,7 +33,6 @@ onclick=\"return false;\"/>")))
                        (template . eli/org-blog-template))))
 
 ;; ORG ARTICLES EXPORT
-
 (defun eli/org-blog-src-block (src-block _contents info)
   "Transcode a SRC-BLOCK element from Org to HTML.
 CONTENTS holds the contents of the item.  INFO is a plist holding
@@ -401,9 +400,7 @@ time in `current-time' format."
              :with-creator nil
              )))
 
-;; (org-publish-remove-all-timestamps)
-
-;; RSS
+;; PUBLISHING RSS
 (use-package! ox-rss)
 (setq eli/blog-rss-dir "~/blog")
 
@@ -487,7 +484,7 @@ project."
                    :sitemap-format-entry #'eli/org-publish-rss-entry))
 
 
-;; ABOUT PAGES
+;; PUBLISHING ABOUT PAGES
 (setq yh/blog-about-dir "~/blog/about")
 (add-to-list 'org-publish-project-alist
              (list "about"
@@ -529,3 +526,6 @@ project."
 (add-to-list 'org-publish-project-alist
              (list "Eli's blog"
                    :components '("blog articles" "about" "blog rss")))
+
+;; force to re-export all posts
+;; (org-publish-remove-all-timestamps)

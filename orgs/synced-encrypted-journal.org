@@ -1,0 +1,98 @@
+#+title: Automatically Encrypt my Org Journal Diary while Syncing
+#+date: 2023-01-01
+#+FILETAGS: :emacs:linux:
+#+PROPERTY: header-args :eval never-export :results verbatim
+
+* Motivation
+I've long been keeping a private diary/journal with [[https://github.com/bastibe/org-journal][Org Journal]] in Emacs.
+For long, I've been writing on a single PC at home with no online syncing or real-time backup out of privacy concerns.
+This is inconvenient, because I'm not always home, and unsafe, because the disk may break down.
+
+Fortunately, Org Journal supports automatic [[https://gnupg.org/][GnuPG]] (GPG) encryption, so each Journal file will be automatically encrypted each time we save the file.
+Thus, it is safe to sync my encrypted files with Dropbox.
+In this blog post, I'll describe how I set up GnuPG and Org Journal to enable encryption;
+
+* Setting up GPG
+GPG is a nice tool for asymmetric encryption.
+Asymmetric encryption, in short, uses a public key to encrypt the secret and a private key to decrypt the secret (in this case my diary).
+The private key must be kept /private/ and /safe/ --- if it is disclosed, somebody else can decrypt my secret; if it is lost, I won't be able to decrypt my own journal (until the era of quantum computing:-)).
+
+GPG should ship with most Linux distributions and Mac OS.
+Windows users will need to install [[https://www.gpg4win.org/][GPG4win]].
+The first step is to generate a GPG key pair, see Steps 1--12 in this [[https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key][Github tutorial]].
+
+I would like to edit my journal on multiple machines, and it's therefore necessary to export this key pair to my other machines.
+First, to list all keys:
+#+begin_src bash
+gpg -k
+#+end_src
+To export the public key:
+#+begin_src bash
+gpg --armor --output pub.key --export example@email.com
+#+end_src
+where ~pub.key~ is the file name, and the email address is corresponds to the key to be exported.
+To export the private key, use [fn:1]:
+#+begin_src bash
+gpg --armor --export-secret-keys example@email.com | gpg --armor --symmetric --output mykey.sec.asc
+#+end_src
+This will prompt for a passphrase to (symmetrically) encrypt my private key.
+
+After sending the keys to another machine, I import the keys.
+For the public key:
+#+begin_src bash
+gpg --import pub.key
+#+end_src
+and the encrypted private key:
+#+begin_src bash
+gpg -d mykey.sec.asc | gpg --allow-secret-key-import --import
+#+end_src
+and I'll be prompted for passphrase twice, the first one being the symmetric decryption during export, and the second one being the one I entered during key pair generation.
+
+The keys must be trusted after import, otherwise I'll be warned when using that key.
+To trust the key, type:
+#+begin_src bash
+gpg --edit-key example@email.com
+#+end_src
+and I enter an interactive prompt which looks like this:
+#+begin_src bash
+gpg>
+#+end_src
+type ~trust~ and then hit {{{kbd(Enter)}}} and choose 5 (ultimate) and then type ~quit~.
+That's it!
+
+[fn:1] see the [[https://www.openkeychain.org/faq/][FAQ of the Openkeychain website]] for details.
+
+* Org journal settings
+Setting Org journal is simple --- just set
+#+begin_src elisp
+(setq org-journal-encrypt-journal t)
+#+end_src
+in my config file.
+It is also possible to encrypt certain entries with [[https://orgmode.org/manual/Org-Crypt.html][Org Crypt]].
+See the [[https://github.com/bastibe/org-journal][Org Journal]] readme page.
+
+I used to keep separate journal files for each day (i.e. ~org-journal-file-type~ is ~'daily~), but I realised that to search over older journal files with ~org-journal-search-forever~ is rather slow because all files must be decrypted one by one.
+Thus, now I use a single file for each year:
+#+begin_src elisp
+(setq org-journal-file-type 'yearly
+      org-journal-file-format "%Y.org")
+#+end_src
+
+* Avoiding entering passphrase each time I open my journal
+The last issue I encountered (on one of my machine) is that I have to enter my passpharase each time I open my journal.
+I would like it to be cached for, say, an hour.
+The way to do it is to configure the GPG Agent, which ships with GPG.
+First is to see if any config already exists:
+#+begin_src bash
+cd ~/.gnupg
+touch gpg-agent.conf
+cat gpg-agent.conf
+#+end_src
+Second, modify or type in these lines in the config file:
+#+begin_src bash
+default-cache-ttl 3600
+max-cache-ttl 86400
+#+end_src
+This will allow GPG Agent to cache my passphrase for 3600 seconds (one hour).
+
+That's it! Happy new year!

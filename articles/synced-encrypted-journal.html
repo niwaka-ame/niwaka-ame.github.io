@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-09-24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Automatically Encrypt my Org Journal Diary while Syncing</title>
+<meta name="author" content="Yu Huo" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" href="/static/favion.png">
+<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="/css/htmlize.css" />
+                  <script src="/scripts/script.js"></script>
+                  <script src="/scripts/toc.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+.content:has([value="all"]:checked) li{display: list-item;}
+
+.content:has([value="python"]:checked)
+ li:has([data-tags~="#python"]){display: list-item;}
+.content:has([value="linux"]:checked)
+ li:has([data-tags~="#linux"]){display: list-item;}
+.content:has([value="research"]:checked)
+ li:has([data-tags~="#research"]){display: list-item;}
+.content:has([value="emacs"]:checked)
+ li:has([data-tags~="#emacs"]){display: list-item;}
+</style>
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+// @license-end
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="nav">
+   <a href="/index.html" class="button">Home</a>
+   <a href="/articles/about.html" class="button">About</a>
+   <a href="/articles/software.html" class="button">Softwares</a>
+   <a href="/rss.xml" class="button">RSS</a>
+ </nav>
+ <hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Automatically Encrypt my Org Journal Diary while Syncing</h1>
+<div class="post-status"><span><i class='bx bx-calendar'></i>
+<span>2023-01-01</span></span>
+<span><i class='bx bx-edit'></i><span>2024-09-24</span></span><span><i class='bx bx-history'></i><span><a href="https://github.com/niwaka-ame/niwaka-ame.github.io/commits/master/orgs/synced-encrypted-journal.org">history</a></span></span></div><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orga47cdd5">1. Motivation</a></li>
+<li><a href="#orgc80f674">2. Setting up GPG</a></li>
+<li><a href="#org4cef219">3. Org journal settings</a></li>
+<li><a href="#org362f9b0">4. Avoiding entering passphrase each time I open my journal</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga47cdd5" class="outline-2">
+<h2 id="orga47cdd5"><span class="section-number-2">1.</span> Motivation</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I&rsquo;ve long been keeping a private diary/journal with <a href="https://github.com/bastibe/org-journal">Org Journal</a> in Emacs.
+For long, I&rsquo;ve been writing on a single PC at home with no online syncing or real-time backup out of privacy concerns.
+This is inconvenient, because I&rsquo;m not always home, and unsafe, because the disk may break down.
+</p>
+
+<p>
+Fortunately, Org Journal supports automatic <a href="https://gnupg.org/">GnuPG</a> (GPG) encryption, so each Journal file will be automatically encrypted each time we save the file.
+Thus, it is safe to sync my encrypted files with Dropbox.
+In this blog post, I&rsquo;ll describe how I set up GnuPG and Org Journal to enable encryption;
+</p>
+</div>
+</div>
+<div id="outline-container-orgc80f674" class="outline-2">
+<h2 id="orgc80f674"><span class="section-number-2">2.</span> Setting up GPG</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+GPG is a nice tool for asymmetric encryption.
+Asymmetric encryption, in short, uses a public key to encrypt the secret and a private key to decrypt the secret (in this case my diary).
+The private key must be kept <i>private</i> and <i>safe</i> &#x2014; if it is disclosed, somebody else can decrypt my secret; if it is lost, I won&rsquo;t be able to decrypt my own journal (until the era of quantum computing:-)).
+</p>
+
+<p>
+GPG should ship with most Linux distributions and Mac OS.
+Windows users will need to install <a href="https://www.gpg4win.org/">GPG4win</a>.
+The first step is to generate a GPG key pair, see Steps 1&#x2013;12 in this <a href="https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key">Github tutorial</a>.
+</p>
+
+<p>
+I would like to edit my journal on multiple machines, and it&rsquo;s therefore necessary to export this key pair to my other machines.
+First, to list all keys:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg -k
+</code></pre>
+</div>
+<p>
+To export the public key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg --armor --output pub.key --export example@email.com
+</code></pre>
+</div>
+<p>
+where <code>pub.key</code> is the file name, and the email address is corresponds to the key to be exported.
+To export the private key, use <sup><label for="fnr.1" class="footref">1</label></sup><input id="fnr.1" class="footref-toggle" type="checkbox">:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg --armor --export-secret-keys example@email.com | gpg --armor --symmetric --output mykey.sec.asc
+</code></pre>
+</div>
+<p>
+This will prompt for a passphrase to (symmetrically) encrypt my private key.
+</p>
+
+<p>
+After sending the keys to another machine, I import the keys.
+For the public key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg --import pub.key
+</code></pre>
+</div>
+<p>
+and the encrypted private key:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg -d mykey.sec.asc | gpg --allow-secret-key-import --import
+</code></pre>
+</div>
+<p>
+and I&rsquo;ll be prompted for passphrase twice, the first one being the symmetric decryption during export, and the second one being the one I entered during key pair generation.
+</p>
+
+<p>
+The keys must be trusted after import, otherwise I&rsquo;ll be warned when using that key.
+To trust the key, type:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg --edit-key example@email.com
+</code></pre>
+</div>
+<p>
+and I enter an interactive prompt which looks like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>gpg&gt;
+</code></pre>
+</div>
+<p>
+type <code>trust</code> and then hit <kbd>Enter</kbd> and choose 5 (ultimate) and then type <code>quit</code>.
+That&rsquo;s it!
+</p>
+</div>
+</div>
+<div id="outline-container-org4cef219" class="outline-2">
+<h2 id="org4cef219"><span class="section-number-2">3.</span> Org journal settings</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Setting Org journal is simple &#x2014; just set
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><code><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-journal-encrypt-journal t<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+<p>
+in my config file.
+It is also possible to encrypt certain entries with <a href="https://orgmode.org/manual/Org-Crypt.html">Org Crypt</a>.
+See the <a href="https://github.com/bastibe/org-journal">Org Journal</a> readme page.
+</p>
+
+<p>
+I used to keep separate journal files for each day (i.e. <code>org-journal-file-type</code> is <code>'daily</code>), but I realised that to search over older journal files with <code>org-journal-search-forever</code> is rather slow because all files must be decrypted one by one.
+Thus, now I use a single file for each year:
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><code><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-journal-file-type <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yearly</span>
+      org-journal-file-format <span class="org-string">"%Y.org"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org362f9b0" class="outline-2">
+<h2 id="org362f9b0"><span class="section-number-2">4.</span> Avoiding entering passphrase each time I open my journal</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+The last issue I encountered (on one of my machine) is that I have to enter my passpharase each time I open my journal.
+I would like it to be cached for, say, an hour.
+The way to do it is to configure the GPG Agent, which ships with GPG.
+First is to see if any config already exists:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code><span class="org-type">cd</span> ~/.gnupg
+<span class="org-type">touch</span> gpg-agent.conf
+<span class="org-type">cat</span> gpg-agent.conf
+</code></pre>
+</div>
+<p>
+Second, modify or type in these lines in the config file:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><code>default-cache-ttl <span class="org-highlight-numbers-number">3600</span>
+max-cache-ttl <span class="org-highlight-numbers-number">86400</span>
+</code></pre>
+</div>
+<p>
+This will allow GPG Agent to cache my passphrase for 3600 seconds (one hour).
+</p>
+
+<p>
+That&rsquo;s it! Happy new year!
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+see the <a href="https://www.openkeychain.org/faq/">FAQ of the Openkeychain website</a> for details.
+</p></div></div>
+
+
+</div>
+</div></div>
+<script src="https://giscus.app/client.js"
+          data-repo="niwaka-ame/niwaka-ame.github.io"
+          data-repo-id="R_kgDOM1VX0Q"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOM1VX0c4CisJf"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script><div id="postamble" class="status">
+<hr class="Solid">
+ <div class="info">
+   <span class="author">Author: Yu Huo (<a href="mailto:yhuo@tuta.io">yhuo@tuta.io</a>)</span>
+   <span class="date">Create Date: 2023-01-01</span>
+   <span class="date">Last modified: 2024-09-24</span>
+   <span>Creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</span>
+ </div>
+</div>
+</body>
+</html>

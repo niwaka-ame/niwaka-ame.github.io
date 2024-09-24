@@ -31,3 +31,4 @@
 - {{{timestamp(2023-02-14)}}}   [[file:articles/sympy-gaussian-quotient.org][Derive the distribution of two Gaussian variables' ratio with SymPy]] {{{tags(#research #python)}}}
 - {{{timestamp(2023-02-05)}}}   [[file:articles/script-fu.org][Scripting with Script-Fu in GIMP to compress photos in batch]] {{{tags(#linux)}}}
 - {{{timestamp(2023-01-20)}}}   [[file:articles/raiden2.org][Getting Raiden 2 working on Retropie]] {{{tags(#linux)}}}
+- {{{timestamp(2023-01-01)}}}   [[file:articles/synced-encrypted-journal.org][Automatically Encrypt my Org Journal Diary while Syncing]] {{{tags(#emacs #linux)}}}

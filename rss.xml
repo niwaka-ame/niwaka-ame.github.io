@@ -14,8 +14,8 @@
   <link>https://niwaka-ame.github.io/</link>
   <description><![CDATA[]]></description>
   <language>en</language>
-  <pubDate>Sun, 22 Sep 2024 19:25:55 +0100</pubDate>
-  <lastBuildDate>Sun, 22 Sep 2024 19:25:55 +0100</lastBuildDate>
+  <pubDate>Tue, 24 Sep 2024 21:45:04 +0100</pubDate>
+  <lastBuildDate>Tue, 24 Sep 2024 21:45:04 +0100</lastBuildDate>
   <generator>Emacs 29.2 Org-mode 9.7.11</generator>
   <webMaster>yhuo@tuta.io (Yu Huo)</webMaster>
   <image>
@@ -116,7 +116,19 @@
     <pubDate>Fri, 20 Jan 2023 00:00:00 +0000</pubDate>
 
     <description><![CDATA[<p>
-    <a href="https://niwaka-ame.github.io/articles/raiden2.html">Read More</a></p>
+    <a href="https://niwaka-ame.github.io/articles/raiden2.html">Read More</a>
+    </p>
+    ]]></description>
+  </item>
+  <item>
+    <title>Automatically Encrypt my Org Journal Diary while Syncing</title>
+    <link>https://niwaka-ame.github.io/articles/synced-encrypted-journal.html</link>
+    <author>yhuo@tuta.io (Yu Huo)</author>
+    <guid isPermaLink="false">https://niwaka-ame.github.io/articles/synced-encrypted-journal.html</guid>
+    <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+
+    <description><![CDATA[<p>
+    <a href="https://niwaka-ame.github.io/articles/synced-encrypted-journal.html">Read More</a></p>
     ]]></description>
   </item>
 </channel>

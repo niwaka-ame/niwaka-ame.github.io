@@ -56,3 +56,10 @@
 :END:
 
 [[https://niwaka-ame.github.io/articles/raiden2.html][Read More]]
+* Automatically Encrypt my Org Journal Diary while Syncing
+:properties:
+:rss_permalink: articles/synced-encrypted-journal.html
+:pubdate: 2023-01-01
+:END:
+
+[[https://niwaka-ame.github.io/articles/synced-encrypted-journal.html][Read More]]
